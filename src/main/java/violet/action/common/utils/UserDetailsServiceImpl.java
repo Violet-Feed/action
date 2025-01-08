@@ -1,9 +1,7 @@
 package violet.action.common.utils;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import violet.action.common.mapper.UserMapper;
 import violet.action.common.pojo.User;
-import violet.action.common.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,9 +14,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserMapper userMapper;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {//用来接入数据库信息
-        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("username",username);
-        User user=userMapper.selectOne(queryWrapper);
+        User user=userMapper.selectByUserName(username);
         if(user==null){
             throw new RuntimeException("用户不存在");
         }

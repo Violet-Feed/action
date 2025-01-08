@@ -9,14 +9,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import violet.action.common.mapper.UserMapper;
+import violet.action.common.pojo.User;
 import violet.action.common.service.UserService;
 import violet.action.common.utils.JwtUtil;
+import violet.action.common.utils.SnowFlake;
 import violet.action.common.utils.UserDetailsImpl;
 
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private SnowFlake userIdGenerator=new SnowFlake(0,0);
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -56,17 +59,18 @@ public class UserServiceImpl implements UserService {
             resp.put("message","两次输入的密码不一致");
             return resp;
         }
-        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("username",username);
-        List<User> users=userMapper.selectList(queryWrapper);
-        if(!users.isEmpty()){
+        User user=userMapper.selectByUserName(username);
+        if(user!=null){
             resp.put("message","用户名已存在");
             return resp;
         }
         String encodedPassword=passwordEncoder.encode(password);
-        User user=new User(null,username,null,encodedPassword,null,null,null,0);
-        userMapper.insert(user);
-        resp.put("message","successful");
+        user=new User(null,userIdGenerator.nextId(),username,"",encodedPassword);
+        if(!userMapper.createUser(user)){
+            resp.put("message","创建失败");
+            return resp;
+        }
+        resp.put("message","success");
         return resp;
     }
 
@@ -77,9 +81,9 @@ public class UserServiceImpl implements UserService {
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         UserDetailsImpl loginUser=(UserDetailsImpl)authenticate.getPrincipal();
         User user=loginUser.getUser();
-        String jwt= JwtUtil.createJWT(user.getId().toString());
+        String jwt= JwtUtil.createJWT(user.getUserId().toString());
         JSONObject resp=new JSONObject();
-        resp.put("message","successful");
+        resp.put("message","success");
         resp.put("token",jwt);
         return resp;
     }
@@ -91,11 +95,11 @@ public class UserServiceImpl implements UserService {
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
         User user = loginUser.getUser();
         JSONObject resp = new JSONObject();
-        JSONObject data = new JSONObject();
-        resp.put("message", "successful");
+        resp.put("message", "success");
         resp.put("id", user.getId().toString());
+        resp.put("userId", user.getUserId().toString());
         resp.put("username", user.getUsername());
-        resp.put("avatar", user.getPhoto());
-        return null;
+        resp.put("avatar", user.getAvatar());
+        return resp;
     }
 }

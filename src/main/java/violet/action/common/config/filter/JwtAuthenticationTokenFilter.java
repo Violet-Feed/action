@@ -1,9 +1,9 @@
 package violet.action.common.config.filter;
 
-import com.kob.backend.mapper.UserMapper;
-import com.kob.backend.pojo.User;
-import com.kob.backend.service.impl.utils.UserDetailsImpl;
-import com.kob.backend.utils.JwtUtil;
+import violet.action.common.mapper.UserMapper;
+import violet.action.common.pojo.User;
+import violet.action.common.utils.UserDetailsImpl;
+import violet.action.common.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +35,15 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {//用来
 
         token = token.substring(7);
 
-        String userid;
+        String userId;
         try {
             Claims claims = JwtUtil.parseJWT(token);
-            userid = claims.getSubject();
+            userId = claims.getSubject();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        User user = userMapper.selectById(Integer.parseInt(userid));
+        User user = userMapper.selectByUserId(Long.parseLong(userId));
 
         if (user == null) {
             throw new RuntimeException("用户名未登录");

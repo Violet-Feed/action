@@ -1,5 +1,7 @@
 package violet.action.common.config;
 
+import net.devh.boot.grpc.server.security.authentication.BasicGrpcAuthenticationReader;
+import net.devh.boot.grpc.server.security.authentication.GrpcAuthenticationReader;
 import violet.action.common.config.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,16 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/api/user/account/token/",
-                        "/api/user/account/register/",
-                        "/api/user/photo/update/",
-                        "/api/user/account/phone/applycode/",
-                        "/api/user/account/phone/login/",
-                        "/api/user/account/wechat/applyqr/",
-                        "/api/user/account/wechat/applyinfo/",
-                        "/api/user/account/wechat/login/",
-                        "/api/user/account/qq/applyurl/",
-                        "/api/user/account/qq/applyinfo/"
+                        "/api/user/login/",
+                        "/api/user/register/"
                 ).permitAll()
                 .antMatchers("/pk/startgame/","/pk/receivebotmove/").hasIpAddress("172.17.0.2")
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
@@ -60,5 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/websocket/**");
+    }
+
+    @Bean
+    public GrpcAuthenticationReader grpcAuthenticationReader(){
+        return new BasicGrpcAuthenticationReader();
     }
 }
