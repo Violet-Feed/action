@@ -24,14 +24,14 @@ public class UserController {
     }
 
     @PostMapping("/api/user/login/")
-    public Map<String,String> login(@RequestParam Map<String,String> map){
+    public JSONObject login(@RequestParam Map<String,String> map){
         String username=map.get("username");
         String password=map.get("password");
         return userService.login(username,password);
     }
 
     @GetMapping("/api/user/get_info/")
-    public Map<String,String> getUserInfo(){
+    public JSONObject getUserInfo(){
         return userService.getUserInfo();
     }
 }
