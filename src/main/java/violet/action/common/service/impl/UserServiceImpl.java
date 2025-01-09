@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import violet.action.common.mapper.RelationMapper;
 import violet.action.common.mapper.UserMapper;
 import violet.action.common.pojo.User;
 import violet.action.common.service.UserService;
@@ -15,13 +16,13 @@ import violet.action.common.utils.JwtUtil;
 import violet.action.common.utils.SnowFlake;
 import violet.action.common.utils.UserDetailsImpl;
 
-import java.util.List;
-
 @Service
 public class UserServiceImpl implements UserService {
     private SnowFlake userIdGenerator=new SnowFlake(0,0);
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RelationMapper relationMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -70,6 +71,7 @@ public class UserServiceImpl implements UserService {
             resp.put("message","创建失败");
             return resp;
         }
+        relationMapper.save(user);
         resp.put("message","success");
         return resp;
     }
