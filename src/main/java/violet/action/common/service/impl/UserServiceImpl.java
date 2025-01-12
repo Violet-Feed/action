@@ -1,6 +1,16 @@
 package violet.action.common.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,10 +21,16 @@ import org.springframework.stereotype.Service;
 import violet.action.common.mapper.RelationMapper;
 import violet.action.common.mapper.UserMapper;
 import violet.action.common.pojo.User;
+import violet.action.common.pojo.UserEs;
 import violet.action.common.service.UserService;
 import violet.action.common.utils.JwtUtil;
 import violet.action.common.utils.SnowFlake;
 import violet.action.common.utils.UserDetailsImpl;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,6 +39,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private RelationMapper relationMapper;
+    @Autowired
+    private RestHighLevelClient restHighLevelClient;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -102,6 +120,30 @@ public class UserServiceImpl implements UserService {
         resp.put("userId", user.getUserId().toString());
         resp.put("username", user.getUsername());
         resp.put("avatar", user.getAvatar());
+        return resp;
+    }
+
+    @Override
+    public JSONObject searchUsers(String term) {
+        SearchRequest request = new SearchRequest("user");
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+        MatchQueryBuilder query = QueryBuilders.matchQuery("username", term);
+        builder.from(0);
+        builder.size(10);
+        builder.query(query);
+        request.source(builder);
+        SearchResponse response = null;
+        try {
+            response = restHighLevelClient.search(request, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        SearchHit[] hits = response.getHits().getHits();
+        List<UserEs> userList= Arrays.stream(hits).map(o -> JSON.parseObject(o.getSourceAsString(), UserEs.class)).collect(Collectors.toList());
+        JSONObject resp = new JSONObject();
+        resp.put("message", "success");
+        resp.put("userList", userList);
         return resp;
     }
 }

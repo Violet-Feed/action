@@ -2,7 +2,6 @@ package violet.action.common.mapper;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import violet.action.common.pojo.User;
 

@@ -6,4 +6,5 @@ public interface UserService {
     JSONObject register(String username,String password,String confirmPassword);
     JSONObject login(String username,String password);
     JSONObject getUserInfo();
+    JSONObject searchUsers(String term);
 }

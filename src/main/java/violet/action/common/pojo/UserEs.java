@@ -3,27 +3,23 @@ package violet.action.common.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Property;
-
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Node("user")
-public class User {
-    @Id
-    @GeneratedValue
-    private Long id;
+@Document(indexName = "user")
+public class UserEs{
+    @Field(name = "user_id",type = FieldType.Long)
     private Long userId;
+    @Field(name = "username",type = FieldType.Text)
     private String username;
+    @Field(name = "avatar",type = FieldType.Keyword)
     private String avatar;
-    @Transient
-    private String password;
 }

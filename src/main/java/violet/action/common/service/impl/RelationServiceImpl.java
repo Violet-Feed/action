@@ -55,6 +55,7 @@ public class RelationServiceImpl implements RelationService {
 
     @Override
     public GetFollowListResponse getFriendList(GetFollowListRequest req) {
+        //TODO：改成查询两个list再取并集
         List<User> userList=relationMapper.getFriendList(req.getUserId());
         List<Long> userIdList=new ArrayList<>();
         for(User user:userList){
