@@ -5,3 +5,5 @@
 启动es：~/elasticsearch-7.9.2/bin/elasticsearch
 
 启动neo4j：~/neo4j-community-3.5.9/bin/neo4j start
+
+启动redis：redis-server

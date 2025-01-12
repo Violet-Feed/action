@@ -40,6 +40,11 @@ public final class Action {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_MIsFollowResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_MIsFollowResponse_IsFollowingEntry_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_MIsFollowResponse_IsFollowingEntry_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_MIsFollowResponse_IsFollowerEntry_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -94,48 +99,51 @@ public final class Action {
       "d\030\001 \001(\003\022\022\n\nto_user_id\030\002 \001(\003\".\n\016FollowRes" +
       "ponse\022\034\n\010baseResp\030\377\001 \001(\0132\t.BaseResp\"=\n\020M" +
       "IsFollowRequest\022\024\n\014from_user_id\030\001 \001(\003\022\023\n" +
-      "\013to_user_ids\030\002 \003(\003\"\235\001\n\021MIsFollowResponse" +
-      "\0227\n\013is_follower\030\001 \003(\0132\".MIsFollowRespons" +
-      "e.IsFollowerEntry\022\034\n\010baseResp\030\377\001 \001(\0132\t.B" +
-      "aseResp\0321\n\017IsFollowerEntry\022\013\n\003key\030\001 \001(\003\022",
-      "\r\n\005value\030\002 \001(\010:\0028\001\"Z\n\024GetFollowListReque" +
-      "st\022\017\n\007user_id\030\001 \001(\003\022\020\n\010min_time\030\002 \001(\003\022\020\n" +
-      "\010max_time\030\003 \001(\003\022\r\n\005count\030\004 \001(\003\"h\n\025GetFol" +
-      "lowListResponse\022\020\n\010user_ids\030\001 \003(\003\022\r\n\005tot" +
-      "al\030\002 \001(\003\022\020\n\010has_more\030\003 \001(\010\022\034\n\010baseResp\030\377" +
-      "\001 \001(\0132\t.BaseResp\"n\n\026MGetFollowCountReque" +
-      "st\022\020\n\010user_ids\030\001 \003(\003\022\026\n\016need_following\030\002" +
-      " \001(\010\022\025\n\rneed_follower\030\003 \001(\010\022\023\n\013need_frie" +
-      "nd\030\004 \001(\010\"\245\003\n\027MGetFollowCountResponse\022E\n\017" +
-      "following_count\030\001 \003(\0132,.MGetFollowCountR",
-      "esponse.FollowingCountEntry\022C\n\016follower_" +
-      "count\030\002 \003(\0132+.MGetFollowCountResponse.Fo" +
-      "llowerCountEntry\022?\n\014friend_count\030\003 \003(\0132)" +
-      ".MGetFollowCountResponse.FriendCountEntr" +
-      "y\022\034\n\010baseResp\030\377\001 \001(\0132\t.BaseResp\0325\n\023Follo" +
-      "wingCountEntry\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002 \001" +
-      "(\003:\0028\001\0324\n\022FollowerCountEntry\022\013\n\003key\030\001 \001(" +
-      "\003\022\r\n\005value\030\002 \001(\003:\0028\001\0322\n\020FriendCountEntry" +
-      "\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002 \001(\003:\0028\001*\263\001\n\nSta" +
-      "tusCode\022\026\n\022StatusCode_Not_Use\020\000\022\014\n\007Succe",
-      "ss\020\350\007\022\021\n\014Server_Error\020\351\007\022\020\n\013Param_Error\020" +
-      "\352\007\022\030\n\023OverFrequency_Error\020\353\007\022\024\n\017OverLimi" +
-      "t_Error\020\354\007\022\024\n\017Duplicate_Error\020\355\007\022\024\n\017Retr" +
-      "yTime_Error\020\356\0072\356\003\n\rActionService\022+\n\006Foll" +
-      "ow\022\016.FollowRequest\032\017.FollowResponse\"\000\022-\n" +
-      "\010Unfollow\022\016.FollowRequest\032\017.FollowRespon" +
-      "se\"\000\0227\n\014MIsFollowing\022\021.MIsFollowRequest\032" +
-      "\022.MIsFollowResponse\"\000\0226\n\013MIsFollower\022\021.M" +
-      "IsFollowRequest\032\022.MIsFollowResponse\"\000\022C\n" +
-      "\020GetFollowingList\022\025.GetFollowListRequest",
-      "\032\026.GetFollowListResponse\"\000\022B\n\017GetFollowe" +
-      "rList\022\025.GetFollowListRequest\032\026.GetFollow" +
-      "ListResponse\"\000\022@\n\rGetFriendList\022\025.GetFol" +
-      "lowListRequest\032\026.GetFollowListResponse\"\000" +
-      "\022E\n\016GetFollowCount\022\027.MGetFollowCountRequ" +
-      "est\032\030.MGetFollowCountResponse\"\000B<\n%viole" +
-      "t.action.common.proto_gen.actionP\001Z\021/pro" +
-      "to_gen/actionb\006proto3"
+      "\013to_user_ids\030\002 \003(\003\"\214\002\n\021MIsFollowResponse" +
+      "\0229\n\014is_following\030\001 \003(\0132#.MIsFollowRespon" +
+      "se.IsFollowingEntry\0227\n\013is_follower\030\002 \003(\013" +
+      "2\".MIsFollowResponse.IsFollowerEntry\022\034\n\010",
+      "baseResp\030\377\001 \001(\0132\t.BaseResp\0322\n\020IsFollowin" +
+      "gEntry\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002 \001(\010:\0028\001\0321" +
+      "\n\017IsFollowerEntry\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030" +
+      "\002 \001(\010:\0028\001\"Z\n\024GetFollowListRequest\022\017\n\007use" +
+      "r_id\030\001 \001(\003\022\020\n\010min_time\030\002 \001(\003\022\020\n\010max_time" +
+      "\030\003 \001(\003\022\r\n\005count\030\004 \001(\003\"h\n\025GetFollowListRe" +
+      "sponse\022\020\n\010user_ids\030\001 \003(\003\022\r\n\005total\030\002 \001(\003\022" +
+      "\020\n\010has_more\030\003 \001(\010\022\034\n\010baseResp\030\377\001 \001(\0132\t.B" +
+      "aseResp\"n\n\026MGetFollowCountRequest\022\020\n\010use" +
+      "r_ids\030\001 \003(\003\022\026\n\016need_following\030\002 \001(\010\022\025\n\rn",
+      "eed_follower\030\003 \001(\010\022\023\n\013need_friend\030\004 \001(\010\"" +
+      "\245\003\n\027MGetFollowCountResponse\022E\n\017following" +
+      "_count\030\001 \003(\0132,.MGetFollowCountResponse.F" +
+      "ollowingCountEntry\022C\n\016follower_count\030\002 \003" +
+      "(\0132+.MGetFollowCountResponse.FollowerCou" +
+      "ntEntry\022?\n\014friend_count\030\003 \003(\0132).MGetFoll" +
+      "owCountResponse.FriendCountEntry\022\034\n\010base" +
+      "Resp\030\377\001 \001(\0132\t.BaseResp\0325\n\023FollowingCount" +
+      "Entry\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002 \001(\003:\0028\001\0324\n" +
+      "\022FollowerCountEntry\022\013\n\003key\030\001 \001(\003\022\r\n\005valu",
+      "e\030\002 \001(\003:\0028\001\0322\n\020FriendCountEntry\022\013\n\003key\030\001" +
+      " \001(\003\022\r\n\005value\030\002 \001(\003:\0028\001*\263\001\n\nStatusCode\022\026" +
+      "\n\022StatusCode_Not_Use\020\000\022\014\n\007Success\020\350\007\022\021\n\014" +
+      "Server_Error\020\351\007\022\020\n\013Param_Error\020\352\007\022\030\n\023Ove" +
+      "rFrequency_Error\020\353\007\022\024\n\017OverLimit_Error\020\354" +
+      "\007\022\024\n\017Duplicate_Error\020\355\007\022\024\n\017RetryTime_Err" +
+      "or\020\356\0072\356\003\n\rActionService\022+\n\006Follow\022\016.Foll" +
+      "owRequest\032\017.FollowResponse\"\000\022-\n\010Unfollow" +
+      "\022\016.FollowRequest\032\017.FollowResponse\"\000\0227\n\014M" +
+      "IsFollowing\022\021.MIsFollowRequest\032\022.MIsFoll",
+      "owResponse\"\000\0226\n\013MIsFollower\022\021.MIsFollowR" +
+      "equest\032\022.MIsFollowResponse\"\000\022C\n\020GetFollo" +
+      "wingList\022\025.GetFollowListRequest\032\026.GetFol" +
+      "lowListResponse\"\000\022B\n\017GetFollowerList\022\025.G" +
+      "etFollowListRequest\032\026.GetFollowListRespo" +
+      "nse\"\000\022@\n\rGetFriendList\022\025.GetFollowListRe" +
+      "quest\032\026.GetFollowListResponse\"\000\022E\n\016GetFo" +
+      "llowCount\022\027.MGetFollowCountRequest\032\030.MGe" +
+      "tFollowCountResponse\"\000B<\n%violet.action." +
+      "common.proto_gen.actionP\001Z\021/proto_gen/ac",
+      "tionb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -178,9 +186,15 @@ public final class Action {
     internal_static_MIsFollowResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MIsFollowResponse_descriptor,
-        new java.lang.String[] { "IsFollower", "BaseResp", });
-    internal_static_MIsFollowResponse_IsFollowerEntry_descriptor =
+        new java.lang.String[] { "IsFollowing", "IsFollower", "BaseResp", });
+    internal_static_MIsFollowResponse_IsFollowingEntry_descriptor =
       internal_static_MIsFollowResponse_descriptor.getNestedTypes().get(0);
+    internal_static_MIsFollowResponse_IsFollowingEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_MIsFollowResponse_IsFollowingEntry_descriptor,
+        new java.lang.String[] { "Key", "Value", });
+    internal_static_MIsFollowResponse_IsFollowerEntry_descriptor =
+      internal_static_MIsFollowResponse_descriptor.getNestedTypes().get(1);
     internal_static_MIsFollowResponse_IsFollowerEntry_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MIsFollowResponse_IsFollowerEntry_descriptor,

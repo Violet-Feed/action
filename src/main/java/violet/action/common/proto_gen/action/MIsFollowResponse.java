@@ -44,9 +44,22 @@ public  final class MIsFollowResponse extends
           }
           case 10: {
             if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+              isFollowing_ = com.google.protobuf.MapField.newMapField(
+                  IsFollowingDefaultEntryHolder.defaultEntry);
+              mutable_bitField0_ |= 0x00000001;
+            }
+            com.google.protobuf.MapEntry<java.lang.Long, java.lang.Boolean>
+            isFollowing__ = input.readMessage(
+                IsFollowingDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+            isFollowing_.getMutableMap().put(
+                isFollowing__.getKey(), isFollowing__.getValue());
+            break;
+          }
+          case 18: {
+            if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
               isFollower_ = com.google.protobuf.MapField.newMapField(
                   IsFollowerDefaultEntryHolder.defaultEntry);
-              mutable_bitField0_ |= 0x00000001;
+              mutable_bitField0_ |= 0x00000002;
             }
             com.google.protobuf.MapEntry<java.lang.Long, java.lang.Boolean>
             isFollower__ = input.readMessage(
@@ -89,6 +102,8 @@ public  final class MIsFollowResponse extends
       int number) {
     switch (number) {
       case 1:
+        return internalGetIsFollowing();
+      case 2:
         return internalGetIsFollower();
       default:
         throw new RuntimeException(
@@ -103,7 +118,83 @@ public  final class MIsFollowResponse extends
   }
 
   private int bitField0_;
-  public static final int IS_FOLLOWER_FIELD_NUMBER = 1;
+  public static final int IS_FOLLOWING_FIELD_NUMBER = 1;
+  private static final class IsFollowingDefaultEntryHolder {
+    static final com.google.protobuf.MapEntry<
+        java.lang.Long, java.lang.Boolean> defaultEntry =
+            com.google.protobuf.MapEntry
+            .<java.lang.Long, java.lang.Boolean>newDefaultInstance(
+                violet.action.common.proto_gen.action.Action.internal_static_MIsFollowResponse_IsFollowingEntry_descriptor, 
+                com.google.protobuf.WireFormat.FieldType.INT64,
+                0L,
+                com.google.protobuf.WireFormat.FieldType.BOOL,
+                false);
+  }
+  private com.google.protobuf.MapField<
+      java.lang.Long, java.lang.Boolean> isFollowing_;
+  private com.google.protobuf.MapField<java.lang.Long, java.lang.Boolean>
+  internalGetIsFollowing() {
+    if (isFollowing_ == null) {
+      return com.google.protobuf.MapField.emptyMapField(
+          IsFollowingDefaultEntryHolder.defaultEntry);
+    }
+    return isFollowing_;
+  }
+
+  public int getIsFollowingCount() {
+    return internalGetIsFollowing().getMap().size();
+  }
+  /**
+   * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+   */
+
+  public boolean containsIsFollowing(
+      long key) {
+    
+    return internalGetIsFollowing().getMap().containsKey(key);
+  }
+  /**
+   * Use {@link #getIsFollowingMap()} instead.
+   */
+  @java.lang.Deprecated
+  public java.util.Map<java.lang.Long, java.lang.Boolean> getIsFollowing() {
+    return getIsFollowingMap();
+  }
+  /**
+   * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+   */
+
+  public java.util.Map<java.lang.Long, java.lang.Boolean> getIsFollowingMap() {
+    return internalGetIsFollowing().getMap();
+  }
+  /**
+   * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+   */
+
+  public boolean getIsFollowingOrDefault(
+      long key,
+      boolean defaultValue) {
+    
+    java.util.Map<java.lang.Long, java.lang.Boolean> map =
+        internalGetIsFollowing().getMap();
+    return map.containsKey(key) ? map.get(key) : defaultValue;
+  }
+  /**
+   * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+   */
+
+  public boolean getIsFollowingOrThrow(
+      long key) {
+    
+    java.util.Map<java.lang.Long, java.lang.Boolean> map =
+        internalGetIsFollowing().getMap();
+    if (!map.containsKey(key)) {
+      throw new java.lang.IllegalArgumentException();
+    }
+    return map.get(key);
+  }
+
+  public static final int IS_FOLLOWER_FIELD_NUMBER = 2;
   private static final class IsFollowerDefaultEntryHolder {
     static final com.google.protobuf.MapEntry<
         java.lang.Long, java.lang.Boolean> defaultEntry =
@@ -130,7 +221,7 @@ public  final class MIsFollowResponse extends
     return internalGetIsFollower().getMap().size();
   }
   /**
-   * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+   * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
    */
 
   public boolean containsIsFollower(
@@ -146,14 +237,14 @@ public  final class MIsFollowResponse extends
     return getIsFollowerMap();
   }
   /**
-   * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+   * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
    */
 
   public java.util.Map<java.lang.Long, java.lang.Boolean> getIsFollowerMap() {
     return internalGetIsFollower().getMap();
   }
   /**
-   * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+   * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
    */
 
   public boolean getIsFollowerOrDefault(
@@ -165,7 +256,7 @@ public  final class MIsFollowResponse extends
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
   /**
-   * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+   * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
    */
 
   public boolean getIsFollowerOrThrow(
@@ -215,9 +306,15 @@ public  final class MIsFollowResponse extends
     com.google.protobuf.GeneratedMessageV3
       .serializeLongMapTo(
         output,
+        internalGetIsFollowing(),
+        IsFollowingDefaultEntryHolder.defaultEntry,
+        1);
+    com.google.protobuf.GeneratedMessageV3
+      .serializeLongMapTo(
+        output,
         internalGetIsFollower(),
         IsFollowerDefaultEntryHolder.defaultEntry,
-        1);
+        2);
     if (baseResp_ != null) {
       output.writeMessage(255, getBaseResp());
     }
@@ -229,6 +326,16 @@ public  final class MIsFollowResponse extends
 
     size = 0;
     for (java.util.Map.Entry<java.lang.Long, java.lang.Boolean> entry
+         : internalGetIsFollowing().getMap().entrySet()) {
+      com.google.protobuf.MapEntry<java.lang.Long, java.lang.Boolean>
+      isFollowing__ = IsFollowingDefaultEntryHolder.defaultEntry.newBuilderForType()
+          .setKey(entry.getKey())
+          .setValue(entry.getValue())
+          .build();
+      size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, isFollowing__);
+    }
+    for (java.util.Map.Entry<java.lang.Long, java.lang.Boolean> entry
          : internalGetIsFollower().getMap().entrySet()) {
       com.google.protobuf.MapEntry<java.lang.Long, java.lang.Boolean>
       isFollower__ = IsFollowerDefaultEntryHolder.defaultEntry.newBuilderForType()
@@ -236,7 +343,7 @@ public  final class MIsFollowResponse extends
           .setValue(entry.getValue())
           .build();
       size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, isFollower__);
+          .computeMessageSize(2, isFollower__);
     }
     if (baseResp_ != null) {
       size += com.google.protobuf.CodedOutputStream
@@ -258,6 +365,8 @@ public  final class MIsFollowResponse extends
     violet.action.common.proto_gen.action.MIsFollowResponse other = (violet.action.common.proto_gen.action.MIsFollowResponse) obj;
 
     boolean result = true;
+    result = result && internalGetIsFollowing().equals(
+        other.internalGetIsFollowing());
     result = result && internalGetIsFollower().equals(
         other.internalGetIsFollower());
     result = result && (hasBaseResp() == other.hasBaseResp());
@@ -275,6 +384,10 @@ public  final class MIsFollowResponse extends
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    if (!internalGetIsFollowing().getMap().isEmpty()) {
+      hash = (37 * hash) + IS_FOLLOWING_FIELD_NUMBER;
+      hash = (53 * hash) + internalGetIsFollowing().hashCode();
+    }
     if (!internalGetIsFollower().getMap().isEmpty()) {
       hash = (37 * hash) + IS_FOLLOWER_FIELD_NUMBER;
       hash = (53 * hash) + internalGetIsFollower().hashCode();
@@ -393,6 +506,8 @@ public  final class MIsFollowResponse extends
         int number) {
       switch (number) {
         case 1:
+          return internalGetIsFollowing();
+        case 2:
           return internalGetIsFollower();
         default:
           throw new RuntimeException(
@@ -404,6 +519,8 @@ public  final class MIsFollowResponse extends
         int number) {
       switch (number) {
         case 1:
+          return internalGetMutableIsFollowing();
+        case 2:
           return internalGetMutableIsFollower();
         default:
           throw new RuntimeException(
@@ -434,6 +551,7 @@ public  final class MIsFollowResponse extends
     }
     public Builder clear() {
       super.clear();
+      internalGetMutableIsFollowing().clear();
       internalGetMutableIsFollower().clear();
       if (baseRespBuilder_ == null) {
         baseResp_ = null;
@@ -465,6 +583,8 @@ public  final class MIsFollowResponse extends
       violet.action.common.proto_gen.action.MIsFollowResponse result = new violet.action.common.proto_gen.action.MIsFollowResponse(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
+      result.isFollowing_ = internalGetIsFollowing();
+      result.isFollowing_.makeImmutable();
       result.isFollower_ = internalGetIsFollower();
       result.isFollower_.makeImmutable();
       if (baseRespBuilder_ == null) {
@@ -514,6 +634,8 @@ public  final class MIsFollowResponse extends
 
     public Builder mergeFrom(violet.action.common.proto_gen.action.MIsFollowResponse other) {
       if (other == violet.action.common.proto_gen.action.MIsFollowResponse.getDefaultInstance()) return this;
+      internalGetMutableIsFollowing().mergeFrom(
+          other.internalGetIsFollowing());
       internalGetMutableIsFollower().mergeFrom(
           other.internalGetIsFollower());
       if (other.hasBaseResp()) {
@@ -547,6 +669,129 @@ public  final class MIsFollowResponse extends
     private int bitField0_;
 
     private com.google.protobuf.MapField<
+        java.lang.Long, java.lang.Boolean> isFollowing_;
+    private com.google.protobuf.MapField<java.lang.Long, java.lang.Boolean>
+    internalGetIsFollowing() {
+      if (isFollowing_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            IsFollowingDefaultEntryHolder.defaultEntry);
+      }
+      return isFollowing_;
+    }
+    private com.google.protobuf.MapField<java.lang.Long, java.lang.Boolean>
+    internalGetMutableIsFollowing() {
+      onChanged();;
+      if (isFollowing_ == null) {
+        isFollowing_ = com.google.protobuf.MapField.newMapField(
+            IsFollowingDefaultEntryHolder.defaultEntry);
+      }
+      if (!isFollowing_.isMutable()) {
+        isFollowing_ = isFollowing_.copy();
+      }
+      return isFollowing_;
+    }
+
+    public int getIsFollowingCount() {
+      return internalGetIsFollowing().getMap().size();
+    }
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+
+    public boolean containsIsFollowing(
+        long key) {
+      
+      return internalGetIsFollowing().getMap().containsKey(key);
+    }
+    /**
+     * Use {@link #getIsFollowingMap()} instead.
+     */
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.Long, java.lang.Boolean> getIsFollowing() {
+      return getIsFollowingMap();
+    }
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+
+    public java.util.Map<java.lang.Long, java.lang.Boolean> getIsFollowingMap() {
+      return internalGetIsFollowing().getMap();
+    }
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+
+    public boolean getIsFollowingOrDefault(
+        long key,
+        boolean defaultValue) {
+      
+      java.util.Map<java.lang.Long, java.lang.Boolean> map =
+          internalGetIsFollowing().getMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+
+    public boolean getIsFollowingOrThrow(
+        long key) {
+      
+      java.util.Map<java.lang.Long, java.lang.Boolean> map =
+          internalGetIsFollowing().getMap();
+      if (!map.containsKey(key)) {
+        throw new java.lang.IllegalArgumentException();
+      }
+      return map.get(key);
+    }
+
+    public Builder clearIsFollowing() {
+      internalGetMutableIsFollowing().getMutableMap()
+          .clear();
+      return this;
+    }
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+
+    public Builder removeIsFollowing(
+        long key) {
+      
+      internalGetMutableIsFollowing().getMutableMap()
+          .remove(key);
+      return this;
+    }
+    /**
+     * Use alternate mutation accessors instead.
+     */
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.Long, java.lang.Boolean>
+    getMutableIsFollowing() {
+      return internalGetMutableIsFollowing().getMutableMap();
+    }
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+    public Builder putIsFollowing(
+        long key,
+        boolean value) {
+      
+      
+      internalGetMutableIsFollowing().getMutableMap()
+          .put(key, value);
+      return this;
+    }
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+
+    public Builder putAllIsFollowing(
+        java.util.Map<java.lang.Long, java.lang.Boolean> values) {
+      internalGetMutableIsFollowing().getMutableMap()
+          .putAll(values);
+      return this;
+    }
+
+    private com.google.protobuf.MapField<
         java.lang.Long, java.lang.Boolean> isFollower_;
     private com.google.protobuf.MapField<java.lang.Long, java.lang.Boolean>
     internalGetIsFollower() {
@@ -573,7 +818,7 @@ public  final class MIsFollowResponse extends
       return internalGetIsFollower().getMap().size();
     }
     /**
-     * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
      */
 
     public boolean containsIsFollower(
@@ -589,14 +834,14 @@ public  final class MIsFollowResponse extends
       return getIsFollowerMap();
     }
     /**
-     * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
      */
 
     public java.util.Map<java.lang.Long, java.lang.Boolean> getIsFollowerMap() {
       return internalGetIsFollower().getMap();
     }
     /**
-     * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
      */
 
     public boolean getIsFollowerOrDefault(
@@ -608,7 +853,7 @@ public  final class MIsFollowResponse extends
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
-     * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
      */
 
     public boolean getIsFollowerOrThrow(
@@ -628,7 +873,7 @@ public  final class MIsFollowResponse extends
       return this;
     }
     /**
-     * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
      */
 
     public Builder removeIsFollower(
@@ -647,7 +892,7 @@ public  final class MIsFollowResponse extends
       return internalGetMutableIsFollower().getMutableMap();
     }
     /**
-     * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
      */
     public Builder putIsFollower(
         long key,
@@ -659,7 +904,7 @@ public  final class MIsFollowResponse extends
       return this;
     }
     /**
-     * <code>map&lt;int64, bool&gt; is_follower = 1;</code>
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
      */
 
     public Builder putAllIsFollower(

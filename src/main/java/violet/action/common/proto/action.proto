@@ -31,7 +31,8 @@ message MIsFollowRequest{
   repeated int64 to_user_ids=2;
 }
 message MIsFollowResponse{
-  map<int64,bool> is_follower=1;
+  map<int64,bool> is_following=1;
+  map<int64,bool> is_follower=2;
   BaseResp baseResp=255;
 }
 
