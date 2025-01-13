@@ -1,33 +1,23 @@
 package violet.action.common.config;
 
-import com.alibaba.fastjson.JSONObject;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.CacheLoader;
-import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.benmanes.caffeine.cache.LoadingCache;
+import com.github.benmanes.caffeine.cache.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
-import violet.action.common.mapper.RelationMapper;
-import violet.action.common.pojo.User;
-import violet.action.common.service.RelationService;
-import violet.action.common.service.impl.RelationServiceImpl;
 import violet.action.common.service.model.RelationModel;
-import violet.action.common.utils.RedisMutex;
 
-import java.time.Duration;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @Configuration
@@ -41,35 +31,79 @@ public class CaffeineConfig {
     public class StarCacheResult{
         private List<Long> followingList;
         private List<Long> followerList;
+        private Map<Long,Boolean> followingMap;
     }
 
     @Bean
-    public LoadingCache<String, Object> starCaffeineCache() {
-        CacheLoader<String, Object> loader = new CacheLoader<String, Object>() {
+    public LoadingCache<String, StarCacheResult> starCaffeineCache() {
+        CacheLoader<String, StarCacheResult> loader = new CacheLoader<String, StarCacheResult>() {
             @Override
-            public Object load(@NotNull String key) {
+            public StarCacheResult load(@NotNull String key) {
                 String[] parts = key.split(":");
                 Long userId = Long.parseLong(parts[parts.length - 1]);
                 List<Long> followingList=relationModel.getFollowingListFromCache(userId);
                 List<Long> followerList=relationModel.getFollowerListFromCache(userId);
-                return new StarCacheResult(followingList,followerList);
+                Map<Long, Boolean> followingMap=new HashMap<>();
+                for(Long followingId:followingList){
+                    followingMap.put(followingId,Boolean.TRUE);
+                }
+                return new StarCacheResult(followingList,followerList,followingMap);
             }
         };
-        LoadingCache<String, Object> cache = Caffeine.newBuilder()
+        LoadingCache<String, StarCacheResult> cache = Caffeine.newBuilder()
                 .initialCapacity(100)
-                .maximumSize(500)
+                .maximumSize(200)
                 .refreshAfterWrite(10, TimeUnit.SECONDS)
                 .build(loader);
         return cache;
     }
 
     @Bean
-    public Cache<String, Object> caffeineCache() {
-        Cache<String, Object> cache = Caffeine.newBuilder()
+    public Cache<String, List<Long>> listCaffeineCache() {
+        Cache<String, List<Long>> cache = Caffeine.newBuilder()
                 .initialCapacity(100)
-                .maximumSize(500)
+                .maximumSize(200)
                 .expireAfterWrite(10, TimeUnit.SECONDS)
                 .build();
         return cache;
+    }
+
+    @Bean
+    public Cache<String, Map<Long,Boolean>> hashCaffeineCache() {
+        Cache<String, Map<Long,Boolean>> cache = Caffeine.newBuilder()
+                .initialCapacity(100)
+                .maximumSize(200)
+                .expireAfterWrite(10, TimeUnit.SECONDS)
+                .build();
+        return cache;
+    }
+
+    @Bean
+    public Cache<String, Long> countCaffeineCache() {
+        Cache<String, Long> cache = Caffeine.newBuilder()
+                .initialCapacity(100)
+                .maximumSize(200)
+                .expireAfterWrite(10, TimeUnit.SECONDS)
+                .build();
+        return cache;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public class HitCaffeineCache{
+        private Cache<String, AtomicInteger> cache;
+        private AtomicInteger totalCount;
+    }
+
+    @Bean
+    public HitCaffeineCache hitCaffeineCache() {
+        Cache<String, AtomicInteger> cache = Caffeine.newBuilder()
+                .initialCapacity(100)
+                .maximumSize(200)
+                .expireAfterWrite(10, TimeUnit.SECONDS)
+                .build();
+        AtomicInteger totalCount = new AtomicInteger(0);
+        return new HitCaffeineCache(cache,totalCount);
     }
 }
