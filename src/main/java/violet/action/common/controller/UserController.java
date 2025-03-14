@@ -3,6 +3,9 @@ package violet.action.common.controller;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import violet.action.common.proto_gen.action.GetFollowListRequest;
+import violet.action.common.proto_gen.action.GetUserInfosRequest;
+import violet.action.common.proto_gen.action.LoginRequest;
 import violet.action.common.service.UserService;
 
 import java.util.Map;
@@ -13,7 +16,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register/")
+    @PostMapping("/register")
     public JSONObject register(@RequestParam Map<String,String> map){
         String username=map.get("username");
         String password=map.get("password");
@@ -21,21 +24,19 @@ public class UserController {
         return userService.register(username,password,confirmPassword);
     }
 
-    @PostMapping("/login/")
-    public JSONObject login(@RequestParam Map<String,String> map){
-        String username=map.get("username");
-        String password=map.get("password");
-        return userService.login(username,password);
+    @PostMapping("/login")
+    public JSONObject login(@RequestBody LoginRequest req){
+        return userService.login(req);
     }
 
-    @GetMapping("/get_info/")
-    public JSONObject getUserInfo(){
-        return userService.getUserInfo();
+    @PostMapping("/get_infos")
+    public JSONObject getUserInfos(@RequestBody GetUserInfosRequest req){
+        return userService.getUserInfos(req);
     }
 
-    @GetMapping("/search/")
+    @GetMapping("/search")
     public JSONObject searchUsers(@RequestParam Map<String,String> map){
-        String term=map.get("term");
-        return userService.searchUsers(term);
+        String keyword=map.get("keyword");
+        return userService.searchUsers(keyword);
     }
 }

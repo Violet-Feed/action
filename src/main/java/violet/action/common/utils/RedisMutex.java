@@ -20,7 +20,7 @@ public class RedisMutex {
         int retry =0;
         boolean locked = false;
         while(!locked) {
-            locked = Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent("lock:"+key, "lock", Duration.ofSeconds(timeout)));
+            locked = Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent("lock:"+key, "1", Duration.ofSeconds(timeout)));
             if(locked) {
                 break;
             }

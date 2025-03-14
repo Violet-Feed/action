@@ -2,6 +2,9 @@ package violet.action.common.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.util.JsonFormat;
+import com.sun.javaws.IconUtil;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -22,12 +25,14 @@ import violet.action.common.mapper.RelationMapper;
 import violet.action.common.mapper.UserMapper;
 import violet.action.common.pojo.User;
 import violet.action.common.pojo.UserEs;
+import violet.action.common.proto_gen.action.*;
 import violet.action.common.service.UserService;
 import violet.action.common.utils.JwtUtil;
 import violet.action.common.utils.SnowFlake;
 import violet.action.common.utils.UserDetailsImpl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,39 +100,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public JSONObject login(String username, String password) {
+    public JSONObject login(LoginRequest req) {
         UsernamePasswordAuthenticationToken authenticationToken=
-                new UsernamePasswordAuthenticationToken(username,password);
+                new UsernamePasswordAuthenticationToken(req.getUsername(),req.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         UserDetailsImpl loginUser=(UserDetailsImpl)authenticate.getPrincipal();
         User user=loginUser.getUser();
         String jwt= JwtUtil.createJWT(user.getUserId().toString());
+        LoginResponse data= LoginResponse.newBuilder().setToken(jwt).setUserId(user.getUserId()).build();
         JSONObject resp=new JSONObject();
+        resp.put("code",1000);
         resp.put("message","success");
-        resp.put("token",jwt);
+        resp.put("data", data);
         return resp;
     }
 
     @Override
-    public JSONObject getUserInfo() {
-        UsernamePasswordAuthenticationToken authenticationToken =
-                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
-        User user = loginUser.getUser();
+    public JSONObject getUserInfos(GetUserInfosRequest req) {
+        List<Long> userIds=req.getUserIdsList();
+        List<User> users=userMapper.selectByUserIds(userIds);
+        List<UserInfo> userInfos=new ArrayList<>();
+        for(User user:users){
+            userInfos.add(UserInfo.newBuilder().setUserId(user.getUserId()).setUsername(user.getUsername()).setAvatar(user.getAvatar()).build());
+        }
+        GetUserInfosResponse data =GetUserInfosResponse.newBuilder().addAllUserInfos(userInfos).build();
         JSONObject resp = new JSONObject();
+        resp.put("code", 1000);
         resp.put("message", "success");
-        resp.put("id", user.getId().toString());
-        resp.put("userId", user.getUserId().toString());
-        resp.put("username", user.getUsername());
-        resp.put("avatar", user.getAvatar());
+        resp.put("data",data);
         return resp;
     }
 
     @Override
-    public JSONObject searchUsers(String term) {
+    public JSONObject searchUsers(String keyword) {
         SearchRequest request = new SearchRequest("user");
         SearchSourceBuilder builder = new SearchSourceBuilder();
-        MatchQueryBuilder query = QueryBuilders.matchQuery("username", term);
+        MatchQueryBuilder query = QueryBuilders.matchQuery("username", keyword);
         builder.from(0);
         builder.size(10);
         builder.query(query);
