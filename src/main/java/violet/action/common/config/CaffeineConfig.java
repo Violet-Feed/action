@@ -41,8 +41,8 @@ public class CaffeineConfig {
             public StarCacheResult load(@NotNull String key) {
                 String[] parts = key.split(":");
                 Long userId = Long.parseLong(parts[parts.length - 1]);
-                List<Long> followingList=relationModel.getFollowingListFromCache(userId);
-                List<Long> followerList=relationModel.getFollowerListFromCache(userId);
+                List<Long> followingList=relationModel.getFollowingListFromDB(userId);
+                List<Long> followerList=relationModel.getFollowerListFromDB(userId);
                 Map<Long, Boolean> followingMap=new HashMap<>();
                 for(Long followingId:followingList){
                     followingMap.put(followingId,Boolean.TRUE);

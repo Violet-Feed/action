@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 public interface LoginResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:LoginResponse)
+    // @@protoc_insertion_point(interface_extends:action.LoginResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -18,7 +18,15 @@ public interface LoginResponseOrBuilder extends
       getTokenBytes();
 
   /**
-   * <code>int64 user_id = 2;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
-  long getUserId();
+  boolean hasBaseResp();
+  /**
+   * <code>.action.BaseResp baseResp = 255;</code>
+   */
+  violet.action.common.proto_gen.action.BaseResp getBaseResp();
+  /**
+   * <code>.action.BaseResp baseResp = 255;</code>
+   */
+  violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder();
 }

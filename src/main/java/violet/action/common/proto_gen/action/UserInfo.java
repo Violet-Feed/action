@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code UserInfo}
+ * Protobuf type {@code action.UserInfo}
  */
 public  final class UserInfo extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:UserInfo)
+    // @@protoc_insertion_point(message_implements:action.UserInfo)
     UserInfoOrBuilder {
   // Use UserInfo.newBuilder() to construct.
   private UserInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -75,12 +75,12 @@ public  final class UserInfo extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_UserInfo_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_UserInfo_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_UserInfo_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_UserInfo_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.UserInfo.class, violet.action.common.proto_gen.action.UserInfo.Builder.class);
   }
@@ -333,20 +333,20 @@ public  final class UserInfo extends
     return builder;
   }
   /**
-   * Protobuf type {@code UserInfo}
+   * Protobuf type {@code action.UserInfo}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:UserInfo)
+      // @@protoc_insertion_point(builder_implements:action.UserInfo)
       violet.action.common.proto_gen.action.UserInfoOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_UserInfo_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_UserInfo_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_UserInfo_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_UserInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.UserInfo.class, violet.action.common.proto_gen.action.UserInfo.Builder.class);
     }
@@ -379,7 +379,7 @@ public  final class UserInfo extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_UserInfo_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_UserInfo_descriptor;
     }
 
     public violet.action.common.proto_gen.action.UserInfo getDefaultInstanceForType() {
@@ -651,10 +651,10 @@ public  final class UserInfo extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:UserInfo)
+    // @@protoc_insertion_point(builder_scope:action.UserInfo)
   }
 
-  // @@protoc_insertion_point(class_scope:UserInfo)
+  // @@protoc_insertion_point(class_scope:action.UserInfo)
   private static final violet.action.common.proto_gen.action.UserInfo DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.UserInfo();

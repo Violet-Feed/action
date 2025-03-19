@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 public interface GetFollowListRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:GetFollowListRequest)
+    // @@protoc_insertion_point(interface_extends:action.GetFollowListRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**

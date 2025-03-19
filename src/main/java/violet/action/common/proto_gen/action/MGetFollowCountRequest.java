@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code MGetFollowCountRequest}
+ * Protobuf type {@code action.MGetFollowCountRequest}
  */
 public  final class MGetFollowCountRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:MGetFollowCountRequest)
+    // @@protoc_insertion_point(message_implements:action.MGetFollowCountRequest)
     MGetFollowCountRequestOrBuilder {
   // Use MGetFollowCountRequest.newBuilder() to construct.
   private MGetFollowCountRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -98,12 +98,12 @@ public  final class MGetFollowCountRequest extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountRequest_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountRequest_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountRequest_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.MGetFollowCountRequest.class, violet.action.common.proto_gen.action.MGetFollowCountRequest.Builder.class);
   }
@@ -362,20 +362,20 @@ public  final class MGetFollowCountRequest extends
     return builder;
   }
   /**
-   * Protobuf type {@code MGetFollowCountRequest}
+   * Protobuf type {@code action.MGetFollowCountRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:MGetFollowCountRequest)
+      // @@protoc_insertion_point(builder_implements:action.MGetFollowCountRequest)
       violet.action.common.proto_gen.action.MGetFollowCountRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountRequest_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.MGetFollowCountRequest.class, violet.action.common.proto_gen.action.MGetFollowCountRequest.Builder.class);
     }
@@ -410,7 +410,7 @@ public  final class MGetFollowCountRequest extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountRequest_descriptor;
     }
 
     public violet.action.common.proto_gen.action.MGetFollowCountRequest getDefaultInstanceForType() {
@@ -679,10 +679,10 @@ public  final class MGetFollowCountRequest extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:MGetFollowCountRequest)
+    // @@protoc_insertion_point(builder_scope:action.MGetFollowCountRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:MGetFollowCountRequest)
+  // @@protoc_insertion_point(class_scope:action.MGetFollowCountRequest)
   private static final violet.action.common.proto_gen.action.MGetFollowCountRequest DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.MGetFollowCountRequest();

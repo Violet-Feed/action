@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf enum {@code StatusCode}
+ * Protobuf enum {@code action.StatusCode}
  */
 public enum StatusCode
     implements com.google.protobuf.ProtocolMessageEnum {
@@ -40,6 +40,10 @@ public enum StatusCode
    * <code>RetryTime_Error = 1006;</code>
    */
   RetryTime_Error(1006),
+  /**
+   * <code>Not_Found_Error = 1007;</code>
+   */
+  Not_Found_Error(1007),
   UNRECOGNIZED(-1),
   ;
 
@@ -75,6 +79,10 @@ public enum StatusCode
    * <code>RetryTime_Error = 1006;</code>
    */
   public static final int RetryTime_Error_VALUE = 1006;
+  /**
+   * <code>Not_Found_Error = 1007;</code>
+   */
+  public static final int Not_Found_Error_VALUE = 1007;
 
 
   public final int getNumber() {
@@ -103,6 +111,7 @@ public enum StatusCode
       case 1004: return OverLimit_Error;
       case 1005: return Duplicate_Error;
       case 1006: return RetryTime_Error;
+      case 1007: return Not_Found_Error;
       default: return null;
     }
   }
@@ -152,6 +161,6 @@ public enum StatusCode
     this.value = value;
   }
 
-  // @@protoc_insertion_point(enum_scope:StatusCode)
+  // @@protoc_insertion_point(enum_scope:action.StatusCode)
 }
 

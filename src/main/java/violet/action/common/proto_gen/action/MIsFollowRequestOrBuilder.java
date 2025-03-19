@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 public interface MIsFollowRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:MIsFollowRequest)
+    // @@protoc_insertion_point(interface_extends:action.MIsFollowRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**

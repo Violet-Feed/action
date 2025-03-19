@@ -34,7 +34,7 @@ public class UserController {
         return userService.getUserInfos(req);
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public JSONObject searchUsers(@RequestParam Map<String,String> map){
         String keyword=map.get("keyword");
         return userService.searchUsers(keyword);

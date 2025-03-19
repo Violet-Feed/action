@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code GetFollowListResponse}
+ * Protobuf type {@code action.GetFollowListResponse}
  */
 public  final class GetFollowListResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:GetFollowListResponse)
+    // @@protoc_insertion_point(message_implements:action.GetFollowListResponse)
     GetFollowListResponseOrBuilder {
   // Use GetFollowListResponse.newBuilder() to construct.
   private GetFollowListResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -105,12 +105,12 @@ public  final class GetFollowListResponse extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListResponse_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListResponse_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListResponse_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.GetFollowListResponse.class, violet.action.common.proto_gen.action.GetFollowListResponse.Builder.class);
   }
@@ -160,19 +160,19 @@ public  final class GetFollowListResponse extends
   public static final int BASERESP_FIELD_NUMBER = 255;
   private violet.action.common.proto_gen.action.BaseResp baseResp_;
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   public boolean hasBaseResp() {
     return baseResp_ != null;
   }
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
     return baseResp_ == null ? violet.action.common.proto_gen.action.BaseResp.getDefaultInstance() : baseResp_;
   }
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
     return getBaseResp();
@@ -385,20 +385,20 @@ public  final class GetFollowListResponse extends
     return builder;
   }
   /**
-   * Protobuf type {@code GetFollowListResponse}
+   * Protobuf type {@code action.GetFollowListResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:GetFollowListResponse)
+      // @@protoc_insertion_point(builder_implements:action.GetFollowListResponse)
       violet.action.common.proto_gen.action.GetFollowListResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListResponse_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.GetFollowListResponse.class, violet.action.common.proto_gen.action.GetFollowListResponse.Builder.class);
     }
@@ -437,7 +437,7 @@ public  final class GetFollowListResponse extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListResponse_descriptor;
     }
 
     public violet.action.common.proto_gen.action.GetFollowListResponse getDefaultInstanceForType() {
@@ -678,13 +678,13 @@ public  final class GetFollowListResponse extends
     private com.google.protobuf.SingleFieldBuilderV3<
         violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> baseRespBuilder_;
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public boolean hasBaseResp() {
       return baseRespBuilder_ != null || baseResp_ != null;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
       if (baseRespBuilder_ == null) {
@@ -694,7 +694,7 @@ public  final class GetFollowListResponse extends
       }
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder setBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
       if (baseRespBuilder_ == null) {
@@ -710,7 +710,7 @@ public  final class GetFollowListResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder setBaseResp(
         violet.action.common.proto_gen.action.BaseResp.Builder builderForValue) {
@@ -724,7 +724,7 @@ public  final class GetFollowListResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder mergeBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
       if (baseRespBuilder_ == null) {
@@ -742,7 +742,7 @@ public  final class GetFollowListResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder clearBaseResp() {
       if (baseRespBuilder_ == null) {
@@ -756,7 +756,7 @@ public  final class GetFollowListResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public violet.action.common.proto_gen.action.BaseResp.Builder getBaseRespBuilder() {
       
@@ -764,7 +764,7 @@ public  final class GetFollowListResponse extends
       return getBaseRespFieldBuilder().getBuilder();
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
       if (baseRespBuilder_ != null) {
@@ -775,7 +775,7 @@ public  final class GetFollowListResponse extends
       }
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> 
@@ -801,10 +801,10 @@ public  final class GetFollowListResponse extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:GetFollowListResponse)
+    // @@protoc_insertion_point(builder_scope:action.GetFollowListResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:GetFollowListResponse)
+  // @@protoc_insertion_point(class_scope:action.GetFollowListResponse)
   private static final violet.action.common.proto_gen.action.GetFollowListResponse DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.GetFollowListResponse();

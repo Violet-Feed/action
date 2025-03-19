@@ -4,19 +4,18 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code action.LoginRequest}
+ * Protobuf type {@code action.SearchUsersRequest}
  */
-public  final class LoginRequest extends
+public  final class SearchUsersRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:action.LoginRequest)
-    LoginRequestOrBuilder {
-  // Use LoginRequest.newBuilder() to construct.
-  private LoginRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // @@protoc_insertion_point(message_implements:action.SearchUsersRequest)
+    SearchUsersRequestOrBuilder {
+  // Use SearchUsersRequest.newBuilder() to construct.
+  private SearchUsersRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private LoginRequest() {
-    username_ = "";
-    password_ = "";
+  private SearchUsersRequest() {
+    keyword_ = "";
   }
 
   @java.lang.Override
@@ -24,7 +23,7 @@ public  final class LoginRequest extends
   getUnknownFields() {
     return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
   }
-  private LoginRequest(
+  private SearchUsersRequest(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -47,13 +46,7 @@ public  final class LoginRequest extends
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            username_ = s;
-            break;
-          }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            password_ = s;
+            keyword_ = s;
             break;
           }
         }
@@ -69,78 +62,44 @@ public  final class LoginRequest extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_action_LoginRequest_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_SearchUsersRequest_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_action_LoginRequest_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_SearchUsersRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            violet.action.common.proto_gen.action.LoginRequest.class, violet.action.common.proto_gen.action.LoginRequest.Builder.class);
+            violet.action.common.proto_gen.action.SearchUsersRequest.class, violet.action.common.proto_gen.action.SearchUsersRequest.Builder.class);
   }
 
-  public static final int USERNAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object username_;
+  public static final int KEYWORD_FIELD_NUMBER = 1;
+  private volatile java.lang.Object keyword_;
   /**
-   * <code>string username = 1;</code>
+   * <code>string keyword = 1;</code>
    */
-  public java.lang.String getUsername() {
-    java.lang.Object ref = username_;
+  public java.lang.String getKeyword() {
+    java.lang.Object ref = keyword_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      username_ = s;
+      keyword_ = s;
       return s;
     }
   }
   /**
-   * <code>string username = 1;</code>
+   * <code>string keyword = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getUsernameBytes() {
-    java.lang.Object ref = username_;
+      getKeywordBytes() {
+    java.lang.Object ref = keyword_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      username_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int PASSWORD_FIELD_NUMBER = 2;
-  private volatile java.lang.Object password_;
-  /**
-   * <code>string password = 2;</code>
-   */
-  public java.lang.String getPassword() {
-    java.lang.Object ref = password_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      password_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string password = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getPasswordBytes() {
-    java.lang.Object ref = password_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      password_ = b;
+      keyword_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -159,11 +118,8 @@ public  final class LoginRequest extends
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getUsernameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
-    }
-    if (!getPasswordBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
+    if (!getKeywordBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, keyword_);
     }
   }
 
@@ -172,11 +128,8 @@ public  final class LoginRequest extends
     if (size != -1) return size;
 
     size = 0;
-    if (!getUsernameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
-    }
-    if (!getPasswordBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
+    if (!getKeywordBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, keyword_);
     }
     memoizedSize = size;
     return size;
@@ -188,16 +141,14 @@ public  final class LoginRequest extends
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof violet.action.common.proto_gen.action.LoginRequest)) {
+    if (!(obj instanceof violet.action.common.proto_gen.action.SearchUsersRequest)) {
       return super.equals(obj);
     }
-    violet.action.common.proto_gen.action.LoginRequest other = (violet.action.common.proto_gen.action.LoginRequest) obj;
+    violet.action.common.proto_gen.action.SearchUsersRequest other = (violet.action.common.proto_gen.action.SearchUsersRequest) obj;
 
     boolean result = true;
-    result = result && getUsername()
-        .equals(other.getUsername());
-    result = result && getPassword()
-        .equals(other.getPassword());
+    result = result && getKeyword()
+        .equals(other.getKeyword());
     return result;
   }
 
@@ -208,78 +159,76 @@ public  final class LoginRequest extends
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + USERNAME_FIELD_NUMBER;
-    hash = (53 * hash) + getUsername().hashCode();
-    hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
-    hash = (53 * hash) + getPassword().hashCode();
+    hash = (37 * hash) + KEYWORD_FIELD_NUMBER;
+    hash = (53 * hash) + getKeyword().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(byte[] data)
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(java.io.InputStream input)
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseDelimitedFrom(java.io.InputStream input)
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseDelimitedFrom(
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static violet.action.common.proto_gen.action.LoginRequest parseFrom(
+  public static violet.action.common.proto_gen.action.SearchUsersRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -291,7 +240,7 @@ public  final class LoginRequest extends
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(violet.action.common.proto_gen.action.LoginRequest prototype) {
+  public static Builder newBuilder(violet.action.common.proto_gen.action.SearchUsersRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() {
@@ -306,25 +255,25 @@ public  final class LoginRequest extends
     return builder;
   }
   /**
-   * Protobuf type {@code action.LoginRequest}
+   * Protobuf type {@code action.SearchUsersRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:action.LoginRequest)
-      violet.action.common.proto_gen.action.LoginRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:action.SearchUsersRequest)
+      violet.action.common.proto_gen.action.SearchUsersRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_LoginRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_SearchUsersRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_LoginRequest_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_SearchUsersRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              violet.action.common.proto_gen.action.LoginRequest.class, violet.action.common.proto_gen.action.LoginRequest.Builder.class);
+              violet.action.common.proto_gen.action.SearchUsersRequest.class, violet.action.common.proto_gen.action.SearchUsersRequest.Builder.class);
     }
 
-    // Construct using violet.action.common.proto_gen.action.LoginRequest.newBuilder()
+    // Construct using violet.action.common.proto_gen.action.SearchUsersRequest.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -341,34 +290,31 @@ public  final class LoginRequest extends
     }
     public Builder clear() {
       super.clear();
-      username_ = "";
-
-      password_ = "";
+      keyword_ = "";
 
       return this;
     }
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_LoginRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_SearchUsersRequest_descriptor;
     }
 
-    public violet.action.common.proto_gen.action.LoginRequest getDefaultInstanceForType() {
-      return violet.action.common.proto_gen.action.LoginRequest.getDefaultInstance();
+    public violet.action.common.proto_gen.action.SearchUsersRequest getDefaultInstanceForType() {
+      return violet.action.common.proto_gen.action.SearchUsersRequest.getDefaultInstance();
     }
 
-    public violet.action.common.proto_gen.action.LoginRequest build() {
-      violet.action.common.proto_gen.action.LoginRequest result = buildPartial();
+    public violet.action.common.proto_gen.action.SearchUsersRequest build() {
+      violet.action.common.proto_gen.action.SearchUsersRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public violet.action.common.proto_gen.action.LoginRequest buildPartial() {
-      violet.action.common.proto_gen.action.LoginRequest result = new violet.action.common.proto_gen.action.LoginRequest(this);
-      result.username_ = username_;
-      result.password_ = password_;
+    public violet.action.common.proto_gen.action.SearchUsersRequest buildPartial() {
+      violet.action.common.proto_gen.action.SearchUsersRequest result = new violet.action.common.proto_gen.action.SearchUsersRequest(this);
+      result.keyword_ = keyword_;
       onBuilt();
       return result;
     }
@@ -400,22 +346,18 @@ public  final class LoginRequest extends
       return (Builder) super.addRepeatedField(field, value);
     }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof violet.action.common.proto_gen.action.LoginRequest) {
-        return mergeFrom((violet.action.common.proto_gen.action.LoginRequest)other);
+      if (other instanceof violet.action.common.proto_gen.action.SearchUsersRequest) {
+        return mergeFrom((violet.action.common.proto_gen.action.SearchUsersRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(violet.action.common.proto_gen.action.LoginRequest other) {
-      if (other == violet.action.common.proto_gen.action.LoginRequest.getDefaultInstance()) return this;
-      if (!other.getUsername().isEmpty()) {
-        username_ = other.username_;
-        onChanged();
-      }
-      if (!other.getPassword().isEmpty()) {
-        password_ = other.password_;
+    public Builder mergeFrom(violet.action.common.proto_gen.action.SearchUsersRequest other) {
+      if (other == violet.action.common.proto_gen.action.SearchUsersRequest.getDefaultInstance()) return this;
+      if (!other.getKeyword().isEmpty()) {
+        keyword_ = other.keyword_;
         onChanged();
       }
       onChanged();
@@ -430,11 +372,11 @@ public  final class LoginRequest extends
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      violet.action.common.proto_gen.action.LoginRequest parsedMessage = null;
+      violet.action.common.proto_gen.action.SearchUsersRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (violet.action.common.proto_gen.action.LoginRequest) e.getUnfinishedMessage();
+        parsedMessage = (violet.action.common.proto_gen.action.SearchUsersRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -444,140 +386,71 @@ public  final class LoginRequest extends
       return this;
     }
 
-    private java.lang.Object username_ = "";
+    private java.lang.Object keyword_ = "";
     /**
-     * <code>string username = 1;</code>
+     * <code>string keyword = 1;</code>
      */
-    public java.lang.String getUsername() {
-      java.lang.Object ref = username_;
+    public java.lang.String getKeyword() {
+      java.lang.Object ref = keyword_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        username_ = s;
+        keyword_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string username = 1;</code>
+     * <code>string keyword = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getUsernameBytes() {
-      java.lang.Object ref = username_;
+        getKeywordBytes() {
+      java.lang.Object ref = keyword_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        username_ = b;
+        keyword_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string username = 1;</code>
+     * <code>string keyword = 1;</code>
      */
-    public Builder setUsername(
+    public Builder setKeyword(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      username_ = value;
+      keyword_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string username = 1;</code>
+     * <code>string keyword = 1;</code>
      */
-    public Builder clearUsername() {
+    public Builder clearKeyword() {
       
-      username_ = getDefaultInstance().getUsername();
+      keyword_ = getDefaultInstance().getKeyword();
       onChanged();
       return this;
     }
     /**
-     * <code>string username = 1;</code>
+     * <code>string keyword = 1;</code>
      */
-    public Builder setUsernameBytes(
+    public Builder setKeywordBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      username_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object password_ = "";
-    /**
-     * <code>string password = 2;</code>
-     */
-    public java.lang.String getPassword() {
-      java.lang.Object ref = password_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        password_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string password = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getPasswordBytes() {
-      java.lang.Object ref = password_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        password_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string password = 2;</code>
-     */
-    public Builder setPassword(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      password_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string password = 2;</code>
-     */
-    public Builder clearPassword() {
-      
-      password_ = getDefaultInstance().getPassword();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string password = 2;</code>
-     */
-    public Builder setPasswordBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      password_ = value;
+      keyword_ = value;
       onChanged();
       return this;
     }
@@ -592,39 +465,39 @@ public  final class LoginRequest extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:action.LoginRequest)
+    // @@protoc_insertion_point(builder_scope:action.SearchUsersRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:action.LoginRequest)
-  private static final violet.action.common.proto_gen.action.LoginRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:action.SearchUsersRequest)
+  private static final violet.action.common.proto_gen.action.SearchUsersRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.LoginRequest();
+    DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.SearchUsersRequest();
   }
 
-  public static violet.action.common.proto_gen.action.LoginRequest getDefaultInstance() {
+  public static violet.action.common.proto_gen.action.SearchUsersRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<LoginRequest>
-      PARSER = new com.google.protobuf.AbstractParser<LoginRequest>() {
-    public LoginRequest parsePartialFrom(
+  private static final com.google.protobuf.Parser<SearchUsersRequest>
+      PARSER = new com.google.protobuf.AbstractParser<SearchUsersRequest>() {
+    public SearchUsersRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-        return new LoginRequest(input, extensionRegistry);
+        return new SearchUsersRequest(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<LoginRequest> parser() {
+  public static com.google.protobuf.Parser<SearchUsersRequest> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<LoginRequest> getParserForType() {
+  public com.google.protobuf.Parser<SearchUsersRequest> getParserForType() {
     return PARSER;
   }
 
-  public violet.action.common.proto_gen.action.LoginRequest getDefaultInstanceForType() {
+  public violet.action.common.proto_gen.action.SearchUsersRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

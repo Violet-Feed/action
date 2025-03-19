@@ -4,15 +4,15 @@
 package violet.action.common.proto_gen.action;
 
 public interface BaseRespOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:BaseResp)
+    // @@protoc_insertion_point(interface_extends:action.BaseResp)
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.StatusCode StatusCode = 1;</code>
+   * <code>.action.StatusCode StatusCode = 1;</code>
    */
   int getStatusCodeValue();
   /**
-   * <code>.StatusCode StatusCode = 1;</code>
+   * <code>.action.StatusCode StatusCode = 1;</code>
    */
   violet.action.common.proto_gen.action.StatusCode getStatusCode();
 

@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code GetFollowListRequest}
+ * Protobuf type {@code action.GetFollowListRequest}
  */
 public  final class GetFollowListRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:GetFollowListRequest)
+    // @@protoc_insertion_point(message_implements:action.GetFollowListRequest)
     GetFollowListRequestOrBuilder {
   // Use GetFollowListRequest.newBuilder() to construct.
   private GetFollowListRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -79,12 +79,12 @@ public  final class GetFollowListRequest extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListRequest_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListRequest_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListRequest_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.GetFollowListRequest.class, violet.action.common.proto_gen.action.GetFollowListRequest.Builder.class);
   }
@@ -312,20 +312,20 @@ public  final class GetFollowListRequest extends
     return builder;
   }
   /**
-   * Protobuf type {@code GetFollowListRequest}
+   * Protobuf type {@code action.GetFollowListRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:GetFollowListRequest)
+      // @@protoc_insertion_point(builder_implements:action.GetFollowListRequest)
       violet.action.common.proto_gen.action.GetFollowListRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListRequest_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.GetFollowListRequest.class, violet.action.common.proto_gen.action.GetFollowListRequest.Builder.class);
     }
@@ -360,7 +360,7 @@ public  final class GetFollowListRequest extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_GetFollowListRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_GetFollowListRequest_descriptor;
     }
 
     public violet.action.common.proto_gen.action.GetFollowListRequest getDefaultInstanceForType() {
@@ -574,10 +574,10 @@ public  final class GetFollowListRequest extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:GetFollowListRequest)
+    // @@protoc_insertion_point(builder_scope:action.GetFollowListRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:GetFollowListRequest)
+  // @@protoc_insertion_point(class_scope:action.GetFollowListRequest)
   private static final violet.action.common.proto_gen.action.GetFollowListRequest DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.GetFollowListRequest();

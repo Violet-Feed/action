@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code MIsFollowRequest}
+ * Protobuf type {@code action.MIsFollowRequest}
  */
 public  final class MIsFollowRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:MIsFollowRequest)
+    // @@protoc_insertion_point(message_implements:action.MIsFollowRequest)
     MIsFollowRequestOrBuilder {
   // Use MIsFollowRequest.newBuilder() to construct.
   private MIsFollowRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -86,12 +86,12 @@ public  final class MIsFollowRequest extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowRequest_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowRequest_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowRequest_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.MIsFollowRequest.class, violet.action.common.proto_gen.action.MIsFollowRequest.Builder.class);
   }
@@ -308,20 +308,20 @@ public  final class MIsFollowRequest extends
     return builder;
   }
   /**
-   * Protobuf type {@code MIsFollowRequest}
+   * Protobuf type {@code action.MIsFollowRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:MIsFollowRequest)
+      // @@protoc_insertion_point(builder_implements:action.MIsFollowRequest)
       violet.action.common.proto_gen.action.MIsFollowRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowRequest_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.MIsFollowRequest.class, violet.action.common.proto_gen.action.MIsFollowRequest.Builder.class);
     }
@@ -352,7 +352,7 @@ public  final class MIsFollowRequest extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowRequest_descriptor;
     }
 
     public violet.action.common.proto_gen.action.MIsFollowRequest getDefaultInstanceForType() {
@@ -561,10 +561,10 @@ public  final class MIsFollowRequest extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:MIsFollowRequest)
+    // @@protoc_insertion_point(builder_scope:action.MIsFollowRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:MIsFollowRequest)
+  // @@protoc_insertion_point(class_scope:action.MIsFollowRequest)
   private static final violet.action.common.proto_gen.action.MIsFollowRequest DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.MIsFollowRequest();

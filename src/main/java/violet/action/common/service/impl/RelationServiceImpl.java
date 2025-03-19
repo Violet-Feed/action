@@ -89,7 +89,7 @@ public class RelationServiceImpl implements RelationService {
         MGetFollowCountRequest countReq=MGetFollowCountRequest.newBuilder().addUserIds(userId).setNeedFollowing(true).build();
         long followingCount=mGetFollowCount(countReq).getFollowingCountOrThrow(userId);
         if(followingCount<=2000||toUserIds.size()>20){
-            List<Long> followingList=relationModel.getFollowingListFromCache(userId);
+            List<Long> followingList=relationModel.getFollowingListFromDB(userId);
             for(Long toUserId:toUserIds){
                  isFollowing.put(toUserId,false);
             }
@@ -101,7 +101,7 @@ public class RelationServiceImpl implements RelationService {
             BaseResp baseResp= BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
             return MIsFollowResponse.newBuilder().setBaseResp(baseResp).putAllIsFollowing(isFollowing).build();
         }
-        isFollowing=relationModel.getFollowingHashFromCache(userId,toUserIds);
+        isFollowing=relationModel.getFollowingHashFromDB(userId,toUserIds);
         BaseResp baseResp= BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return MIsFollowResponse.newBuilder().setBaseResp(baseResp).putAllIsFollowing(isFollowing).build();
     }
@@ -117,7 +117,7 @@ public class RelationServiceImpl implements RelationService {
         long followerCount=mGetFollowCount(countReq).getFollowerCountOrThrow(userId);
         followerCount=10000;
         if(followerCount<=1000||followerCount<=5000&&toUserIds.size()>20){
-            List<Long> followerList=relationModel.getFollowerListFromCache(userId);
+            List<Long> followerList=relationModel.getFollowerListFromDB(userId);
             for(Long toUserId:toUserIds){
                 isFollower.put(toUserId,false);
             }
@@ -147,7 +147,7 @@ public class RelationServiceImpl implements RelationService {
                     followingMap= hashCaffeineCache.getIfPresent(followCaffeineKey);
                     log.info("[RelationServiceImpl:mIsFollower] hit cache, toUserId = {}, total = {}, hit = {}, isLoad = {}",toUserId,total,hit,followingMap==null);
                     if(followingMap==null){
-                        List<Long> followingList=relationModel.getFollowingListFromCache(toUserId);
+                        List<Long> followingList=relationModel.getFollowingListFromDB(toUserId);
                         followingMap=new HashMap<>();
                         for(Long followingId:followingList){
                             followingMap.put(followingId,Boolean.TRUE);
@@ -166,7 +166,7 @@ public class RelationServiceImpl implements RelationService {
             }
         }
         if(!missIds.isEmpty()){
-            Map<Long,Boolean> isFollowerDB=relationModel.getFollowerHashFromCache(userId,missIds);
+            Map<Long,Boolean> isFollowerDB=relationModel.getFollowerHashFromDB(userId,missIds);
             isFollower.putAll(isFollowerDB);
         }
         BaseResp baseResp= BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
@@ -191,7 +191,7 @@ public class RelationServiceImpl implements RelationService {
             BaseResp baseResp= BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
             return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followingList).setTotal(total).build();
         }
-        List<Long> followingList=relationModel.getFollowingListFromCache(userId);
+        List<Long> followingList=relationModel.getFollowingListFromDB(userId);
         int total=followingList.size();
         BaseResp baseResp= BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followingList).setTotal(total).build();
@@ -215,7 +215,7 @@ public class RelationServiceImpl implements RelationService {
             return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followerList).setTotal(total).build();
         }
         String followerListKey= String.format(relationModel.FOLLOWER_LIST_KEY, userId);
-        List<Long> followerList= listCaffeineCache.get(followerListKey, fun->relationModel.getFollowerListFromCache(userId));
+        List<Long> followerList= listCaffeineCache.get(followerListKey, fun->relationModel.getFollowerListFromDB(userId));
         int total=followerList.size();
         BaseResp baseResp= BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followerList).setTotal(total).build();
@@ -224,7 +224,7 @@ public class RelationServiceImpl implements RelationService {
     @Override
     public GetFollowListResponse getFriendList(GetFollowListRequest req) {
         Long userId=req.getUserId();
-        List<Long> friendList=relationModel.getFriendListFromCache(userId);
+        List<Long> friendList=relationModel.getFriendListFromDB(userId);
         int total=friendList.size();
         BaseResp baseResp= BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(friendList).setTotal(total).build();
@@ -311,7 +311,7 @@ public class RelationServiceImpl implements RelationService {
                 String friendCountKey=String.format(relationModel.FRIEND_COUNT_KEY,userId);
                 Long cacheResult = countCaffeineCache.getIfPresent(friendCountKey);
                 if(cacheResult==null){
-                    List<Long> friendList=relationModel.getFriendListFromCache(userId);
+                    List<Long> friendList=relationModel.getFriendListFromDB(userId);
                     friendCountMap.put(userId, (long) friendList.size());
                     countCaffeineCache.put(friendCountKey, (long) friendList.size());
                 }else{

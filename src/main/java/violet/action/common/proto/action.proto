@@ -1,7 +1,8 @@
 syntax = "proto3";
+package action;
 option java_multiple_files = true;
 option java_package = "violet.action.common.proto_gen.action";
-option go_package="/proto_gen/action";
+option go_package = "/proto_gen/action";
 
 enum StatusCode{
   StatusCode_Not_Use = 0;
@@ -9,9 +10,10 @@ enum StatusCode{
   Server_Error = 1001;
   Param_Error = 1002;
   OverFrequency_Error = 1003;
-  OverLimit_Error=1004;
-  Duplicate_Error=1005;
-  RetryTime_Error=1006;
+  OverLimit_Error = 1004;
+  Duplicate_Error = 1005;
+  RetryTime_Error = 1006;
+  Not_Found_Error = 1007;
 }
 message BaseResp{
   StatusCode StatusCode = 1;
@@ -19,74 +21,94 @@ message BaseResp{
 }
 
 message LoginRequest{
-  string username=1;
-  string password=2;
+  string username = 1;
+  string password = 2;
+}
+message LoginResponse{
+  string token = 1;
+  BaseResp baseResp = 255;
 }
 
-message LoginResponse{
-  string token=1;
-  int64 user_id=2;
+message RegisterRequest{
+  string username = 1;
+  string password = 2;
+  string confirm_password = 3;
+}
+message RegisterResponse{
+  BaseResp baseResp = 255;
 }
 
 message UserInfo{
-  int64 user_id=1;
-  string username=2;
-  string avatar=3;
+  int64 user_id = 1;
+  string username = 2;
+  string avatar = 3;
 }
 
 message GetUserInfosRequest{
-  repeated int64 user_ids=1;
+  repeated int64 user_ids = 1;
+}
+message GetUserInfosResponse{
+  repeated UserInfo user_infos = 1;
+  BaseResp baseResp = 255;
 }
 
-message GetUserInfosResponse{
-  repeated UserInfo user_infos=1;
+message SearchUsersRequest{
+  string keyword = 1;
+}
+message SearchUsersResponse{
+  repeated UserInfo user_infos = 1;
+  BaseResp baseResp = 255;
 }
 
 message FollowRequest{
-  int64 from_user_id=1;
-  int64 to_user_id=2;
+  int64 from_user_id = 1;
+  int64 to_user_id = 2;
 }
 message FollowResponse{
-  BaseResp baseResp=255;
+  BaseResp baseResp = 255;
 }
 
 message MIsFollowRequest{
   int64 from_user_id = 1;
-  repeated int64 to_user_ids=2;
+  repeated int64 to_user_ids = 2;
 }
 message MIsFollowResponse{
-  map<int64,bool> is_following=1;
-  map<int64,bool> is_follower=2;
-  BaseResp baseResp=255;
+  map<int64, bool> is_following = 1;
+  map<int64, bool> is_follower = 2;
+  BaseResp baseResp = 255;
 }
 
 message GetFollowListRequest{
-  int64 user_id=1;
-  int64 min_time=2;
-  int64 max_time=3;
-  int64 count=4;
+  int64 user_id = 1;
+  int64 min_time = 2;
+  int64 max_time = 3;
+  int64 count = 4;
 }
 message GetFollowListResponse{
-  repeated int64 user_ids=1;
-  int64 total=2;
-  bool has_more=3;
-  BaseResp baseResp=255;
+  repeated int64 user_ids = 1;
+  int64 total = 2;
+  bool has_more = 3;
+  BaseResp baseResp = 255;
 }
 
 message MGetFollowCountRequest{
-  repeated int64 user_ids=1;
-  bool need_following=2;
-  bool need_follower=3;
-  bool need_friend=4;
+  repeated int64 user_ids = 1;
+  bool need_following = 2;
+  bool need_follower = 3;
+  bool need_friend = 4;
 }
 message MGetFollowCountResponse{
-  map<int64,int64> following_count=1;
-  map<int64,int64> follower_count=2;
-  map<int64,int64> friend_count=3;
-  BaseResp baseResp=255;
+  map<int64, int64> following_count = 1;
+  map<int64, int64> follower_count = 2;
+  map<int64, int64> friend_count = 3;
+  BaseResp baseResp = 255;
 }
 
 service ActionService {
+  rpc Login(LoginRequest)returns(LoginResponse){}
+  rpc Register(RegisterRequest)returns(RegisterResponse){}
+  rpc GetUserInfos(GetUserInfosRequest)returns(GetUserInfosResponse){}
+  rpc SearchUsers(SearchUsersRequest)returns(SearchUsersResponse){}
   rpc Follow(FollowRequest)returns(FollowResponse){}
   rpc Unfollow(FollowRequest)returns(FollowResponse){}
   rpc MIsFollowing(MIsFollowRequest)returns(MIsFollowResponse){}

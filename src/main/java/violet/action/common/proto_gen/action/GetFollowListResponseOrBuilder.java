@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 public interface GetFollowListResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:GetFollowListResponse)
+    // @@protoc_insertion_point(interface_extends:action.GetFollowListResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -31,15 +31,15 @@ public interface GetFollowListResponseOrBuilder extends
   boolean getHasMore();
 
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   boolean hasBaseResp();
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   violet.action.common.proto_gen.action.BaseResp getBaseResp();
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder();
 }

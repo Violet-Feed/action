@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code GetUserInfosRequest}
+ * Protobuf type {@code action.GetUserInfosRequest}
  */
 public  final class GetUserInfosRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:GetUserInfosRequest)
+    // @@protoc_insertion_point(message_implements:action.GetUserInfosRequest)
     GetUserInfosRequestOrBuilder {
   // Use GetUserInfosRequest.newBuilder() to construct.
   private GetUserInfosRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -80,12 +80,12 @@ public  final class GetUserInfosRequest extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_GetUserInfosRequest_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_GetUserInfosRequest_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_GetUserInfosRequest_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_GetUserInfosRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.GetUserInfosRequest.class, violet.action.common.proto_gen.action.GetUserInfosRequest.Builder.class);
   }
@@ -280,20 +280,20 @@ public  final class GetUserInfosRequest extends
     return builder;
   }
   /**
-   * Protobuf type {@code GetUserInfosRequest}
+   * Protobuf type {@code action.GetUserInfosRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:GetUserInfosRequest)
+      // @@protoc_insertion_point(builder_implements:action.GetUserInfosRequest)
       violet.action.common.proto_gen.action.GetUserInfosRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_GetUserInfosRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_GetUserInfosRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_GetUserInfosRequest_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_GetUserInfosRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.GetUserInfosRequest.class, violet.action.common.proto_gen.action.GetUserInfosRequest.Builder.class);
     }
@@ -322,7 +322,7 @@ public  final class GetUserInfosRequest extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_GetUserInfosRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_GetUserInfosRequest_descriptor;
     }
 
     public violet.action.common.proto_gen.action.GetUserInfosRequest getDefaultInstanceForType() {
@@ -499,10 +499,10 @@ public  final class GetUserInfosRequest extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:GetUserInfosRequest)
+    // @@protoc_insertion_point(builder_scope:action.GetUserInfosRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:GetUserInfosRequest)
+  // @@protoc_insertion_point(class_scope:action.GetUserInfosRequest)
   private static final violet.action.common.proto_gen.action.GetUserInfosRequest DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.GetUserInfosRequest();

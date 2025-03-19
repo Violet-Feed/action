@@ -3,8 +3,8 @@
 
 package violet.action.common.proto_gen.action;
 
-public interface LoginRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:action.LoginRequest)
+public interface RegisterRequestOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:action.RegisterRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -26,4 +26,14 @@ public interface LoginRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getPasswordBytes();
+
+  /**
+   * <code>string confirm_password = 3;</code>
+   */
+  java.lang.String getConfirmPassword();
+  /**
+   * <code>string confirm_password = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getConfirmPasswordBytes();
 }

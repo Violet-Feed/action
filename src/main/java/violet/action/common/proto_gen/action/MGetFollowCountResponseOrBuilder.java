@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 public interface MGetFollowCountResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:MGetFollowCountResponse)
+    // @@protoc_insertion_point(interface_extends:action.MGetFollowCountResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -110,15 +110,15 @@ public interface MGetFollowCountResponseOrBuilder extends
       long key);
 
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   boolean hasBaseResp();
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   violet.action.common.proto_gen.action.BaseResp getBaseResp();
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder();
 }

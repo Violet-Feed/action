@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code MIsFollowResponse}
+ * Protobuf type {@code action.MIsFollowResponse}
  */
 public  final class MIsFollowResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:MIsFollowResponse)
+    // @@protoc_insertion_point(message_implements:action.MIsFollowResponse)
     MIsFollowResponseOrBuilder {
   // Use MIsFollowResponse.newBuilder() to construct.
   private MIsFollowResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -94,7 +94,7 @@ public  final class MIsFollowResponse extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowResponse_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowResponse_descriptor;
   }
 
   @SuppressWarnings({"rawtypes"})
@@ -112,7 +112,7 @@ public  final class MIsFollowResponse extends
   }
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowResponse_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.MIsFollowResponse.class, violet.action.common.proto_gen.action.MIsFollowResponse.Builder.class);
   }
@@ -124,7 +124,7 @@ public  final class MIsFollowResponse extends
         java.lang.Long, java.lang.Boolean> defaultEntry =
             com.google.protobuf.MapEntry
             .<java.lang.Long, java.lang.Boolean>newDefaultInstance(
-                violet.action.common.proto_gen.action.Action.internal_static_MIsFollowResponse_IsFollowingEntry_descriptor, 
+                violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowResponse_IsFollowingEntry_descriptor, 
                 com.google.protobuf.WireFormat.FieldType.INT64,
                 0L,
                 com.google.protobuf.WireFormat.FieldType.BOOL,
@@ -200,7 +200,7 @@ public  final class MIsFollowResponse extends
         java.lang.Long, java.lang.Boolean> defaultEntry =
             com.google.protobuf.MapEntry
             .<java.lang.Long, java.lang.Boolean>newDefaultInstance(
-                violet.action.common.proto_gen.action.Action.internal_static_MIsFollowResponse_IsFollowerEntry_descriptor, 
+                violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowResponse_IsFollowerEntry_descriptor, 
                 com.google.protobuf.WireFormat.FieldType.INT64,
                 0L,
                 com.google.protobuf.WireFormat.FieldType.BOOL,
@@ -273,19 +273,19 @@ public  final class MIsFollowResponse extends
   public static final int BASERESP_FIELD_NUMBER = 255;
   private violet.action.common.proto_gen.action.BaseResp baseResp_;
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   public boolean hasBaseResp() {
     return baseResp_ != null;
   }
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
     return baseResp_ == null ? violet.action.common.proto_gen.action.BaseResp.getDefaultInstance() : baseResp_;
   }
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
     return getBaseResp();
@@ -490,15 +490,15 @@ public  final class MIsFollowResponse extends
     return builder;
   }
   /**
-   * Protobuf type {@code MIsFollowResponse}
+   * Protobuf type {@code action.MIsFollowResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:MIsFollowResponse)
+      // @@protoc_insertion_point(builder_implements:action.MIsFollowResponse)
       violet.action.common.proto_gen.action.MIsFollowResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowResponse_descriptor;
     }
 
     @SuppressWarnings({"rawtypes"})
@@ -529,7 +529,7 @@ public  final class MIsFollowResponse extends
     }
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowResponse_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.MIsFollowResponse.class, violet.action.common.proto_gen.action.MIsFollowResponse.Builder.class);
     }
@@ -564,7 +564,7 @@ public  final class MIsFollowResponse extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MIsFollowResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MIsFollowResponse_descriptor;
     }
 
     public violet.action.common.proto_gen.action.MIsFollowResponse getDefaultInstanceForType() {
@@ -918,13 +918,13 @@ public  final class MIsFollowResponse extends
     private com.google.protobuf.SingleFieldBuilderV3<
         violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> baseRespBuilder_;
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public boolean hasBaseResp() {
       return baseRespBuilder_ != null || baseResp_ != null;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
       if (baseRespBuilder_ == null) {
@@ -934,7 +934,7 @@ public  final class MIsFollowResponse extends
       }
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder setBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
       if (baseRespBuilder_ == null) {
@@ -950,7 +950,7 @@ public  final class MIsFollowResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder setBaseResp(
         violet.action.common.proto_gen.action.BaseResp.Builder builderForValue) {
@@ -964,7 +964,7 @@ public  final class MIsFollowResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder mergeBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
       if (baseRespBuilder_ == null) {
@@ -982,7 +982,7 @@ public  final class MIsFollowResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder clearBaseResp() {
       if (baseRespBuilder_ == null) {
@@ -996,7 +996,7 @@ public  final class MIsFollowResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public violet.action.common.proto_gen.action.BaseResp.Builder getBaseRespBuilder() {
       
@@ -1004,7 +1004,7 @@ public  final class MIsFollowResponse extends
       return getBaseRespFieldBuilder().getBuilder();
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
       if (baseRespBuilder_ != null) {
@@ -1015,7 +1015,7 @@ public  final class MIsFollowResponse extends
       }
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> 
@@ -1041,10 +1041,10 @@ public  final class MIsFollowResponse extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:MIsFollowResponse)
+    // @@protoc_insertion_point(builder_scope:action.MIsFollowResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:MIsFollowResponse)
+  // @@protoc_insertion_point(class_scope:action.MIsFollowResponse)
   private static final violet.action.common.proto_gen.action.MIsFollowResponse DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.MIsFollowResponse();

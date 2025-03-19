@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code LoginResponse}
+ * Protobuf type {@code action.LoginResponse}
  */
 public  final class LoginResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:LoginResponse)
+    // @@protoc_insertion_point(message_implements:action.LoginResponse)
     LoginResponseOrBuilder {
   // Use LoginResponse.newBuilder() to construct.
   private LoginResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -16,7 +16,6 @@ public  final class LoginResponse extends
   }
   private LoginResponse() {
     token_ = "";
-    userId_ = 0L;
   }
 
   @java.lang.Override
@@ -50,9 +49,17 @@ public  final class LoginResponse extends
             token_ = s;
             break;
           }
-          case 16: {
+          case 2042: {
+            violet.action.common.proto_gen.action.BaseResp.Builder subBuilder = null;
+            if (baseResp_ != null) {
+              subBuilder = baseResp_.toBuilder();
+            }
+            baseResp_ = input.readMessage(violet.action.common.proto_gen.action.BaseResp.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(baseResp_);
+              baseResp_ = subBuilder.buildPartial();
+            }
 
-            userId_ = input.readInt64();
             break;
           }
         }
@@ -68,12 +75,12 @@ public  final class LoginResponse extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_LoginResponse_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_LoginResponse_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.LoginResponse.class, violet.action.common.proto_gen.action.LoginResponse.Builder.class);
   }
@@ -112,13 +119,25 @@ public  final class LoginResponse extends
     }
   }
 
-  public static final int USER_ID_FIELD_NUMBER = 2;
-  private long userId_;
+  public static final int BASERESP_FIELD_NUMBER = 255;
+  private violet.action.common.proto_gen.action.BaseResp baseResp_;
   /**
-   * <code>int64 user_id = 2;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
-  public long getUserId() {
-    return userId_;
+  public boolean hasBaseResp() {
+    return baseResp_ != null;
+  }
+  /**
+   * <code>.action.BaseResp baseResp = 255;</code>
+   */
+  public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
+    return baseResp_ == null ? violet.action.common.proto_gen.action.BaseResp.getDefaultInstance() : baseResp_;
+  }
+  /**
+   * <code>.action.BaseResp baseResp = 255;</code>
+   */
+  public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
+    return getBaseResp();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -136,8 +155,8 @@ public  final class LoginResponse extends
     if (!getTokenBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, token_);
     }
-    if (userId_ != 0L) {
-      output.writeInt64(2, userId_);
+    if (baseResp_ != null) {
+      output.writeMessage(255, getBaseResp());
     }
   }
 
@@ -149,9 +168,9 @@ public  final class LoginResponse extends
     if (!getTokenBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, token_);
     }
-    if (userId_ != 0L) {
+    if (baseResp_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(2, userId_);
+        .computeMessageSize(255, getBaseResp());
     }
     memoizedSize = size;
     return size;
@@ -171,8 +190,11 @@ public  final class LoginResponse extends
     boolean result = true;
     result = result && getToken()
         .equals(other.getToken());
-    result = result && (getUserId()
-        == other.getUserId());
+    result = result && (hasBaseResp() == other.hasBaseResp());
+    if (hasBaseResp()) {
+      result = result && getBaseResp()
+          .equals(other.getBaseResp());
+    }
     return result;
   }
 
@@ -185,9 +207,10 @@ public  final class LoginResponse extends
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + TOKEN_FIELD_NUMBER;
     hash = (53 * hash) + getToken().hashCode();
-    hash = (37 * hash) + USER_ID_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getUserId());
+    if (hasBaseResp()) {
+      hash = (37 * hash) + BASERESP_FIELD_NUMBER;
+      hash = (53 * hash) + getBaseResp().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -282,20 +305,20 @@ public  final class LoginResponse extends
     return builder;
   }
   /**
-   * Protobuf type {@code LoginResponse}
+   * Protobuf type {@code action.LoginResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:LoginResponse)
+      // @@protoc_insertion_point(builder_implements:action.LoginResponse)
       violet.action.common.proto_gen.action.LoginResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_LoginResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_LoginResponse_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.LoginResponse.class, violet.action.common.proto_gen.action.LoginResponse.Builder.class);
     }
@@ -319,14 +342,18 @@ public  final class LoginResponse extends
       super.clear();
       token_ = "";
 
-      userId_ = 0L;
-
+      if (baseRespBuilder_ == null) {
+        baseResp_ = null;
+      } else {
+        baseResp_ = null;
+        baseRespBuilder_ = null;
+      }
       return this;
     }
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_LoginResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_descriptor;
     }
 
     public violet.action.common.proto_gen.action.LoginResponse getDefaultInstanceForType() {
@@ -344,7 +371,11 @@ public  final class LoginResponse extends
     public violet.action.common.proto_gen.action.LoginResponse buildPartial() {
       violet.action.common.proto_gen.action.LoginResponse result = new violet.action.common.proto_gen.action.LoginResponse(this);
       result.token_ = token_;
-      result.userId_ = userId_;
+      if (baseRespBuilder_ == null) {
+        result.baseResp_ = baseResp_;
+      } else {
+        result.baseResp_ = baseRespBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -390,8 +421,8 @@ public  final class LoginResponse extends
         token_ = other.token_;
         onChanged();
       }
-      if (other.getUserId() != 0L) {
-        setUserId(other.getUserId());
+      if (other.hasBaseResp()) {
+        mergeBaseResp(other.getBaseResp());
       }
       onChanged();
       return this;
@@ -488,30 +519,121 @@ public  final class LoginResponse extends
       return this;
     }
 
-    private long userId_ ;
+    private violet.action.common.proto_gen.action.BaseResp baseResp_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> baseRespBuilder_;
     /**
-     * <code>int64 user_id = 2;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
-    public long getUserId() {
-      return userId_;
+    public boolean hasBaseResp() {
+      return baseRespBuilder_ != null || baseResp_ != null;
     }
     /**
-     * <code>int64 user_id = 2;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
-    public Builder setUserId(long value) {
-      
-      userId_ = value;
-      onChanged();
+    public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
+      if (baseRespBuilder_ == null) {
+        return baseResp_ == null ? violet.action.common.proto_gen.action.BaseResp.getDefaultInstance() : baseResp_;
+      } else {
+        return baseRespBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.action.BaseResp baseResp = 255;</code>
+     */
+    public Builder setBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
+      if (baseRespBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        baseResp_ = value;
+        onChanged();
+      } else {
+        baseRespBuilder_.setMessage(value);
+      }
+
       return this;
     }
     /**
-     * <code>int64 user_id = 2;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
-    public Builder clearUserId() {
-      
-      userId_ = 0L;
-      onChanged();
+    public Builder setBaseResp(
+        violet.action.common.proto_gen.action.BaseResp.Builder builderForValue) {
+      if (baseRespBuilder_ == null) {
+        baseResp_ = builderForValue.build();
+        onChanged();
+      } else {
+        baseRespBuilder_.setMessage(builderForValue.build());
+      }
+
       return this;
+    }
+    /**
+     * <code>.action.BaseResp baseResp = 255;</code>
+     */
+    public Builder mergeBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
+      if (baseRespBuilder_ == null) {
+        if (baseResp_ != null) {
+          baseResp_ =
+            violet.action.common.proto_gen.action.BaseResp.newBuilder(baseResp_).mergeFrom(value).buildPartial();
+        } else {
+          baseResp_ = value;
+        }
+        onChanged();
+      } else {
+        baseRespBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.action.BaseResp baseResp = 255;</code>
+     */
+    public Builder clearBaseResp() {
+      if (baseRespBuilder_ == null) {
+        baseResp_ = null;
+        onChanged();
+      } else {
+        baseResp_ = null;
+        baseRespBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.action.BaseResp baseResp = 255;</code>
+     */
+    public violet.action.common.proto_gen.action.BaseResp.Builder getBaseRespBuilder() {
+      
+      onChanged();
+      return getBaseRespFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.action.BaseResp baseResp = 255;</code>
+     */
+    public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
+      if (baseRespBuilder_ != null) {
+        return baseRespBuilder_.getMessageOrBuilder();
+      } else {
+        return baseResp_ == null ?
+            violet.action.common.proto_gen.action.BaseResp.getDefaultInstance() : baseResp_;
+      }
+    }
+    /**
+     * <code>.action.BaseResp baseResp = 255;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> 
+        getBaseRespFieldBuilder() {
+      if (baseRespBuilder_ == null) {
+        baseRespBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder>(
+                getBaseResp(),
+                getParentForChildren(),
+                isClean());
+        baseResp_ = null;
+      }
+      return baseRespBuilder_;
     }
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -524,10 +646,10 @@ public  final class LoginResponse extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:LoginResponse)
+    // @@protoc_insertion_point(builder_scope:action.LoginResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:LoginResponse)
+  // @@protoc_insertion_point(class_scope:action.LoginResponse)
   private static final violet.action.common.proto_gen.action.LoginResponse DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.LoginResponse();

@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 public interface MIsFollowResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:MIsFollowResponse)
+    // @@protoc_insertion_point(interface_extends:action.MIsFollowResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -76,15 +76,15 @@ public interface MIsFollowResponseOrBuilder extends
       long key);
 
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   boolean hasBaseResp();
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   violet.action.common.proto_gen.action.BaseResp getBaseResp();
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder();
 }

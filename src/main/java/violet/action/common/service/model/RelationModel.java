@@ -39,7 +39,7 @@ public class RelationModel {
     @Autowired
     private Neo4jClient neo4jClient;
 
-    public List<Long> getFollowingListFromCache(Long userId) {
+    public List<Long> getFollowingListFromDB(Long userId) {
         String followingListKey= String.format(FOLLOWING_LIST_KEY, userId);
         String followingListStr=redisTemplate.opsForValue().get(followingListKey);
         if(followingListStr!=null){
@@ -51,7 +51,7 @@ public class RelationModel {
             return JSONObject.parseArray(followingListStr, Long.class);
         }
         if(!locked){
-            log.error("[RelationModel:getFollowingListFromCache] err = redis mutex failed");
+            log.error("[RelationModel:getFollowingListFromDB] err = redis mutex failed");
             return null;
         }
         List<User> userList=relationMapper.getFollowingList(userId);
@@ -64,7 +64,7 @@ public class RelationModel {
         return followingList;
     }
 
-    public List<Long> getFollowerListFromCache(Long userId) {
+    public List<Long> getFollowerListFromDB(Long userId) {
         String followerListKey= String.format(FOLLOWER_LIST_KEY, userId);
         String followerListStr=redisTemplate.opsForValue().get(followerListKey);
         if(followerListStr!=null){
@@ -76,7 +76,7 @@ public class RelationModel {
             return JSONObject.parseArray(followerListStr, Long.class);
         }
         if(!locked){
-            log.error("[RelationModel:getFollowerListFromCache] err = redis mutex failed");
+            log.error("[RelationModel:getFollowerListFromDB] err = redis mutex failed");
             return null;
         }
         List<User> userList=relationMapper.getFollowerList(userId);
@@ -89,7 +89,7 @@ public class RelationModel {
         return followerList;
     }
 
-    public List<Long> getFriendListFromCache(Long userId) {
+    public List<Long> getFriendListFromDB(Long userId) {
         String friendListKey= String.format(FRIEND_LIST_KEY, userId);
         String friendListStr=redisTemplate.opsForValue().get(friendListKey);
         if(friendListStr!=null){
@@ -101,7 +101,7 @@ public class RelationModel {
             return JSONObject.parseArray(friendListStr, Long.class);
         }
         if(!locked){
-            log.error("[RelationModel:getFriendListFromCache] err = redis mutex failed");
+            log.error("[RelationModel:getFriendListFromDB] err = redis mutex failed");
             return null;
         }
         List<User> userList=relationMapper.getFriendList(userId);
@@ -119,7 +119,7 @@ public class RelationModel {
         return friendList;
     }
 
-    public Map<Long,Boolean> getFollowingHashFromCache(Long userId,List<Long> toUserIds) {
+    public Map<Long,Boolean> getFollowingHashFromDB(Long userId,List<Long> toUserIds) {
         Map<Long,Boolean> isFollowing=new HashMap<>();
         String followingHashKey= String.format(FOLLOWING_HASH_KEY, userId);
         List<Object> fields = new ArrayList<>();
@@ -151,7 +151,7 @@ public class RelationModel {
             return isFollowing;
         }
         if(!locked){
-            log.error("[RelationModel:getFollowingHashFromCache] err = redis mutex failed");
+            log.error("[RelationModel:getFollowingHashFromDB] err = redis mutex failed");
             return null;
         }
         List<User> followingList=relationMapper.getFollowingList(userId);
@@ -173,7 +173,7 @@ public class RelationModel {
         return isFollowing;
     }
 
-    public Map<Long,Boolean> getFollowerHashFromCache(Long userId,List<Long> toUserIds) {
+    public Map<Long,Boolean> getFollowerHashFromDB(Long userId,List<Long> toUserIds) {
         Map<Long,Boolean> isFollower=new HashMap<>();
         List<Object> results = redisTemplate.executePipelined(new SessionCallback<Object>(){
             @Override
@@ -219,7 +219,7 @@ public class RelationModel {
             }
         }
 //        if(!locked){
-//            log.error("[RelationModel:getFollowerHashFromCache] err = redis mutex failed");
+//            log.error("[RelationModel:getFollowerHashFromDB] err = redis mutex failed");
 //            return null;
 //        }
         Map<Long,Map<String,String>> followingMaps=mGetFollowingMap(newMissIds);
@@ -247,6 +247,20 @@ public class RelationModel {
         });
 //        redisMutex.unlock(followingHashKey);
         return isFollower;
+    }
+
+    public Integer getFollowingCountFromDB(List<Long> userIds){
+        List<Object> results = redisTemplate.executePipelined(new SessionCallback<Object>(){
+            @Override
+            public Object execute(RedisOperations operations) throws DataAccessException {
+                for(Long userId:userIds){
+                    String followingCountKey= String.format(FOLLOWING_COUNT_KEY, userId);
+                    operations.opsForValue().get(followingCountKey);
+                }
+                return null;
+            }
+        });
+        return 0;
     }
 
     public Map<Long,Map<String,String>> mGetFollowingMap(List<Long> userIds) {

@@ -24,16 +24,64 @@ public final class ActionServiceGrpc {
 
   private ActionServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "ActionService";
+  public static final String SERVICE_NAME = "action.ActionService";
 
   // Static method descriptors that strictly reflect the proto.
+  @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
+  public static final io.grpc.MethodDescriptor<violet.action.common.proto_gen.action.LoginRequest,
+      violet.action.common.proto_gen.action.LoginResponse> METHOD_LOGIN =
+      io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.LoginRequest, violet.action.common.proto_gen.action.LoginResponse>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "action.ActionService", "Login"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              violet.action.common.proto_gen.action.LoginRequest.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              violet.action.common.proto_gen.action.LoginResponse.getDefaultInstance()))
+          .build();
+  @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
+  public static final io.grpc.MethodDescriptor<violet.action.common.proto_gen.action.RegisterRequest,
+      violet.action.common.proto_gen.action.RegisterResponse> METHOD_REGISTER =
+      io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.RegisterRequest, violet.action.common.proto_gen.action.RegisterResponse>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "action.ActionService", "Register"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              violet.action.common.proto_gen.action.RegisterRequest.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              violet.action.common.proto_gen.action.RegisterResponse.getDefaultInstance()))
+          .build();
+  @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
+  public static final io.grpc.MethodDescriptor<violet.action.common.proto_gen.action.GetUserInfosRequest,
+      violet.action.common.proto_gen.action.GetUserInfosResponse> METHOD_GET_USER_INFOS =
+      io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.GetUserInfosRequest, violet.action.common.proto_gen.action.GetUserInfosResponse>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "action.ActionService", "GetUserInfos"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              violet.action.common.proto_gen.action.GetUserInfosRequest.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              violet.action.common.proto_gen.action.GetUserInfosResponse.getDefaultInstance()))
+          .build();
+  @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
+  public static final io.grpc.MethodDescriptor<violet.action.common.proto_gen.action.SearchUsersRequest,
+      violet.action.common.proto_gen.action.SearchUsersResponse> METHOD_SEARCH_USERS =
+      io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.SearchUsersRequest, violet.action.common.proto_gen.action.SearchUsersResponse>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "action.ActionService", "SearchUsers"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              violet.action.common.proto_gen.action.SearchUsersRequest.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              violet.action.common.proto_gen.action.SearchUsersResponse.getDefaultInstance()))
+          .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<violet.action.common.proto_gen.action.FollowRequest,
       violet.action.common.proto_gen.action.FollowResponse> METHOD_FOLLOW =
       io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.FollowRequest, violet.action.common.proto_gen.action.FollowResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ActionService", "Follow"))
+              "action.ActionService", "Follow"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               violet.action.common.proto_gen.action.FollowRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -45,7 +93,7 @@ public final class ActionServiceGrpc {
       io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.FollowRequest, violet.action.common.proto_gen.action.FollowResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ActionService", "Unfollow"))
+              "action.ActionService", "Unfollow"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               violet.action.common.proto_gen.action.FollowRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -57,7 +105,7 @@ public final class ActionServiceGrpc {
       io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.MIsFollowRequest, violet.action.common.proto_gen.action.MIsFollowResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ActionService", "MIsFollowing"))
+              "action.ActionService", "MIsFollowing"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               violet.action.common.proto_gen.action.MIsFollowRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -69,7 +117,7 @@ public final class ActionServiceGrpc {
       io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.MIsFollowRequest, violet.action.common.proto_gen.action.MIsFollowResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ActionService", "MIsFollower"))
+              "action.ActionService", "MIsFollower"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               violet.action.common.proto_gen.action.MIsFollowRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -81,7 +129,7 @@ public final class ActionServiceGrpc {
       io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.GetFollowListRequest, violet.action.common.proto_gen.action.GetFollowListResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ActionService", "GetFollowingList"))
+              "action.ActionService", "GetFollowingList"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               violet.action.common.proto_gen.action.GetFollowListRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -93,7 +141,7 @@ public final class ActionServiceGrpc {
       io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.GetFollowListRequest, violet.action.common.proto_gen.action.GetFollowListResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ActionService", "GetFollowerList"))
+              "action.ActionService", "GetFollowerList"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               violet.action.common.proto_gen.action.GetFollowListRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -105,7 +153,7 @@ public final class ActionServiceGrpc {
       io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.GetFollowListRequest, violet.action.common.proto_gen.action.GetFollowListResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ActionService", "GetFriendList"))
+              "action.ActionService", "GetFriendList"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               violet.action.common.proto_gen.action.GetFollowListRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -117,7 +165,7 @@ public final class ActionServiceGrpc {
       io.grpc.MethodDescriptor.<violet.action.common.proto_gen.action.MGetFollowCountRequest, violet.action.common.proto_gen.action.MGetFollowCountResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "ActionService", "GetFollowCount"))
+              "action.ActionService", "GetFollowCount"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               violet.action.common.proto_gen.action.MGetFollowCountRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -150,6 +198,34 @@ public final class ActionServiceGrpc {
   /**
    */
   public static abstract class ActionServiceImplBase implements io.grpc.BindableService {
+
+    /**
+     */
+    public void login(violet.action.common.proto_gen.action.LoginRequest request,
+        io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.LoginResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(METHOD_LOGIN, responseObserver);
+    }
+
+    /**
+     */
+    public void register(violet.action.common.proto_gen.action.RegisterRequest request,
+        io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.RegisterResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(METHOD_REGISTER, responseObserver);
+    }
+
+    /**
+     */
+    public void getUserInfos(violet.action.common.proto_gen.action.GetUserInfosRequest request,
+        io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.GetUserInfosResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(METHOD_GET_USER_INFOS, responseObserver);
+    }
+
+    /**
+     */
+    public void searchUsers(violet.action.common.proto_gen.action.SearchUsersRequest request,
+        io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.SearchUsersResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(METHOD_SEARCH_USERS, responseObserver);
+    }
 
     /**
      */
@@ -209,6 +285,34 @@ public final class ActionServiceGrpc {
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+          .addMethod(
+            METHOD_LOGIN,
+            asyncUnaryCall(
+              new MethodHandlers<
+                violet.action.common.proto_gen.action.LoginRequest,
+                violet.action.common.proto_gen.action.LoginResponse>(
+                  this, METHODID_LOGIN)))
+          .addMethod(
+            METHOD_REGISTER,
+            asyncUnaryCall(
+              new MethodHandlers<
+                violet.action.common.proto_gen.action.RegisterRequest,
+                violet.action.common.proto_gen.action.RegisterResponse>(
+                  this, METHODID_REGISTER)))
+          .addMethod(
+            METHOD_GET_USER_INFOS,
+            asyncUnaryCall(
+              new MethodHandlers<
+                violet.action.common.proto_gen.action.GetUserInfosRequest,
+                violet.action.common.proto_gen.action.GetUserInfosResponse>(
+                  this, METHODID_GET_USER_INFOS)))
+          .addMethod(
+            METHOD_SEARCH_USERS,
+            asyncUnaryCall(
+              new MethodHandlers<
+                violet.action.common.proto_gen.action.SearchUsersRequest,
+                violet.action.common.proto_gen.action.SearchUsersResponse>(
+                  this, METHODID_SEARCH_USERS)))
           .addMethod(
             METHOD_FOLLOW,
             asyncUnaryCall(
@@ -285,6 +389,38 @@ public final class ActionServiceGrpc {
     protected ActionServiceStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new ActionServiceStub(channel, callOptions);
+    }
+
+    /**
+     */
+    public void login(violet.action.common.proto_gen.action.LoginRequest request,
+        io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.LoginResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(METHOD_LOGIN, getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void register(violet.action.common.proto_gen.action.RegisterRequest request,
+        io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.RegisterResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(METHOD_REGISTER, getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void getUserInfos(violet.action.common.proto_gen.action.GetUserInfosRequest request,
+        io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.GetUserInfosResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(METHOD_GET_USER_INFOS, getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void searchUsers(violet.action.common.proto_gen.action.SearchUsersRequest request,
+        io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.SearchUsersResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(METHOD_SEARCH_USERS, getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -372,6 +508,34 @@ public final class ActionServiceGrpc {
 
     /**
      */
+    public violet.action.common.proto_gen.action.LoginResponse login(violet.action.common.proto_gen.action.LoginRequest request) {
+      return blockingUnaryCall(
+          getChannel(), METHOD_LOGIN, getCallOptions(), request);
+    }
+
+    /**
+     */
+    public violet.action.common.proto_gen.action.RegisterResponse register(violet.action.common.proto_gen.action.RegisterRequest request) {
+      return blockingUnaryCall(
+          getChannel(), METHOD_REGISTER, getCallOptions(), request);
+    }
+
+    /**
+     */
+    public violet.action.common.proto_gen.action.GetUserInfosResponse getUserInfos(violet.action.common.proto_gen.action.GetUserInfosRequest request) {
+      return blockingUnaryCall(
+          getChannel(), METHOD_GET_USER_INFOS, getCallOptions(), request);
+    }
+
+    /**
+     */
+    public violet.action.common.proto_gen.action.SearchUsersResponse searchUsers(violet.action.common.proto_gen.action.SearchUsersRequest request) {
+      return blockingUnaryCall(
+          getChannel(), METHOD_SEARCH_USERS, getCallOptions(), request);
+    }
+
+    /**
+     */
     public violet.action.common.proto_gen.action.FollowResponse follow(violet.action.common.proto_gen.action.FollowRequest request) {
       return blockingUnaryCall(
           getChannel(), METHOD_FOLLOW, getCallOptions(), request);
@@ -447,6 +611,38 @@ public final class ActionServiceGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<violet.action.common.proto_gen.action.LoginResponse> login(
+        violet.action.common.proto_gen.action.LoginRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(METHOD_LOGIN, getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<violet.action.common.proto_gen.action.RegisterResponse> register(
+        violet.action.common.proto_gen.action.RegisterRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(METHOD_REGISTER, getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<violet.action.common.proto_gen.action.GetUserInfosResponse> getUserInfos(
+        violet.action.common.proto_gen.action.GetUserInfosRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(METHOD_GET_USER_INFOS, getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<violet.action.common.proto_gen.action.SearchUsersResponse> searchUsers(
+        violet.action.common.proto_gen.action.SearchUsersRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(METHOD_SEARCH_USERS, getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<violet.action.common.proto_gen.action.FollowResponse> follow(
         violet.action.common.proto_gen.action.FollowRequest request) {
       return futureUnaryCall(
@@ -510,14 +706,18 @@ public final class ActionServiceGrpc {
     }
   }
 
-  private static final int METHODID_FOLLOW = 0;
-  private static final int METHODID_UNFOLLOW = 1;
-  private static final int METHODID_MIS_FOLLOWING = 2;
-  private static final int METHODID_MIS_FOLLOWER = 3;
-  private static final int METHODID_GET_FOLLOWING_LIST = 4;
-  private static final int METHODID_GET_FOLLOWER_LIST = 5;
-  private static final int METHODID_GET_FRIEND_LIST = 6;
-  private static final int METHODID_GET_FOLLOW_COUNT = 7;
+  private static final int METHODID_LOGIN = 0;
+  private static final int METHODID_REGISTER = 1;
+  private static final int METHODID_GET_USER_INFOS = 2;
+  private static final int METHODID_SEARCH_USERS = 3;
+  private static final int METHODID_FOLLOW = 4;
+  private static final int METHODID_UNFOLLOW = 5;
+  private static final int METHODID_MIS_FOLLOWING = 6;
+  private static final int METHODID_MIS_FOLLOWER = 7;
+  private static final int METHODID_GET_FOLLOWING_LIST = 8;
+  private static final int METHODID_GET_FOLLOWER_LIST = 9;
+  private static final int METHODID_GET_FRIEND_LIST = 10;
+  private static final int METHODID_GET_FOLLOW_COUNT = 11;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -536,6 +736,22 @@ public final class ActionServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_LOGIN:
+          serviceImpl.login((violet.action.common.proto_gen.action.LoginRequest) request,
+              (io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.LoginResponse>) responseObserver);
+          break;
+        case METHODID_REGISTER:
+          serviceImpl.register((violet.action.common.proto_gen.action.RegisterRequest) request,
+              (io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.RegisterResponse>) responseObserver);
+          break;
+        case METHODID_GET_USER_INFOS:
+          serviceImpl.getUserInfos((violet.action.common.proto_gen.action.GetUserInfosRequest) request,
+              (io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.GetUserInfosResponse>) responseObserver);
+          break;
+        case METHODID_SEARCH_USERS:
+          serviceImpl.searchUsers((violet.action.common.proto_gen.action.SearchUsersRequest) request,
+              (io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.SearchUsersResponse>) responseObserver);
+          break;
         case METHODID_FOLLOW:
           serviceImpl.follow((violet.action.common.proto_gen.action.FollowRequest) request,
               (io.grpc.stub.StreamObserver<violet.action.common.proto_gen.action.FollowResponse>) responseObserver);
@@ -601,6 +817,10 @@ public final class ActionServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new ActionServiceDescriptorSupplier())
+              .addMethod(METHOD_LOGIN)
+              .addMethod(METHOD_REGISTER)
+              .addMethod(METHOD_GET_USER_INFOS)
+              .addMethod(METHOD_SEARCH_USERS)
               .addMethod(METHOD_FOLLOW)
               .addMethod(METHOD_UNFOLLOW)
               .addMethod(METHOD_MIS_FOLLOWING)

@@ -3,8 +3,8 @@
 
 package violet.action.common.proto_gen.action;
 
-public interface FollowResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:action.FollowResponse)
+public interface RegisterResponseOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:action.RegisterResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**

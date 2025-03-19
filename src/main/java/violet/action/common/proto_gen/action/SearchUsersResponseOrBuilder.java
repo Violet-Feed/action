@@ -3,8 +3,8 @@
 
 package violet.action.common.proto_gen.action;
 
-public interface GetUserInfosResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:action.GetUserInfosResponse)
+public interface SearchUsersResponseOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:action.SearchUsersResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**

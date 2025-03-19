@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code FollowRequest}
+ * Protobuf type {@code action.FollowRequest}
  */
 public  final class FollowRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:FollowRequest)
+    // @@protoc_insertion_point(message_implements:action.FollowRequest)
     FollowRequestOrBuilder {
   // Use FollowRequest.newBuilder() to construct.
   private FollowRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -67,12 +67,12 @@ public  final class FollowRequest extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_FollowRequest_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_FollowRequest_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.FollowRequest.class, violet.action.common.proto_gen.action.FollowRequest.Builder.class);
   }
@@ -258,20 +258,20 @@ public  final class FollowRequest extends
     return builder;
   }
   /**
-   * Protobuf type {@code FollowRequest}
+   * Protobuf type {@code action.FollowRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:FollowRequest)
+      // @@protoc_insertion_point(builder_implements:action.FollowRequest)
       violet.action.common.proto_gen.action.FollowRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_FollowRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_FollowRequest_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.FollowRequest.class, violet.action.common.proto_gen.action.FollowRequest.Builder.class);
     }
@@ -302,7 +302,7 @@ public  final class FollowRequest extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_FollowRequest_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_descriptor;
     }
 
     public violet.action.common.proto_gen.action.FollowRequest getDefaultInstanceForType() {
@@ -456,10 +456,10 @@ public  final class FollowRequest extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:FollowRequest)
+    // @@protoc_insertion_point(builder_scope:action.FollowRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:FollowRequest)
+  // @@protoc_insertion_point(class_scope:action.FollowRequest)
   private static final violet.action.common.proto_gen.action.FollowRequest DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.FollowRequest();

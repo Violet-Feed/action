@@ -4,17 +4,17 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code action.FollowResponse}
+ * Protobuf type {@code action.RegisterResponse}
  */
-public  final class FollowResponse extends
+public  final class RegisterResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:action.FollowResponse)
-    FollowResponseOrBuilder {
-  // Use FollowResponse.newBuilder() to construct.
-  private FollowResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // @@protoc_insertion_point(message_implements:action.RegisterResponse)
+    RegisterResponseOrBuilder {
+  // Use RegisterResponse.newBuilder() to construct.
+  private RegisterResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private FollowResponse() {
+  private RegisterResponse() {
   }
 
   @java.lang.Override
@@ -22,7 +22,7 @@ public  final class FollowResponse extends
   getUnknownFields() {
     return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
   }
-  private FollowResponse(
+  private RegisterResponse(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -68,14 +68,14 @@ public  final class FollowResponse extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_action_FollowResponse_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_RegisterResponse_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_action_FollowResponse_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_RegisterResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            violet.action.common.proto_gen.action.FollowResponse.class, violet.action.common.proto_gen.action.FollowResponse.Builder.class);
+            violet.action.common.proto_gen.action.RegisterResponse.class, violet.action.common.proto_gen.action.RegisterResponse.Builder.class);
   }
 
   public static final int BASERESP_FIELD_NUMBER = 255;
@@ -135,10 +135,10 @@ public  final class FollowResponse extends
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof violet.action.common.proto_gen.action.FollowResponse)) {
+    if (!(obj instanceof violet.action.common.proto_gen.action.RegisterResponse)) {
       return super.equals(obj);
     }
-    violet.action.common.proto_gen.action.FollowResponse other = (violet.action.common.proto_gen.action.FollowResponse) obj;
+    violet.action.common.proto_gen.action.RegisterResponse other = (violet.action.common.proto_gen.action.RegisterResponse) obj;
 
     boolean result = true;
     result = result && (hasBaseResp() == other.hasBaseResp());
@@ -165,69 +165,69 @@ public  final class FollowResponse extends
     return hash;
   }
 
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(byte[] data)
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(java.io.InputStream input)
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseDelimitedFrom(java.io.InputStream input)
+  public static violet.action.common.proto_gen.action.RegisterResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseDelimitedFrom(
+  public static violet.action.common.proto_gen.action.RegisterResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static violet.action.common.proto_gen.action.FollowResponse parseFrom(
+  public static violet.action.common.proto_gen.action.RegisterResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -239,7 +239,7 @@ public  final class FollowResponse extends
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(violet.action.common.proto_gen.action.FollowResponse prototype) {
+  public static Builder newBuilder(violet.action.common.proto_gen.action.RegisterResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() {
@@ -254,25 +254,25 @@ public  final class FollowResponse extends
     return builder;
   }
   /**
-   * Protobuf type {@code action.FollowResponse}
+   * Protobuf type {@code action.RegisterResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:action.FollowResponse)
-      violet.action.common.proto_gen.action.FollowResponseOrBuilder {
+      // @@protoc_insertion_point(builder_implements:action.RegisterResponse)
+      violet.action.common.proto_gen.action.RegisterResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_FollowResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_RegisterResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_FollowResponse_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_RegisterResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              violet.action.common.proto_gen.action.FollowResponse.class, violet.action.common.proto_gen.action.FollowResponse.Builder.class);
+              violet.action.common.proto_gen.action.RegisterResponse.class, violet.action.common.proto_gen.action.RegisterResponse.Builder.class);
     }
 
-    // Construct using violet.action.common.proto_gen.action.FollowResponse.newBuilder()
+    // Construct using violet.action.common.proto_gen.action.RegisterResponse.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -300,23 +300,23 @@ public  final class FollowResponse extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_FollowResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_RegisterResponse_descriptor;
     }
 
-    public violet.action.common.proto_gen.action.FollowResponse getDefaultInstanceForType() {
-      return violet.action.common.proto_gen.action.FollowResponse.getDefaultInstance();
+    public violet.action.common.proto_gen.action.RegisterResponse getDefaultInstanceForType() {
+      return violet.action.common.proto_gen.action.RegisterResponse.getDefaultInstance();
     }
 
-    public violet.action.common.proto_gen.action.FollowResponse build() {
-      violet.action.common.proto_gen.action.FollowResponse result = buildPartial();
+    public violet.action.common.proto_gen.action.RegisterResponse build() {
+      violet.action.common.proto_gen.action.RegisterResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public violet.action.common.proto_gen.action.FollowResponse buildPartial() {
-      violet.action.common.proto_gen.action.FollowResponse result = new violet.action.common.proto_gen.action.FollowResponse(this);
+    public violet.action.common.proto_gen.action.RegisterResponse buildPartial() {
+      violet.action.common.proto_gen.action.RegisterResponse result = new violet.action.common.proto_gen.action.RegisterResponse(this);
       if (baseRespBuilder_ == null) {
         result.baseResp_ = baseResp_;
       } else {
@@ -353,16 +353,16 @@ public  final class FollowResponse extends
       return (Builder) super.addRepeatedField(field, value);
     }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof violet.action.common.proto_gen.action.FollowResponse) {
-        return mergeFrom((violet.action.common.proto_gen.action.FollowResponse)other);
+      if (other instanceof violet.action.common.proto_gen.action.RegisterResponse) {
+        return mergeFrom((violet.action.common.proto_gen.action.RegisterResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(violet.action.common.proto_gen.action.FollowResponse other) {
-      if (other == violet.action.common.proto_gen.action.FollowResponse.getDefaultInstance()) return this;
+    public Builder mergeFrom(violet.action.common.proto_gen.action.RegisterResponse other) {
+      if (other == violet.action.common.proto_gen.action.RegisterResponse.getDefaultInstance()) return this;
       if (other.hasBaseResp()) {
         mergeBaseResp(other.getBaseResp());
       }
@@ -378,11 +378,11 @@ public  final class FollowResponse extends
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      violet.action.common.proto_gen.action.FollowResponse parsedMessage = null;
+      violet.action.common.proto_gen.action.RegisterResponse parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (violet.action.common.proto_gen.action.FollowResponse) e.getUnfinishedMessage();
+        parsedMessage = (violet.action.common.proto_gen.action.RegisterResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -519,39 +519,39 @@ public  final class FollowResponse extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:action.FollowResponse)
+    // @@protoc_insertion_point(builder_scope:action.RegisterResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:action.FollowResponse)
-  private static final violet.action.common.proto_gen.action.FollowResponse DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:action.RegisterResponse)
+  private static final violet.action.common.proto_gen.action.RegisterResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.FollowResponse();
+    DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.RegisterResponse();
   }
 
-  public static violet.action.common.proto_gen.action.FollowResponse getDefaultInstance() {
+  public static violet.action.common.proto_gen.action.RegisterResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<FollowResponse>
-      PARSER = new com.google.protobuf.AbstractParser<FollowResponse>() {
-    public FollowResponse parsePartialFrom(
+  private static final com.google.protobuf.Parser<RegisterResponse>
+      PARSER = new com.google.protobuf.AbstractParser<RegisterResponse>() {
+    public RegisterResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-        return new FollowResponse(input, extensionRegistry);
+        return new RegisterResponse(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<FollowResponse> parser() {
+  public static com.google.protobuf.Parser<RegisterResponse> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<FollowResponse> getParserForType() {
+  public com.google.protobuf.Parser<RegisterResponse> getParserForType() {
     return PARSER;
   }
 
-  public violet.action.common.proto_gen.action.FollowResponse getDefaultInstanceForType() {
+  public violet.action.common.proto_gen.action.RegisterResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

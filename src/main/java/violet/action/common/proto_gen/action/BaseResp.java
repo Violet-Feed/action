@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code BaseResp}
+ * Protobuf type {@code action.BaseResp}
  */
 public  final class BaseResp extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:BaseResp)
+    // @@protoc_insertion_point(message_implements:action.BaseResp)
     BaseRespOrBuilder {
   // Use BaseResp.newBuilder() to construct.
   private BaseResp(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -69,12 +69,12 @@ public  final class BaseResp extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_BaseResp_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_BaseResp_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_BaseResp_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_BaseResp_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.BaseResp.class, violet.action.common.proto_gen.action.BaseResp.Builder.class);
   }
@@ -82,13 +82,13 @@ public  final class BaseResp extends
   public static final int STATUSCODE_FIELD_NUMBER = 1;
   private int statusCode_;
   /**
-   * <code>.StatusCode StatusCode = 1;</code>
+   * <code>.action.StatusCode StatusCode = 1;</code>
    */
   public int getStatusCodeValue() {
     return statusCode_;
   }
   /**
-   * <code>.StatusCode StatusCode = 1;</code>
+   * <code>.action.StatusCode StatusCode = 1;</code>
    */
   public violet.action.common.proto_gen.action.StatusCode getStatusCode() {
     violet.action.common.proto_gen.action.StatusCode result = violet.action.common.proto_gen.action.StatusCode.valueOf(statusCode_);
@@ -288,20 +288,20 @@ public  final class BaseResp extends
     return builder;
   }
   /**
-   * Protobuf type {@code BaseResp}
+   * Protobuf type {@code action.BaseResp}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:BaseResp)
+      // @@protoc_insertion_point(builder_implements:action.BaseResp)
       violet.action.common.proto_gen.action.BaseRespOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_BaseResp_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_BaseResp_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_BaseResp_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_BaseResp_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.BaseResp.class, violet.action.common.proto_gen.action.BaseResp.Builder.class);
     }
@@ -332,7 +332,7 @@ public  final class BaseResp extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_BaseResp_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_BaseResp_descriptor;
     }
 
     public violet.action.common.proto_gen.action.BaseResp getDefaultInstanceForType() {
@@ -427,13 +427,13 @@ public  final class BaseResp extends
 
     private int statusCode_ = 0;
     /**
-     * <code>.StatusCode StatusCode = 1;</code>
+     * <code>.action.StatusCode StatusCode = 1;</code>
      */
     public int getStatusCodeValue() {
       return statusCode_;
     }
     /**
-     * <code>.StatusCode StatusCode = 1;</code>
+     * <code>.action.StatusCode StatusCode = 1;</code>
      */
     public Builder setStatusCodeValue(int value) {
       statusCode_ = value;
@@ -441,14 +441,14 @@ public  final class BaseResp extends
       return this;
     }
     /**
-     * <code>.StatusCode StatusCode = 1;</code>
+     * <code>.action.StatusCode StatusCode = 1;</code>
      */
     public violet.action.common.proto_gen.action.StatusCode getStatusCode() {
       violet.action.common.proto_gen.action.StatusCode result = violet.action.common.proto_gen.action.StatusCode.valueOf(statusCode_);
       return result == null ? violet.action.common.proto_gen.action.StatusCode.UNRECOGNIZED : result;
     }
     /**
-     * <code>.StatusCode StatusCode = 1;</code>
+     * <code>.action.StatusCode StatusCode = 1;</code>
      */
     public Builder setStatusCode(violet.action.common.proto_gen.action.StatusCode value) {
       if (value == null) {
@@ -460,7 +460,7 @@ public  final class BaseResp extends
       return this;
     }
     /**
-     * <code>.StatusCode StatusCode = 1;</code>
+     * <code>.action.StatusCode StatusCode = 1;</code>
      */
     public Builder clearStatusCode() {
       
@@ -548,10 +548,10 @@ public  final class BaseResp extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:BaseResp)
+    // @@protoc_insertion_point(builder_scope:action.BaseResp)
   }
 
-  // @@protoc_insertion_point(class_scope:BaseResp)
+  // @@protoc_insertion_point(class_scope:action.BaseResp)
   private static final violet.action.common.proto_gen.action.BaseResp DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.BaseResp();

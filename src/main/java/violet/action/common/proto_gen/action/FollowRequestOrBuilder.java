@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 public interface FollowRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:FollowRequest)
+    // @@protoc_insertion_point(interface_extends:action.FollowRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**

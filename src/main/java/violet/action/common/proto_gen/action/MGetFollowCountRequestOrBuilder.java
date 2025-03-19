@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 public interface MGetFollowCountRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:MGetFollowCountRequest)
+    // @@protoc_insertion_point(interface_extends:action.MGetFollowCountRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**

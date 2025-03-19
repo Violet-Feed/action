@@ -4,11 +4,11 @@
 package violet.action.common.proto_gen.action;
 
 /**
- * Protobuf type {@code MGetFollowCountResponse}
+ * Protobuf type {@code action.MGetFollowCountResponse}
  */
 public  final class MGetFollowCountResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:MGetFollowCountResponse)
+    // @@protoc_insertion_point(message_implements:action.MGetFollowCountResponse)
     MGetFollowCountResponseOrBuilder {
   // Use MGetFollowCountResponse.newBuilder() to construct.
   private MGetFollowCountResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
@@ -107,7 +107,7 @@ public  final class MGetFollowCountResponse extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountResponse_descriptor;
+    return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountResponse_descriptor;
   }
 
   @SuppressWarnings({"rawtypes"})
@@ -127,7 +127,7 @@ public  final class MGetFollowCountResponse extends
   }
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountResponse_fieldAccessorTable
+    return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             violet.action.common.proto_gen.action.MGetFollowCountResponse.class, violet.action.common.proto_gen.action.MGetFollowCountResponse.Builder.class);
   }
@@ -139,7 +139,7 @@ public  final class MGetFollowCountResponse extends
         java.lang.Long, java.lang.Long> defaultEntry =
             com.google.protobuf.MapEntry
             .<java.lang.Long, java.lang.Long>newDefaultInstance(
-                violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountResponse_FollowingCountEntry_descriptor, 
+                violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountResponse_FollowingCountEntry_descriptor, 
                 com.google.protobuf.WireFormat.FieldType.INT64,
                 0L,
                 com.google.protobuf.WireFormat.FieldType.INT64,
@@ -215,7 +215,7 @@ public  final class MGetFollowCountResponse extends
         java.lang.Long, java.lang.Long> defaultEntry =
             com.google.protobuf.MapEntry
             .<java.lang.Long, java.lang.Long>newDefaultInstance(
-                violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountResponse_FollowerCountEntry_descriptor, 
+                violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountResponse_FollowerCountEntry_descriptor, 
                 com.google.protobuf.WireFormat.FieldType.INT64,
                 0L,
                 com.google.protobuf.WireFormat.FieldType.INT64,
@@ -291,7 +291,7 @@ public  final class MGetFollowCountResponse extends
         java.lang.Long, java.lang.Long> defaultEntry =
             com.google.protobuf.MapEntry
             .<java.lang.Long, java.lang.Long>newDefaultInstance(
-                violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountResponse_FriendCountEntry_descriptor, 
+                violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountResponse_FriendCountEntry_descriptor, 
                 com.google.protobuf.WireFormat.FieldType.INT64,
                 0L,
                 com.google.protobuf.WireFormat.FieldType.INT64,
@@ -364,19 +364,19 @@ public  final class MGetFollowCountResponse extends
   public static final int BASERESP_FIELD_NUMBER = 255;
   private violet.action.common.proto_gen.action.BaseResp baseResp_;
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   public boolean hasBaseResp() {
     return baseResp_ != null;
   }
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
     return baseResp_ == null ? violet.action.common.proto_gen.action.BaseResp.getDefaultInstance() : baseResp_;
   }
   /**
-   * <code>.BaseResp baseResp = 255;</code>
+   * <code>.action.BaseResp baseResp = 255;</code>
    */
   public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
     return getBaseResp();
@@ -603,15 +603,15 @@ public  final class MGetFollowCountResponse extends
     return builder;
   }
   /**
-   * Protobuf type {@code MGetFollowCountResponse}
+   * Protobuf type {@code action.MGetFollowCountResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:MGetFollowCountResponse)
+      // @@protoc_insertion_point(builder_implements:action.MGetFollowCountResponse)
       violet.action.common.proto_gen.action.MGetFollowCountResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountResponse_descriptor;
     }
 
     @SuppressWarnings({"rawtypes"})
@@ -646,7 +646,7 @@ public  final class MGetFollowCountResponse extends
     }
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountResponse_fieldAccessorTable
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               violet.action.common.proto_gen.action.MGetFollowCountResponse.class, violet.action.common.proto_gen.action.MGetFollowCountResponse.Builder.class);
     }
@@ -682,7 +682,7 @@ public  final class MGetFollowCountResponse extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_MGetFollowCountResponse_descriptor;
+      return violet.action.common.proto_gen.action.Action.internal_static_action_MGetFollowCountResponse_descriptor;
     }
 
     public violet.action.common.proto_gen.action.MGetFollowCountResponse getDefaultInstanceForType() {
@@ -1163,13 +1163,13 @@ public  final class MGetFollowCountResponse extends
     private com.google.protobuf.SingleFieldBuilderV3<
         violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> baseRespBuilder_;
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public boolean hasBaseResp() {
       return baseRespBuilder_ != null || baseResp_ != null;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
       if (baseRespBuilder_ == null) {
@@ -1179,7 +1179,7 @@ public  final class MGetFollowCountResponse extends
       }
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder setBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
       if (baseRespBuilder_ == null) {
@@ -1195,7 +1195,7 @@ public  final class MGetFollowCountResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder setBaseResp(
         violet.action.common.proto_gen.action.BaseResp.Builder builderForValue) {
@@ -1209,7 +1209,7 @@ public  final class MGetFollowCountResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder mergeBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
       if (baseRespBuilder_ == null) {
@@ -1227,7 +1227,7 @@ public  final class MGetFollowCountResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public Builder clearBaseResp() {
       if (baseRespBuilder_ == null) {
@@ -1241,7 +1241,7 @@ public  final class MGetFollowCountResponse extends
       return this;
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public violet.action.common.proto_gen.action.BaseResp.Builder getBaseRespBuilder() {
       
@@ -1249,7 +1249,7 @@ public  final class MGetFollowCountResponse extends
       return getBaseRespFieldBuilder().getBuilder();
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
       if (baseRespBuilder_ != null) {
@@ -1260,7 +1260,7 @@ public  final class MGetFollowCountResponse extends
       }
     }
     /**
-     * <code>.BaseResp baseResp = 255;</code>
+     * <code>.action.BaseResp baseResp = 255;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> 
@@ -1286,10 +1286,10 @@ public  final class MGetFollowCountResponse extends
     }
 
 
-    // @@protoc_insertion_point(builder_scope:MGetFollowCountResponse)
+    // @@protoc_insertion_point(builder_scope:action.MGetFollowCountResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:MGetFollowCountResponse)
+  // @@protoc_insertion_point(class_scope:action.MGetFollowCountResponse)
   private static final violet.action.common.proto_gen.action.MGetFollowCountResponse DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.MGetFollowCountResponse();

@@ -4,7 +4,7 @@
 package violet.action.common.proto_gen.action;
 
 public interface GetUserInfosRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:GetUserInfosRequest)
+    // @@protoc_insertion_point(interface_extends:action.GetUserInfosRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
