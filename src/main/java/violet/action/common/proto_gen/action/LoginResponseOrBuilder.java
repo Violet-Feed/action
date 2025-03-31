@@ -4,29 +4,26 @@
 package violet.action.common.proto_gen.action;
 
 public interface LoginResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:action.LoginResponse)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:action.LoginResponse)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>string token = 1;</code>
-   */
-  java.lang.String getToken();
-  /**
-   * <code>string token = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getTokenBytes();
+    /**
+     * <code>int64 user_id = 1;</code>
+     */
+    long getUserId();
 
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  boolean hasBaseResp();
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  violet.action.common.proto_gen.action.BaseResp getBaseResp();
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder();
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    boolean hasBaseResp();
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    violet.action.common.proto_gen.common.BaseResp getBaseResp();
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    violet.action.common.proto_gen.common.BaseRespOrBuilder getBaseRespOrBuilder();
 }

@@ -1,13 +1,13 @@
-server:
-  port: 3000
 grpc:
   server:
-    port: 3010
+    port: 3002
   client:
-    demo:
-      address: 'static://127.0.0.1:3011'
+    im:
+      address: 'static://127.0.0.1:3003'
       negotiation-type: plaintext
 spring:
+  main:
+    web-application-type: none
   data:
     neo4j:
       uri: bolt://localhost:7687

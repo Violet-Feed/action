@@ -4,19 +4,21 @@
 package violet.action.common.proto_gen.action;
 
 public interface FollowResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:action.FollowResponse)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:action.FollowResponse)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  boolean hasBaseResp();
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  violet.action.common.proto_gen.action.BaseResp getBaseResp();
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder();
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    boolean hasBaseResp();
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    violet.action.common.proto_gen.common.BaseResp getBaseResp();
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    violet.action.common.proto_gen.common.BaseRespOrBuilder getBaseRespOrBuilder();
 }

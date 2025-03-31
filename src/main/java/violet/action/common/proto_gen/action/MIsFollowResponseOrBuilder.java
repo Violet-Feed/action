@@ -4,87 +4,99 @@
 package violet.action.common.proto_gen.action;
 
 public interface MIsFollowResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:action.MIsFollowResponse)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:action.MIsFollowResponse)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>map&lt;int64, bool&gt; is_following = 1;</code>
-   */
-  int getIsFollowingCount();
-  /**
-   * <code>map&lt;int64, bool&gt; is_following = 1;</code>
-   */
-  boolean containsIsFollowing(
-      long key);
-  /**
-   * Use {@link #getIsFollowingMap()} instead.
-   */
-  @java.lang.Deprecated
-  java.util.Map<java.lang.Long, java.lang.Boolean>
-  getIsFollowing();
-  /**
-   * <code>map&lt;int64, bool&gt; is_following = 1;</code>
-   */
-  java.util.Map<java.lang.Long, java.lang.Boolean>
-  getIsFollowingMap();
-  /**
-   * <code>map&lt;int64, bool&gt; is_following = 1;</code>
-   */
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+    int getIsFollowingCount();
 
-  boolean getIsFollowingOrDefault(
-      long key,
-      boolean defaultValue);
-  /**
-   * <code>map&lt;int64, bool&gt; is_following = 1;</code>
-   */
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+    boolean containsIsFollowing(
+            long key);
 
-  boolean getIsFollowingOrThrow(
-      long key);
+    /**
+     * Use {@link #getIsFollowingMap()} instead.
+     */
+    @java.lang.Deprecated
+    java.util.Map<java.lang.Long, java.lang.Boolean>
+    getIsFollowing();
 
-  /**
-   * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
-   */
-  int getIsFollowerCount();
-  /**
-   * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
-   */
-  boolean containsIsFollower(
-      long key);
-  /**
-   * Use {@link #getIsFollowerMap()} instead.
-   */
-  @java.lang.Deprecated
-  java.util.Map<java.lang.Long, java.lang.Boolean>
-  getIsFollower();
-  /**
-   * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
-   */
-  java.util.Map<java.lang.Long, java.lang.Boolean>
-  getIsFollowerMap();
-  /**
-   * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
-   */
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+    java.util.Map<java.lang.Long, java.lang.Boolean>
+    getIsFollowingMap();
 
-  boolean getIsFollowerOrDefault(
-      long key,
-      boolean defaultValue);
-  /**
-   * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
-   */
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
 
-  boolean getIsFollowerOrThrow(
-      long key);
+    boolean getIsFollowingOrDefault(
+            long key,
+            boolean defaultValue);
 
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  boolean hasBaseResp();
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  violet.action.common.proto_gen.action.BaseResp getBaseResp();
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder();
+    /**
+     * <code>map&lt;int64, bool&gt; is_following = 1;</code>
+     */
+
+    boolean getIsFollowingOrThrow(
+            long key);
+
+    /**
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
+     */
+    int getIsFollowerCount();
+
+    /**
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
+     */
+    boolean containsIsFollower(
+            long key);
+
+    /**
+     * Use {@link #getIsFollowerMap()} instead.
+     */
+    @java.lang.Deprecated
+    java.util.Map<java.lang.Long, java.lang.Boolean>
+    getIsFollower();
+
+    /**
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
+     */
+    java.util.Map<java.lang.Long, java.lang.Boolean>
+    getIsFollowerMap();
+
+    /**
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
+     */
+
+    boolean getIsFollowerOrDefault(
+            long key,
+            boolean defaultValue);
+
+    /**
+     * <code>map&lt;int64, bool&gt; is_follower = 2;</code>
+     */
+
+    boolean getIsFollowerOrThrow(
+            long key);
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    boolean hasBaseResp();
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    violet.action.common.proto_gen.common.BaseResp getBaseResp();
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    violet.action.common.proto_gen.common.BaseRespOrBuilder getBaseRespOrBuilder();
 }

@@ -4,34 +4,36 @@
 package violet.action.common.proto_gen.action;
 
 public interface MGetFollowCountRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:action.MGetFollowCountRequest)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:action.MGetFollowCountRequest)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>repeated int64 user_ids = 1;</code>
-   */
-  java.util.List<java.lang.Long> getUserIdsList();
-  /**
-   * <code>repeated int64 user_ids = 1;</code>
-   */
-  int getUserIdsCount();
-  /**
-   * <code>repeated int64 user_ids = 1;</code>
-   */
-  long getUserIds(int index);
+    /**
+     * <code>repeated int64 user_ids = 1;</code>
+     */
+    java.util.List<java.lang.Long> getUserIdsList();
 
-  /**
-   * <code>bool need_following = 2;</code>
-   */
-  boolean getNeedFollowing();
+    /**
+     * <code>repeated int64 user_ids = 1;</code>
+     */
+    int getUserIdsCount();
 
-  /**
-   * <code>bool need_follower = 3;</code>
-   */
-  boolean getNeedFollower();
+    /**
+     * <code>repeated int64 user_ids = 1;</code>
+     */
+    long getUserIds(int index);
 
-  /**
-   * <code>bool need_friend = 4;</code>
-   */
-  boolean getNeedFriend();
+    /**
+     * <code>bool need_following = 2;</code>
+     */
+    boolean getNeedFollowing();
+
+    /**
+     * <code>bool need_follower = 3;</code>
+     */
+    boolean getNeedFollower();
+
+    /**
+     * <code>bool need_friend = 4;</code>
+     */
+    boolean getNeedFriend();
 }

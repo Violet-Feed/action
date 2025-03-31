@@ -1,11 +1,11 @@
 package violet.action.common.utils;
 
-import violet.action.common.pojo.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import violet.action.common.pojo.User;
 
 import java.util.Collection;
 
@@ -14,6 +14,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
     private User user;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

@@ -6,681 +6,661 @@ package violet.action.common.proto_gen.action;
 /**
  * Protobuf type {@code action.LoginResponse}
  */
-public  final class LoginResponse extends
-    com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:action.LoginResponse)
-    LoginResponseOrBuilder {
-  // Use LoginResponse.newBuilder() to construct.
-  private LoginResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-  private LoginResponse() {
-    token_ = "";
-  }
+public final class LoginResponse extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:action.LoginResponse)
+        LoginResponseOrBuilder {
+    // Use LoginResponse.newBuilder() to construct.
+    private LoginResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+    }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
-  }
-  private LoginResponse(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    int mutable_bitField0_ = 0;
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          default: {
-            if (!input.skipField(tag)) {
-              done = true;
-            }
-            break;
-          }
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+    private LoginResponse() {
+        userId_ = 0L;
+    }
 
-            token_ = s;
-            break;
-          }
-          case 2042: {
-            violet.action.common.proto_gen.action.BaseResp.Builder subBuilder = null;
-            if (baseResp_ != null) {
-              subBuilder = baseResp_.toBuilder();
-            }
-            baseResp_ = input.readMessage(violet.action.common.proto_gen.action.BaseResp.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(baseResp_);
-              baseResp_ = subBuilder.buildPartial();
-            }
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
 
-            break;
-          }
+    private LoginResponse(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+            boolean done = false;
+            while (!done) {
+                int tag = input.readTag();
+                switch (tag) {
+                    case 0:
+                        done = true;
+                        break;
+                    default: {
+                        if (!input.skipField(tag)) {
+                            done = true;
+                        }
+                        break;
+                    }
+                    case 8: {
+
+                        userId_ = input.readInt64();
+                        break;
+                    }
+                    case 2042: {
+                        violet.action.common.proto_gen.common.BaseResp.Builder subBuilder = null;
+                        if (baseResp_ != null) {
+                            subBuilder = baseResp_.toBuilder();
+                        }
+                        baseResp_ = input.readMessage(violet.action.common.proto_gen.common.BaseResp.parser(), extensionRegistry);
+                        if (subBuilder != null) {
+                            subBuilder.mergeFrom(baseResp_);
+                            baseResp_ = subBuilder.buildPartial();
+                        }
+
+                        break;
+                    }
+                }
+            }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+            throw new com.google.protobuf.InvalidProtocolBufferException(
+                    e).setUnfinishedMessage(this);
+        } finally {
+            makeExtensionsImmutable();
         }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
-    } finally {
-      makeExtensionsImmutable();
     }
-  }
-  public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_descriptor;
-  }
 
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            violet.action.common.proto_gen.action.LoginResponse.class, violet.action.common.proto_gen.action.LoginResponse.Builder.class);
-  }
-
-  public static final int TOKEN_FIELD_NUMBER = 1;
-  private volatile java.lang.Object token_;
-  /**
-   * <code>string token = 1;</code>
-   */
-  public java.lang.String getToken() {
-    java.lang.Object ref = token_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      token_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string token = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getTokenBytes() {
-    java.lang.Object ref = token_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      token_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int BASERESP_FIELD_NUMBER = 255;
-  private violet.action.common.proto_gen.action.BaseResp baseResp_;
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  public boolean hasBaseResp() {
-    return baseResp_ != null;
-  }
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
-    return baseResp_ == null ? violet.action.common.proto_gen.action.BaseResp.getDefaultInstance() : baseResp_;
-  }
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
-    return getBaseResp();
-  }
-
-  private byte memoizedIsInitialized = -1;
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  public void writeTo(com.google.protobuf.CodedOutputStream output)
-                      throws java.io.IOException {
-    if (!getTokenBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, token_);
-    }
-    if (baseResp_ != null) {
-      output.writeMessage(255, getBaseResp());
-    }
-  }
-
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (!getTokenBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, token_);
-    }
-    if (baseResp_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(255, getBaseResp());
-    }
-    memoizedSize = size;
-    return size;
-  }
-
-  private static final long serialVersionUID = 0L;
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-     return true;
-    }
-    if (!(obj instanceof violet.action.common.proto_gen.action.LoginResponse)) {
-      return super.equals(obj);
-    }
-    violet.action.common.proto_gen.action.LoginResponse other = (violet.action.common.proto_gen.action.LoginResponse) obj;
-
-    boolean result = true;
-    result = result && getToken()
-        .equals(other.getToken());
-    result = result && (hasBaseResp() == other.hasBaseResp());
-    if (hasBaseResp()) {
-      result = result && getBaseResp()
-          .equals(other.getBaseResp());
-    }
-    return result;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TOKEN_FIELD_NUMBER;
-    hash = (53 * hash) + getToken().hashCode();
-    if (hasBaseResp()) {
-      hash = (37 * hash) + BASERESP_FIELD_NUMBER;
-      hash = (53 * hash) + getBaseResp().hashCode();
-    }
-    hash = (29 * hash) + unknownFields.hashCode();
-    memoizedHashCode = hash;
-    return hash;
-  }
-
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
-      java.nio.ByteBuffer data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
-      java.nio.ByteBuffer data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
-      byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(java.io.InputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseDelimitedFrom(java.io.InputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseDelimitedWithIOException(PARSER, input);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseDelimitedFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
-      com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input);
-  }
-  public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input, extensionRegistry);
-  }
-
-  public Builder newBuilderForType() { return newBuilder(); }
-  public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
-  }
-  public static Builder newBuilder(violet.action.common.proto_gen.action.LoginResponse prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-  }
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE
-        ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
-  /**
-   * Protobuf type {@code action.LoginResponse}
-   */
-  public static final class Builder extends
-      com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:action.LoginResponse)
-      violet.action.common.proto_gen.action.LoginResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_descriptor;
+    getDescriptor() {
+        return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    internalGetFieldAccessorTable() {
+        return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        violet.action.common.proto_gen.action.LoginResponse.class, violet.action.common.proto_gen.action.LoginResponse.Builder.class);
+    }
+
+    public static final int USER_ID_FIELD_NUMBER = 1;
+    private long userId_;
+
+    /**
+     * <code>int64 user_id = 1;</code>
+     */
+    public long getUserId() {
+        return userId_;
+    }
+
+    public static final int BASERESP_FIELD_NUMBER = 255;
+    private violet.action.common.proto_gen.common.BaseResp baseResp_;
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    public boolean hasBaseResp() {
+        return baseResp_ != null;
+    }
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    public violet.action.common.proto_gen.common.BaseResp getBaseResp() {
+        return baseResp_ == null ? violet.action.common.proto_gen.common.BaseResp.getDefaultInstance() : baseResp_;
+    }
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    public violet.action.common.proto_gen.common.BaseRespOrBuilder getBaseRespOrBuilder() {
+        return getBaseResp();
+    }
+
+    private byte memoizedIsInitialized = -1;
+
+    public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+            throws java.io.IOException {
+        if (userId_ != 0L) {
+            output.writeInt64(1, userId_);
+        }
+        if (baseResp_ != null) {
+            output.writeMessage(255, getBaseResp());
+        }
+    }
+
+    public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (userId_ != 0L) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeInt64Size(1, userId_);
+        }
+        if (baseResp_ != null) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeMessageSize(255, getBaseResp());
+        }
+        memoizedSize = size;
+        return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof violet.action.common.proto_gen.action.LoginResponse)) {
+            return super.equals(obj);
+        }
+        violet.action.common.proto_gen.action.LoginResponse other = (violet.action.common.proto_gen.action.LoginResponse) obj;
+
+        boolean result = true;
+        result = result && (getUserId()
+                == other.getUserId());
+        result = result && (hasBaseResp() == other.hasBaseResp());
+        if (hasBaseResp()) {
+            result = result && getBaseResp()
+                    .equals(other.getBaseResp());
+        }
+        return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        if (memoizedHashCode != 0) {
+            return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (37 * hash) + USER_ID_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+                getUserId());
+        if (hasBaseResp()) {
+            hash = (37 * hash) + BASERESP_FIELD_NUMBER;
+            hash = (53 * hash) + getBaseResp().hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input);
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() {
+        return newBuilder();
+    }
+
+    public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(violet.action.common.proto_gen.action.LoginResponse prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
+    public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+                ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+    }
+
+    /**
+     * Protobuf type {@code action.LoginResponse}
+     */
+    public static final class Builder extends
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:action.LoginResponse)
+            violet.action.common.proto_gen.action.LoginResponseOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              violet.action.common.proto_gen.action.LoginResponse.class, violet.action.common.proto_gen.action.LoginResponse.Builder.class);
-    }
+            return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(
+                            violet.action.common.proto_gen.action.LoginResponse.class, violet.action.common.proto_gen.action.LoginResponse.Builder.class);
+        }
 
-    // Construct using violet.action.common.proto_gen.action.LoginResponse.newBuilder()
-    private Builder() {
-      maybeForceBuilderInitialization();
-    }
+        // Construct using violet.action.common.proto_gen.action.LoginResponse.newBuilder()
+        private Builder() {
+            maybeForceBuilderInitialization();
+        }
 
-    private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
-      }
-    }
-    public Builder clear() {
-      super.clear();
-      token_ = "";
+        private Builder(
+                com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            super(parent);
+            maybeForceBuilderInitialization();
+        }
 
-      if (baseRespBuilder_ == null) {
-        baseResp_ = null;
-      } else {
-        baseResp_ = null;
-        baseRespBuilder_ = null;
-      }
-      return this;
-    }
+        private void maybeForceBuilderInitialization() {
+            if (com.google.protobuf.GeneratedMessageV3
+                    .alwaysUseFieldBuilders) {
+            }
+        }
 
-    public com.google.protobuf.Descriptors.Descriptor
+        public Builder clear() {
+            super.clear();
+            userId_ = 0L;
+
+            if (baseRespBuilder_ == null) {
+                baseResp_ = null;
+            } else {
+                baseResp_ = null;
+                baseRespBuilder_ = null;
+            }
+            return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_descriptor;
+            return violet.action.common.proto_gen.action.Action.internal_static_action_LoginResponse_descriptor;
+        }
+
+        public violet.action.common.proto_gen.action.LoginResponse getDefaultInstanceForType() {
+            return violet.action.common.proto_gen.action.LoginResponse.getDefaultInstance();
+        }
+
+        public violet.action.common.proto_gen.action.LoginResponse build() {
+            violet.action.common.proto_gen.action.LoginResponse result = buildPartial();
+            if (!result.isInitialized()) {
+                throw newUninitializedMessageException(result);
+            }
+            return result;
+        }
+
+        public violet.action.common.proto_gen.action.LoginResponse buildPartial() {
+            violet.action.common.proto_gen.action.LoginResponse result = new violet.action.common.proto_gen.action.LoginResponse(this);
+            result.userId_ = userId_;
+            if (baseRespBuilder_ == null) {
+                result.baseResp_ = baseResp_;
+            } else {
+                result.baseResp_ = baseRespBuilder_.build();
+            }
+            onBuilt();
+            return result;
+        }
+
+        public Builder clone() {
+            return (Builder) super.clone();
+        }
+
+        public Builder setField(
+                com.google.protobuf.Descriptors.FieldDescriptor field,
+                Object value) {
+            return (Builder) super.setField(field, value);
+        }
+
+        public Builder clearField(
+                com.google.protobuf.Descriptors.FieldDescriptor field) {
+            return (Builder) super.clearField(field);
+        }
+
+        public Builder clearOneof(
+                com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+            return (Builder) super.clearOneof(oneof);
+        }
+
+        public Builder setRepeatedField(
+                com.google.protobuf.Descriptors.FieldDescriptor field,
+                int index, Object value) {
+            return (Builder) super.setRepeatedField(field, index, value);
+        }
+
+        public Builder addRepeatedField(
+                com.google.protobuf.Descriptors.FieldDescriptor field,
+                Object value) {
+            return (Builder) super.addRepeatedField(field, value);
+        }
+
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+            if (other instanceof violet.action.common.proto_gen.action.LoginResponse) {
+                return mergeFrom((violet.action.common.proto_gen.action.LoginResponse) other);
+            } else {
+                super.mergeFrom(other);
+                return this;
+            }
+        }
+
+        public Builder mergeFrom(violet.action.common.proto_gen.action.LoginResponse other) {
+            if (other == violet.action.common.proto_gen.action.LoginResponse.getDefaultInstance()) return this;
+            if (other.getUserId() != 0L) {
+                setUserId(other.getUserId());
+            }
+            if (other.hasBaseResp()) {
+                mergeBaseResp(other.getBaseResp());
+            }
+            onChanged();
+            return this;
+        }
+
+        public final boolean isInitialized() {
+            return true;
+        }
+
+        public Builder mergeFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            violet.action.common.proto_gen.action.LoginResponse parsedMessage = null;
+            try {
+                parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                parsedMessage = (violet.action.common.proto_gen.action.LoginResponse) e.getUnfinishedMessage();
+                throw e.unwrapIOException();
+            } finally {
+                if (parsedMessage != null) {
+                    mergeFrom(parsedMessage);
+                }
+            }
+            return this;
+        }
+
+        private long userId_;
+
+        /**
+         * <code>int64 user_id = 1;</code>
+         */
+        public long getUserId() {
+            return userId_;
+        }
+
+        /**
+         * <code>int64 user_id = 1;</code>
+         */
+        public Builder setUserId(long value) {
+
+            userId_ = value;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>int64 user_id = 1;</code>
+         */
+        public Builder clearUserId() {
+
+            userId_ = 0L;
+            onChanged();
+            return this;
+        }
+
+        private violet.action.common.proto_gen.common.BaseResp baseResp_ = null;
+        private com.google.protobuf.SingleFieldBuilderV3<
+                violet.action.common.proto_gen.common.BaseResp, violet.action.common.proto_gen.common.BaseResp.Builder, violet.action.common.proto_gen.common.BaseRespOrBuilder> baseRespBuilder_;
+
+        /**
+         * <code>.common.BaseResp baseResp = 255;</code>
+         */
+        public boolean hasBaseResp() {
+            return baseRespBuilder_ != null || baseResp_ != null;
+        }
+
+        /**
+         * <code>.common.BaseResp baseResp = 255;</code>
+         */
+        public violet.action.common.proto_gen.common.BaseResp getBaseResp() {
+            if (baseRespBuilder_ == null) {
+                return baseResp_ == null ? violet.action.common.proto_gen.common.BaseResp.getDefaultInstance() : baseResp_;
+            } else {
+                return baseRespBuilder_.getMessage();
+            }
+        }
+
+        /**
+         * <code>.common.BaseResp baseResp = 255;</code>
+         */
+        public Builder setBaseResp(violet.action.common.proto_gen.common.BaseResp value) {
+            if (baseRespBuilder_ == null) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                baseResp_ = value;
+                onChanged();
+            } else {
+                baseRespBuilder_.setMessage(value);
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.BaseResp baseResp = 255;</code>
+         */
+        public Builder setBaseResp(
+                violet.action.common.proto_gen.common.BaseResp.Builder builderForValue) {
+            if (baseRespBuilder_ == null) {
+                baseResp_ = builderForValue.build();
+                onChanged();
+            } else {
+                baseRespBuilder_.setMessage(builderForValue.build());
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.BaseResp baseResp = 255;</code>
+         */
+        public Builder mergeBaseResp(violet.action.common.proto_gen.common.BaseResp value) {
+            if (baseRespBuilder_ == null) {
+                if (baseResp_ != null) {
+                    baseResp_ =
+                            violet.action.common.proto_gen.common.BaseResp.newBuilder(baseResp_).mergeFrom(value).buildPartial();
+                } else {
+                    baseResp_ = value;
+                }
+                onChanged();
+            } else {
+                baseRespBuilder_.mergeFrom(value);
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.BaseResp baseResp = 255;</code>
+         */
+        public Builder clearBaseResp() {
+            if (baseRespBuilder_ == null) {
+                baseResp_ = null;
+                onChanged();
+            } else {
+                baseResp_ = null;
+                baseRespBuilder_ = null;
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.BaseResp baseResp = 255;</code>
+         */
+        public violet.action.common.proto_gen.common.BaseResp.Builder getBaseRespBuilder() {
+
+            onChanged();
+            return getBaseRespFieldBuilder().getBuilder();
+        }
+
+        /**
+         * <code>.common.BaseResp baseResp = 255;</code>
+         */
+        public violet.action.common.proto_gen.common.BaseRespOrBuilder getBaseRespOrBuilder() {
+            if (baseRespBuilder_ != null) {
+                return baseRespBuilder_.getMessageOrBuilder();
+            } else {
+                return baseResp_ == null ?
+                        violet.action.common.proto_gen.common.BaseResp.getDefaultInstance() : baseResp_;
+            }
+        }
+
+        /**
+         * <code>.common.BaseResp baseResp = 255;</code>
+         */
+        private com.google.protobuf.SingleFieldBuilderV3<
+                violet.action.common.proto_gen.common.BaseResp, violet.action.common.proto_gen.common.BaseResp.Builder, violet.action.common.proto_gen.common.BaseRespOrBuilder>
+        getBaseRespFieldBuilder() {
+            if (baseRespBuilder_ == null) {
+                baseRespBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+                        violet.action.common.proto_gen.common.BaseResp, violet.action.common.proto_gen.common.BaseResp.Builder, violet.action.common.proto_gen.common.BaseRespOrBuilder>(
+                        getBaseResp(),
+                        getParentForChildren(),
+                        isClean());
+                baseResp_ = null;
+            }
+            return baseRespBuilder_;
+        }
+
+        public final Builder setUnknownFields(
+                final com.google.protobuf.UnknownFieldSet unknownFields) {
+            return this;
+        }
+
+        public final Builder mergeUnknownFields(
+                final com.google.protobuf.UnknownFieldSet unknownFields) {
+            return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:action.LoginResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:action.LoginResponse)
+    private static final violet.action.common.proto_gen.action.LoginResponse DEFAULT_INSTANCE;
+
+    static {
+        DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.LoginResponse();
+    }
+
+    public static violet.action.common.proto_gen.action.LoginResponse getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<LoginResponse>
+            PARSER = new com.google.protobuf.AbstractParser<LoginResponse>() {
+        public LoginResponse parsePartialFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return new LoginResponse(input, extensionRegistry);
+        }
+    };
+
+    public static com.google.protobuf.Parser<LoginResponse> parser() {
+        return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<LoginResponse> getParserForType() {
+        return PARSER;
     }
 
     public violet.action.common.proto_gen.action.LoginResponse getDefaultInstanceForType() {
-      return violet.action.common.proto_gen.action.LoginResponse.getDefaultInstance();
+        return DEFAULT_INSTANCE;
     }
-
-    public violet.action.common.proto_gen.action.LoginResponse build() {
-      violet.action.common.proto_gen.action.LoginResponse result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    public violet.action.common.proto_gen.action.LoginResponse buildPartial() {
-      violet.action.common.proto_gen.action.LoginResponse result = new violet.action.common.proto_gen.action.LoginResponse(this);
-      result.token_ = token_;
-      if (baseRespBuilder_ == null) {
-        result.baseResp_ = baseResp_;
-      } else {
-        result.baseResp_ = baseRespBuilder_.build();
-      }
-      onBuilt();
-      return result;
-    }
-
-    public Builder clone() {
-      return (Builder) super.clone();
-    }
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        Object value) {
-      return (Builder) super.setField(field, value);
-    }
-    public Builder clearField(
-        com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
-    }
-    public Builder clearOneof(
-        com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
-    }
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
-    }
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        Object value) {
-      return (Builder) super.addRepeatedField(field, value);
-    }
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof violet.action.common.proto_gen.action.LoginResponse) {
-        return mergeFrom((violet.action.common.proto_gen.action.LoginResponse)other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(violet.action.common.proto_gen.action.LoginResponse other) {
-      if (other == violet.action.common.proto_gen.action.LoginResponse.getDefaultInstance()) return this;
-      if (!other.getToken().isEmpty()) {
-        token_ = other.token_;
-        onChanged();
-      }
-      if (other.hasBaseResp()) {
-        mergeBaseResp(other.getBaseResp());
-      }
-      onChanged();
-      return this;
-    }
-
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      violet.action.common.proto_gen.action.LoginResponse parsedMessage = null;
-      try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (violet.action.common.proto_gen.action.LoginResponse) e.getUnfinishedMessage();
-        throw e.unwrapIOException();
-      } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
-      return this;
-    }
-
-    private java.lang.Object token_ = "";
-    /**
-     * <code>string token = 1;</code>
-     */
-    public java.lang.String getToken() {
-      java.lang.Object ref = token_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        token_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string token = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getTokenBytes() {
-      java.lang.Object ref = token_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        token_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string token = 1;</code>
-     */
-    public Builder setToken(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      token_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string token = 1;</code>
-     */
-    public Builder clearToken() {
-      
-      token_ = getDefaultInstance().getToken();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string token = 1;</code>
-     */
-    public Builder setTokenBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      token_ = value;
-      onChanged();
-      return this;
-    }
-
-    private violet.action.common.proto_gen.action.BaseResp baseResp_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> baseRespBuilder_;
-    /**
-     * <code>.action.BaseResp baseResp = 255;</code>
-     */
-    public boolean hasBaseResp() {
-      return baseRespBuilder_ != null || baseResp_ != null;
-    }
-    /**
-     * <code>.action.BaseResp baseResp = 255;</code>
-     */
-    public violet.action.common.proto_gen.action.BaseResp getBaseResp() {
-      if (baseRespBuilder_ == null) {
-        return baseResp_ == null ? violet.action.common.proto_gen.action.BaseResp.getDefaultInstance() : baseResp_;
-      } else {
-        return baseRespBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>.action.BaseResp baseResp = 255;</code>
-     */
-    public Builder setBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
-      if (baseRespBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        baseResp_ = value;
-        onChanged();
-      } else {
-        baseRespBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.action.BaseResp baseResp = 255;</code>
-     */
-    public Builder setBaseResp(
-        violet.action.common.proto_gen.action.BaseResp.Builder builderForValue) {
-      if (baseRespBuilder_ == null) {
-        baseResp_ = builderForValue.build();
-        onChanged();
-      } else {
-        baseRespBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.action.BaseResp baseResp = 255;</code>
-     */
-    public Builder mergeBaseResp(violet.action.common.proto_gen.action.BaseResp value) {
-      if (baseRespBuilder_ == null) {
-        if (baseResp_ != null) {
-          baseResp_ =
-            violet.action.common.proto_gen.action.BaseResp.newBuilder(baseResp_).mergeFrom(value).buildPartial();
-        } else {
-          baseResp_ = value;
-        }
-        onChanged();
-      } else {
-        baseRespBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.action.BaseResp baseResp = 255;</code>
-     */
-    public Builder clearBaseResp() {
-      if (baseRespBuilder_ == null) {
-        baseResp_ = null;
-        onChanged();
-      } else {
-        baseResp_ = null;
-        baseRespBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.action.BaseResp baseResp = 255;</code>
-     */
-    public violet.action.common.proto_gen.action.BaseResp.Builder getBaseRespBuilder() {
-      
-      onChanged();
-      return getBaseRespFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.action.BaseResp baseResp = 255;</code>
-     */
-    public violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder() {
-      if (baseRespBuilder_ != null) {
-        return baseRespBuilder_.getMessageOrBuilder();
-      } else {
-        return baseResp_ == null ?
-            violet.action.common.proto_gen.action.BaseResp.getDefaultInstance() : baseResp_;
-      }
-    }
-    /**
-     * <code>.action.BaseResp baseResp = 255;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder> 
-        getBaseRespFieldBuilder() {
-      if (baseRespBuilder_ == null) {
-        baseRespBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            violet.action.common.proto_gen.action.BaseResp, violet.action.common.proto_gen.action.BaseResp.Builder, violet.action.common.proto_gen.action.BaseRespOrBuilder>(
-                getBaseResp(),
-                getParentForChildren(),
-                isClean());
-        baseResp_ = null;
-      }
-      return baseRespBuilder_;
-    }
-    public final Builder setUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return this;
-    }
-
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return this;
-    }
-
-
-    // @@protoc_insertion_point(builder_scope:action.LoginResponse)
-  }
-
-  // @@protoc_insertion_point(class_scope:action.LoginResponse)
-  private static final violet.action.common.proto_gen.action.LoginResponse DEFAULT_INSTANCE;
-  static {
-    DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.LoginResponse();
-  }
-
-  public static violet.action.common.proto_gen.action.LoginResponse getDefaultInstance() {
-    return DEFAULT_INSTANCE;
-  }
-
-  private static final com.google.protobuf.Parser<LoginResponse>
-      PARSER = new com.google.protobuf.AbstractParser<LoginResponse>() {
-    public LoginResponse parsePartialFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-        return new LoginResponse(input, extensionRegistry);
-    }
-  };
-
-  public static com.google.protobuf.Parser<LoginResponse> parser() {
-    return PARSER;
-  }
-
-  @java.lang.Override
-  public com.google.protobuf.Parser<LoginResponse> getParserForType() {
-    return PARSER;
-  }
-
-  public violet.action.common.proto_gen.action.LoginResponse getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
-  }
 
 }
 

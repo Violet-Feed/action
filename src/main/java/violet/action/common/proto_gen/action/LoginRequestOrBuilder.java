@@ -4,26 +4,28 @@
 package violet.action.common.proto_gen.action;
 
 public interface LoginRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:action.LoginRequest)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:action.LoginRequest)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>string username = 1;</code>
-   */
-  java.lang.String getUsername();
-  /**
-   * <code>string username = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getUsernameBytes();
+    /**
+     * <code>string username = 1;</code>
+     */
+    java.lang.String getUsername();
 
-  /**
-   * <code>string password = 2;</code>
-   */
-  java.lang.String getPassword();
-  /**
-   * <code>string password = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getPasswordBytes();
+    /**
+     * <code>string username = 1;</code>
+     */
+    com.google.protobuf.ByteString
+    getUsernameBytes();
+
+    /**
+     * <code>string password = 2;</code>
+     */
+    java.lang.String getPassword();
+
+    /**
+     * <code>string password = 2;</code>
+     */
+    com.google.protobuf.ByteString
+    getPasswordBytes();
 }

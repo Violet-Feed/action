@@ -4,42 +4,46 @@
 package violet.action.common.proto_gen.action;
 
 public interface GetFollowListResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:action.GetFollowListResponse)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:action.GetFollowListResponse)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>repeated int64 user_ids = 1;</code>
-   */
-  java.util.List<java.lang.Long> getUserIdsList();
-  /**
-   * <code>repeated int64 user_ids = 1;</code>
-   */
-  int getUserIdsCount();
-  /**
-   * <code>repeated int64 user_ids = 1;</code>
-   */
-  long getUserIds(int index);
+    /**
+     * <code>repeated int64 user_ids = 1;</code>
+     */
+    java.util.List<java.lang.Long> getUserIdsList();
 
-  /**
-   * <code>int64 total = 2;</code>
-   */
-  long getTotal();
+    /**
+     * <code>repeated int64 user_ids = 1;</code>
+     */
+    int getUserIdsCount();
 
-  /**
-   * <code>bool has_more = 3;</code>
-   */
-  boolean getHasMore();
+    /**
+     * <code>repeated int64 user_ids = 1;</code>
+     */
+    long getUserIds(int index);
 
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  boolean hasBaseResp();
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  violet.action.common.proto_gen.action.BaseResp getBaseResp();
-  /**
-   * <code>.action.BaseResp baseResp = 255;</code>
-   */
-  violet.action.common.proto_gen.action.BaseRespOrBuilder getBaseRespOrBuilder();
+    /**
+     * <code>int64 total = 2;</code>
+     */
+    long getTotal();
+
+    /**
+     * <code>bool has_more = 3;</code>
+     */
+    boolean getHasMore();
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    boolean hasBaseResp();
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    violet.action.common.proto_gen.common.BaseResp getBaseResp();
+
+    /**
+     * <code>.common.BaseResp baseResp = 255;</code>
+     */
+    violet.action.common.proto_gen.common.BaseRespOrBuilder getBaseRespOrBuilder();
 }

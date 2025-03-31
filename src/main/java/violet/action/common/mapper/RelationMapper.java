@@ -8,9 +8,9 @@ import violet.action.common.pojo.User;
 import java.util.List;
 
 @Repository
-public interface RelationMapper extends Neo4jRepository<User,Long> {
+public interface RelationMapper extends Neo4jRepository<User, Long> {
     @Query("MATCH (a:user {userId: {0}}), (b:user {userId: {1}}) CREATE (a)-[:follow]->(b)")
-    void follow(Long fromUserId,Long toUserId);
+    void follow(Long fromUserId, Long toUserId);
 
     @Query("MATCH (a:user {userId: {0}})-[r:follow]->(b:user {userId: {1}}) DELETE r")
     void unfollow(Long fromUserId, Long toUserId);

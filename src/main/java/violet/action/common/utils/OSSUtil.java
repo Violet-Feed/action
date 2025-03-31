@@ -8,8 +8,6 @@ import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 
 import java.io.File;
-import java.net.URL;
-import java.util.Date;
 
 public class OSSUtil {
     public static void main(String[] args) throws Exception {
@@ -25,7 +23,7 @@ public class OSSUtil {
         String objectName = "avatar/logo.png";
         // 填写本地文件的完整路径，例如D:\\localpath\\examplefile.txt。
         // 如果未指定本地路径，则默认从示例程序所属项目对应本地路径中上传文件。
-        String filePath= "D:\\H\\Downloads\\logo.png";
+        String filePath = "D:\\H\\Downloads\\logo.png";
         // 填写Bucket所在地域。以华东1（杭州）为例，Region填写为cn-hangzhou。
         String region = "cn-beijing";
 

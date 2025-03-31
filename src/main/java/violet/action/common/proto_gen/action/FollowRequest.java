@@ -6,491 +6,531 @@ package violet.action.common.proto_gen.action;
 /**
  * Protobuf type {@code action.FollowRequest}
  */
-public  final class FollowRequest extends
-    com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:action.FollowRequest)
-    FollowRequestOrBuilder {
-  // Use FollowRequest.newBuilder() to construct.
-  private FollowRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-  private FollowRequest() {
-    fromUserId_ = 0L;
-    toUserId_ = 0L;
-  }
+public final class FollowRequest extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:action.FollowRequest)
+        FollowRequestOrBuilder {
+    // Use FollowRequest.newBuilder() to construct.
+    private FollowRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+    }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
-  }
-  private FollowRequest(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    int mutable_bitField0_ = 0;
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          default: {
-            if (!input.skipField(tag)) {
-              done = true;
+    private FollowRequest() {
+        fromUserId_ = 0L;
+        toUserId_ = 0L;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+
+    private FollowRequest(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+            boolean done = false;
+            while (!done) {
+                int tag = input.readTag();
+                switch (tag) {
+                    case 0:
+                        done = true;
+                        break;
+                    default: {
+                        if (!input.skipField(tag)) {
+                            done = true;
+                        }
+                        break;
+                    }
+                    case 8: {
+
+                        fromUserId_ = input.readInt64();
+                        break;
+                    }
+                    case 16: {
+
+                        toUserId_ = input.readInt64();
+                        break;
+                    }
+                }
             }
-            break;
-          }
-          case 8: {
-
-            fromUserId_ = input.readInt64();
-            break;
-          }
-          case 16: {
-
-            toUserId_ = input.readInt64();
-            break;
-          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+            throw new com.google.protobuf.InvalidProtocolBufferException(
+                    e).setUnfinishedMessage(this);
+        } finally {
+            makeExtensionsImmutable();
         }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
-    } finally {
-      makeExtensionsImmutable();
     }
-  }
-  public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
-    return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_descriptor;
-  }
 
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            violet.action.common.proto_gen.action.FollowRequest.class, violet.action.common.proto_gen.action.FollowRequest.Builder.class);
-  }
-
-  public static final int FROM_USER_ID_FIELD_NUMBER = 1;
-  private long fromUserId_;
-  /**
-   * <code>int64 from_user_id = 1;</code>
-   */
-  public long getFromUserId() {
-    return fromUserId_;
-  }
-
-  public static final int TO_USER_ID_FIELD_NUMBER = 2;
-  private long toUserId_;
-  /**
-   * <code>int64 to_user_id = 2;</code>
-   */
-  public long getToUserId() {
-    return toUserId_;
-  }
-
-  private byte memoizedIsInitialized = -1;
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  public void writeTo(com.google.protobuf.CodedOutputStream output)
-                      throws java.io.IOException {
-    if (fromUserId_ != 0L) {
-      output.writeInt64(1, fromUserId_);
-    }
-    if (toUserId_ != 0L) {
-      output.writeInt64(2, toUserId_);
-    }
-  }
-
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (fromUserId_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(1, fromUserId_);
-    }
-    if (toUserId_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(2, toUserId_);
-    }
-    memoizedSize = size;
-    return size;
-  }
-
-  private static final long serialVersionUID = 0L;
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
-    if (obj == this) {
-     return true;
-    }
-    if (!(obj instanceof violet.action.common.proto_gen.action.FollowRequest)) {
-      return super.equals(obj);
-    }
-    violet.action.common.proto_gen.action.FollowRequest other = (violet.action.common.proto_gen.action.FollowRequest) obj;
-
-    boolean result = true;
-    result = result && (getFromUserId()
-        == other.getFromUserId());
-    result = result && (getToUserId()
-        == other.getToUserId());
-    return result;
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + FROM_USER_ID_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getFromUserId());
-    hash = (37 * hash) + TO_USER_ID_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getToUserId());
-    hash = (29 * hash) + unknownFields.hashCode();
-    memoizedHashCode = hash;
-    return hash;
-  }
-
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
-      java.nio.ByteBuffer data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
-      java.nio.ByteBuffer data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
-      byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(java.io.InputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseDelimitedFrom(java.io.InputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseDelimitedWithIOException(PARSER, input);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseDelimitedFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
-      com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input);
-  }
-  public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input, extensionRegistry);
-  }
-
-  public Builder newBuilderForType() { return newBuilder(); }
-  public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
-  }
-  public static Builder newBuilder(violet.action.common.proto_gen.action.FollowRequest prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-  }
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE
-        ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @java.lang.Override
-  protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
-  /**
-   * Protobuf type {@code action.FollowRequest}
-   */
-  public static final class Builder extends
-      com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:action.FollowRequest)
-      violet.action.common.proto_gen.action.FollowRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_descriptor;
+    getDescriptor() {
+        return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              violet.action.common.proto_gen.action.FollowRequest.class, violet.action.common.proto_gen.action.FollowRequest.Builder.class);
+    internalGetFieldAccessorTable() {
+        return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        violet.action.common.proto_gen.action.FollowRequest.class, violet.action.common.proto_gen.action.FollowRequest.Builder.class);
     }
 
-    // Construct using violet.action.common.proto_gen.action.FollowRequest.newBuilder()
-    private Builder() {
-      maybeForceBuilderInitialization();
-    }
+    public static final int FROM_USER_ID_FIELD_NUMBER = 1;
+    private long fromUserId_;
 
-    private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
-      }
-    }
-    public Builder clear() {
-      super.clear();
-      fromUserId_ = 0L;
-
-      toUserId_ = 0L;
-
-      return this;
-    }
-
-    public com.google.protobuf.Descriptors.Descriptor
-        getDescriptorForType() {
-      return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_descriptor;
-    }
-
-    public violet.action.common.proto_gen.action.FollowRequest getDefaultInstanceForType() {
-      return violet.action.common.proto_gen.action.FollowRequest.getDefaultInstance();
-    }
-
-    public violet.action.common.proto_gen.action.FollowRequest build() {
-      violet.action.common.proto_gen.action.FollowRequest result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    public violet.action.common.proto_gen.action.FollowRequest buildPartial() {
-      violet.action.common.proto_gen.action.FollowRequest result = new violet.action.common.proto_gen.action.FollowRequest(this);
-      result.fromUserId_ = fromUserId_;
-      result.toUserId_ = toUserId_;
-      onBuilt();
-      return result;
-    }
-
-    public Builder clone() {
-      return (Builder) super.clone();
-    }
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        Object value) {
-      return (Builder) super.setField(field, value);
-    }
-    public Builder clearField(
-        com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
-    }
-    public Builder clearOneof(
-        com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
-    }
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
-    }
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        Object value) {
-      return (Builder) super.addRepeatedField(field, value);
-    }
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof violet.action.common.proto_gen.action.FollowRequest) {
-        return mergeFrom((violet.action.common.proto_gen.action.FollowRequest)other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(violet.action.common.proto_gen.action.FollowRequest other) {
-      if (other == violet.action.common.proto_gen.action.FollowRequest.getDefaultInstance()) return this;
-      if (other.getFromUserId() != 0L) {
-        setFromUserId(other.getFromUserId());
-      }
-      if (other.getToUserId() != 0L) {
-        setToUserId(other.getToUserId());
-      }
-      onChanged();
-      return this;
-    }
-
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      violet.action.common.proto_gen.action.FollowRequest parsedMessage = null;
-      try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (violet.action.common.proto_gen.action.FollowRequest) e.getUnfinishedMessage();
-        throw e.unwrapIOException();
-      } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
-      return this;
-    }
-
-    private long fromUserId_ ;
     /**
      * <code>int64 from_user_id = 1;</code>
      */
     public long getFromUserId() {
-      return fromUserId_;
-    }
-    /**
-     * <code>int64 from_user_id = 1;</code>
-     */
-    public Builder setFromUserId(long value) {
-      
-      fromUserId_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int64 from_user_id = 1;</code>
-     */
-    public Builder clearFromUserId() {
-      
-      fromUserId_ = 0L;
-      onChanged();
-      return this;
+        return fromUserId_;
     }
 
-    private long toUserId_ ;
+    public static final int TO_USER_ID_FIELD_NUMBER = 2;
+    private long toUserId_;
+
     /**
      * <code>int64 to_user_id = 2;</code>
      */
     public long getToUserId() {
-      return toUserId_;
+        return toUserId_;
     }
+
+    private byte memoizedIsInitialized = -1;
+
+    public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+            throws java.io.IOException {
+        if (fromUserId_ != 0L) {
+            output.writeInt64(1, fromUserId_);
+        }
+        if (toUserId_ != 0L) {
+            output.writeInt64(2, toUserId_);
+        }
+    }
+
+    public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (fromUserId_ != 0L) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeInt64Size(1, fromUserId_);
+        }
+        if (toUserId_ != 0L) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeInt64Size(2, toUserId_);
+        }
+        memoizedSize = size;
+        return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof violet.action.common.proto_gen.action.FollowRequest)) {
+            return super.equals(obj);
+        }
+        violet.action.common.proto_gen.action.FollowRequest other = (violet.action.common.proto_gen.action.FollowRequest) obj;
+
+        boolean result = true;
+        result = result && (getFromUserId()
+                == other.getFromUserId());
+        result = result && (getToUserId()
+                == other.getToUserId());
+        return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        if (memoizedHashCode != 0) {
+            return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (37 * hash) + FROM_USER_ID_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+                getFromUserId());
+        hash = (37 * hash) + TO_USER_ID_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+                getToUserId());
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input);
+    }
+
+    public static violet.action.common.proto_gen.action.FollowRequest parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() {
+        return newBuilder();
+    }
+
+    public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(violet.action.common.proto_gen.action.FollowRequest prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
+    public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+                ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+    }
+
     /**
-     * <code>int64 to_user_id = 2;</code>
+     * Protobuf type {@code action.FollowRequest}
      */
-    public Builder setToUserId(long value) {
-      
-      toUserId_ = value;
-      onChanged();
-      return this;
+    public static final class Builder extends
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:action.FollowRequest)
+            violet.action.common.proto_gen.action.FollowRequestOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(
+                            violet.action.common.proto_gen.action.FollowRequest.class, violet.action.common.proto_gen.action.FollowRequest.Builder.class);
+        }
+
+        // Construct using violet.action.common.proto_gen.action.FollowRequest.newBuilder()
+        private Builder() {
+            maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+                com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            super(parent);
+            maybeForceBuilderInitialization();
+        }
+
+        private void maybeForceBuilderInitialization() {
+            if (com.google.protobuf.GeneratedMessageV3
+                    .alwaysUseFieldBuilders) {
+            }
+        }
+
+        public Builder clear() {
+            super.clear();
+            fromUserId_ = 0L;
+
+            toUserId_ = 0L;
+
+            return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+        getDescriptorForType() {
+            return violet.action.common.proto_gen.action.Action.internal_static_action_FollowRequest_descriptor;
+        }
+
+        public violet.action.common.proto_gen.action.FollowRequest getDefaultInstanceForType() {
+            return violet.action.common.proto_gen.action.FollowRequest.getDefaultInstance();
+        }
+
+        public violet.action.common.proto_gen.action.FollowRequest build() {
+            violet.action.common.proto_gen.action.FollowRequest result = buildPartial();
+            if (!result.isInitialized()) {
+                throw newUninitializedMessageException(result);
+            }
+            return result;
+        }
+
+        public violet.action.common.proto_gen.action.FollowRequest buildPartial() {
+            violet.action.common.proto_gen.action.FollowRequest result = new violet.action.common.proto_gen.action.FollowRequest(this);
+            result.fromUserId_ = fromUserId_;
+            result.toUserId_ = toUserId_;
+            onBuilt();
+            return result;
+        }
+
+        public Builder clone() {
+            return (Builder) super.clone();
+        }
+
+        public Builder setField(
+                com.google.protobuf.Descriptors.FieldDescriptor field,
+                Object value) {
+            return (Builder) super.setField(field, value);
+        }
+
+        public Builder clearField(
+                com.google.protobuf.Descriptors.FieldDescriptor field) {
+            return (Builder) super.clearField(field);
+        }
+
+        public Builder clearOneof(
+                com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+            return (Builder) super.clearOneof(oneof);
+        }
+
+        public Builder setRepeatedField(
+                com.google.protobuf.Descriptors.FieldDescriptor field,
+                int index, Object value) {
+            return (Builder) super.setRepeatedField(field, index, value);
+        }
+
+        public Builder addRepeatedField(
+                com.google.protobuf.Descriptors.FieldDescriptor field,
+                Object value) {
+            return (Builder) super.addRepeatedField(field, value);
+        }
+
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+            if (other instanceof violet.action.common.proto_gen.action.FollowRequest) {
+                return mergeFrom((violet.action.common.proto_gen.action.FollowRequest) other);
+            } else {
+                super.mergeFrom(other);
+                return this;
+            }
+        }
+
+        public Builder mergeFrom(violet.action.common.proto_gen.action.FollowRequest other) {
+            if (other == violet.action.common.proto_gen.action.FollowRequest.getDefaultInstance()) return this;
+            if (other.getFromUserId() != 0L) {
+                setFromUserId(other.getFromUserId());
+            }
+            if (other.getToUserId() != 0L) {
+                setToUserId(other.getToUserId());
+            }
+            onChanged();
+            return this;
+        }
+
+        public final boolean isInitialized() {
+            return true;
+        }
+
+        public Builder mergeFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            violet.action.common.proto_gen.action.FollowRequest parsedMessage = null;
+            try {
+                parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                parsedMessage = (violet.action.common.proto_gen.action.FollowRequest) e.getUnfinishedMessage();
+                throw e.unwrapIOException();
+            } finally {
+                if (parsedMessage != null) {
+                    mergeFrom(parsedMessage);
+                }
+            }
+            return this;
+        }
+
+        private long fromUserId_;
+
+        /**
+         * <code>int64 from_user_id = 1;</code>
+         */
+        public long getFromUserId() {
+            return fromUserId_;
+        }
+
+        /**
+         * <code>int64 from_user_id = 1;</code>
+         */
+        public Builder setFromUserId(long value) {
+
+            fromUserId_ = value;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>int64 from_user_id = 1;</code>
+         */
+        public Builder clearFromUserId() {
+
+            fromUserId_ = 0L;
+            onChanged();
+            return this;
+        }
+
+        private long toUserId_;
+
+        /**
+         * <code>int64 to_user_id = 2;</code>
+         */
+        public long getToUserId() {
+            return toUserId_;
+        }
+
+        /**
+         * <code>int64 to_user_id = 2;</code>
+         */
+        public Builder setToUserId(long value) {
+
+            toUserId_ = value;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>int64 to_user_id = 2;</code>
+         */
+        public Builder clearToUserId() {
+
+            toUserId_ = 0L;
+            onChanged();
+            return this;
+        }
+
+        public final Builder setUnknownFields(
+                final com.google.protobuf.UnknownFieldSet unknownFields) {
+            return this;
+        }
+
+        public final Builder mergeUnknownFields(
+                final com.google.protobuf.UnknownFieldSet unknownFields) {
+            return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:action.FollowRequest)
     }
-    /**
-     * <code>int64 to_user_id = 2;</code>
-     */
-    public Builder clearToUserId() {
-      
-      toUserId_ = 0L;
-      onChanged();
-      return this;
-    }
-    public final Builder setUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return this;
+
+    // @@protoc_insertion_point(class_scope:action.FollowRequest)
+    private static final violet.action.common.proto_gen.action.FollowRequest DEFAULT_INSTANCE;
+
+    static {
+        DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.FollowRequest();
     }
 
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return this;
+    public static violet.action.common.proto_gen.action.FollowRequest getDefaultInstance() {
+        return DEFAULT_INSTANCE;
     }
 
+    private static final com.google.protobuf.Parser<FollowRequest>
+            PARSER = new com.google.protobuf.AbstractParser<FollowRequest>() {
+        public FollowRequest parsePartialFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return new FollowRequest(input, extensionRegistry);
+        }
+    };
 
-    // @@protoc_insertion_point(builder_scope:action.FollowRequest)
-  }
-
-  // @@protoc_insertion_point(class_scope:action.FollowRequest)
-  private static final violet.action.common.proto_gen.action.FollowRequest DEFAULT_INSTANCE;
-  static {
-    DEFAULT_INSTANCE = new violet.action.common.proto_gen.action.FollowRequest();
-  }
-
-  public static violet.action.common.proto_gen.action.FollowRequest getDefaultInstance() {
-    return DEFAULT_INSTANCE;
-  }
-
-  private static final com.google.protobuf.Parser<FollowRequest>
-      PARSER = new com.google.protobuf.AbstractParser<FollowRequest>() {
-    public FollowRequest parsePartialFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-        return new FollowRequest(input, extensionRegistry);
+    public static com.google.protobuf.Parser<FollowRequest> parser() {
+        return PARSER;
     }
-  };
 
-  public static com.google.protobuf.Parser<FollowRequest> parser() {
-    return PARSER;
-  }
+    @java.lang.Override
+    public com.google.protobuf.Parser<FollowRequest> getParserForType() {
+        return PARSER;
+    }
 
-  @java.lang.Override
-  public com.google.protobuf.Parser<FollowRequest> getParserForType() {
-    return PARSER;
-  }
-
-  public violet.action.common.proto_gen.action.FollowRequest getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
-  }
+    public violet.action.common.proto_gen.action.FollowRequest getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+    }
 
 }
 

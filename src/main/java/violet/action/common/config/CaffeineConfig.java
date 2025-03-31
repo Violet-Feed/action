@@ -1,12 +1,13 @@
 package violet.action.common.config;
 
-import com.github.benmanes.caffeine.cache.*;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.CacheLoader;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +29,10 @@ public class CaffeineConfig {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public class StarCacheResult{
+    public class StarCacheResult {
         private List<Long> followingList;
         private List<Long> followerList;
-        private Map<Long,Boolean> followingMap;
+        private Map<Long, Boolean> followingMap;
     }
 
     @Bean
@@ -41,13 +42,13 @@ public class CaffeineConfig {
             public StarCacheResult load(@NotNull String key) {
                 String[] parts = key.split(":");
                 Long userId = Long.parseLong(parts[parts.length - 1]);
-                List<Long> followingList=relationModel.getFollowingListFromDB(userId);
-                List<Long> followerList=relationModel.getFollowerListFromDB(userId);
-                Map<Long, Boolean> followingMap=new HashMap<>();
-                for(Long followingId:followingList){
-                    followingMap.put(followingId,Boolean.TRUE);
+                List<Long> followingList = relationModel.getFollowingListFromDB(userId);
+                List<Long> followerList = relationModel.getFollowerListFromDB(userId);
+                Map<Long, Boolean> followingMap = new HashMap<>();
+                for (Long followingId : followingList) {
+                    followingMap.put(followingId, Boolean.TRUE);
                 }
-                return new StarCacheResult(followingList,followerList,followingMap);
+                return new StarCacheResult(followingList, followerList, followingMap);
             }
         };
         LoadingCache<String, StarCacheResult> cache = Caffeine.newBuilder()
@@ -69,8 +70,8 @@ public class CaffeineConfig {
     }
 
     @Bean
-    public Cache<String, Map<Long,Boolean>> hashCaffeineCache() {
-        Cache<String, Map<Long,Boolean>> cache = Caffeine.newBuilder()
+    public Cache<String, Map<Long, Boolean>> hashCaffeineCache() {
+        Cache<String, Map<Long, Boolean>> cache = Caffeine.newBuilder()
                 .initialCapacity(100)
                 .maximumSize(200)
                 .expireAfterWrite(10, TimeUnit.SECONDS)
@@ -91,7 +92,7 @@ public class CaffeineConfig {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public class HitCaffeineCache{
+    public class HitCaffeineCache {
         private Cache<String, AtomicInteger> cache;
         private AtomicInteger totalCount;
     }
@@ -104,6 +105,6 @@ public class CaffeineConfig {
                 .expireAfterWrite(10, TimeUnit.SECONDS)
                 .build();
         AtomicInteger totalCount = new AtomicInteger(0);
-        return new HitCaffeineCache(cache,totalCount);
+        return new HitCaffeineCache(cache, totalCount);
     }
 }

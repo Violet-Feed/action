@@ -4,29 +4,15 @@ option java_multiple_files = true;
 option java_package = "violet.action.common.proto_gen.action";
 option go_package = "/proto_gen/action";
 
-enum StatusCode{
-  StatusCode_Not_Use = 0;
-  Success = 1000;
-  Server_Error = 1001;
-  Param_Error = 1002;
-  OverFrequency_Error = 1003;
-  OverLimit_Error = 1004;
-  Duplicate_Error = 1005;
-  RetryTime_Error = 1006;
-  Not_Found_Error = 1007;
-}
-message BaseResp{
-  StatusCode StatusCode = 1;
-  string StatusMessage = 2;
-}
+import "proto/common.proto";
 
 message LoginRequest{
   string username = 1;
   string password = 2;
 }
 message LoginResponse{
-  string token = 1;
-  BaseResp baseResp = 255;
+  int64 user_id = 1;
+  common.BaseResp baseResp = 255;
 }
 
 message RegisterRequest{
@@ -35,7 +21,7 @@ message RegisterRequest{
   string confirm_password = 3;
 }
 message RegisterResponse{
-  BaseResp baseResp = 255;
+  common.BaseResp baseResp = 255;
 }
 
 message UserInfo{
@@ -49,7 +35,7 @@ message GetUserInfosRequest{
 }
 message GetUserInfosResponse{
   repeated UserInfo user_infos = 1;
-  BaseResp baseResp = 255;
+  common.BaseResp baseResp = 255;
 }
 
 message SearchUsersRequest{
@@ -57,7 +43,7 @@ message SearchUsersRequest{
 }
 message SearchUsersResponse{
   repeated UserInfo user_infos = 1;
-  BaseResp baseResp = 255;
+  common.BaseResp baseResp = 255;
 }
 
 message FollowRequest{
@@ -65,7 +51,7 @@ message FollowRequest{
   int64 to_user_id = 2;
 }
 message FollowResponse{
-  BaseResp baseResp = 255;
+  common.BaseResp baseResp = 255;
 }
 
 message MIsFollowRequest{
@@ -75,7 +61,7 @@ message MIsFollowRequest{
 message MIsFollowResponse{
   map<int64, bool> is_following = 1;
   map<int64, bool> is_follower = 2;
-  BaseResp baseResp = 255;
+  common.BaseResp baseResp = 255;
 }
 
 message GetFollowListRequest{
@@ -88,7 +74,7 @@ message GetFollowListResponse{
   repeated int64 user_ids = 1;
   int64 total = 2;
   bool has_more = 3;
-  BaseResp baseResp = 255;
+  common.BaseResp baseResp = 255;
 }
 
 message MGetFollowCountRequest{
@@ -101,7 +87,7 @@ message MGetFollowCountResponse{
   map<int64, int64> following_count = 1;
   map<int64, int64> follower_count = 2;
   map<int64, int64> friend_count = 3;
-  BaseResp baseResp = 255;
+  common.BaseResp baseResp = 255;
 }
 
 service ActionService {
