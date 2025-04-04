@@ -78,7 +78,7 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     }
 
     @Override
-    public void getFollowCount(MGetFollowCountRequest request, StreamObserver<MGetFollowCountResponse> responseObserver) {
+    public void mGetFollowCount(MGetFollowCountRequest request, StreamObserver<MGetFollowCountResponse> responseObserver) {
         MGetFollowCountResponse resp = relationService.mGetFollowCount(request);
         responseObserver.onNext(resp);
         responseObserver.onCompleted();

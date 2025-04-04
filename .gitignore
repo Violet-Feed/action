@@ -1,5 +1,6 @@
 HELP.md
 target/
+src/main/java/violet/action/common/proto_gen/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

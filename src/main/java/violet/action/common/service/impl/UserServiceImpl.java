@@ -48,14 +48,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginResponse login(LoginRequest req) {
+        LoginResponse.Builder resp=LoginResponse.newBuilder();
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticate.getPrincipal();
         User user = loginUser.getUser();
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-        LoginResponse resp = LoginResponse.newBuilder().setBaseResp(baseResp).setUserId(user.getUserId()).build();
-        return resp;
+        return resp.setBaseResp(baseResp).setUserId(user.getUserId()).build();
     }
 
     private String checkRegisterParam(String username, String password, String confirmPassword) {
@@ -83,54 +83,54 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public RegisterResponse register(RegisterRequest req) {
-        BaseResp baseResp;
+        RegisterResponse.Builder resp = RegisterResponse.newBuilder();
         String checkResult = checkRegisterParam(req.getUsername(), req.getPassword(), req.getConfirmPassword());
         if (checkResult != null) {
-            baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Param_Error).setStatusMessage(checkResult).build();
-        } else {
-            String encodedPassword = passwordEncoder.encode(req.getPassword());
-            User user = new User(null, userIdGenerator.nextId(), req.getUsername(), "", encodedPassword);
-            if (!userMapper.createUser(user)) {
-                baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Server_Error).build();
-            } else {
-                relationMapper.save(user);
-                baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-            }
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Param_Error).setStatusMessage(checkResult).build();
+            return resp.setBaseResp(baseResp).build();
         }
-        RegisterResponse resp = RegisterResponse.newBuilder().setBaseResp(baseResp).build();
-        return resp;
+        String encodedPassword = passwordEncoder.encode(req.getPassword());
+        User user = new User(null, userIdGenerator.nextId(), req.getUsername(), "", encodedPassword);
+        if (!userMapper.createUser(user)) {
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Server_Error).build();
+            return resp.setBaseResp(baseResp).build();
+        }
+        relationMapper.save(user);
+        BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+        return resp.setBaseResp(baseResp).build();
     }
 
     @Override
     public GetUserInfosResponse getUserInfos(GetUserInfosRequest req) {
+        GetUserInfosResponse.Builder resp = GetUserInfosResponse.newBuilder();
         List<Long> userIds = req.getUserIdsList();
         List<User> users = userMapper.selectByUserIds(userIds);
+        if(users.size()!=userIds.size()){
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Not_Found_Error).build();
+            return resp.setBaseResp(baseResp).build();
+        }
         List<UserInfo> userInfos = new ArrayList<>();
         for (User user : users) {
             userInfos.add(UserInfo.newBuilder().setUserId(user.getUserId()).setUsername(user.getUsername()).setAvatar(user.getAvatar()).build());
         }
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-        GetUserInfosResponse resp = GetUserInfosResponse.newBuilder().setBaseResp(baseResp).addAllUserInfos(userInfos).build();
-        return resp;
+        return resp.setBaseResp(baseResp).addAllUserInfos(userInfos).build();
     }
 
     @Override
     public SearchUsersResponse searchUsers(SearchUsersRequest req) {
-        BaseResp baseResp;
+        SearchUsersResponse.Builder resp = SearchUsersResponse.newBuilder();
         SearchRequest request = new SearchRequest("user");
         SearchSourceBuilder builder = new SearchSourceBuilder();
         MatchQueryBuilder query = QueryBuilders.matchQuery("username", req.getKeyword());
-        builder.from(0);
-        builder.size(10);
-        builder.query(query);
+        builder.from(0).size(10).query(query);
         request.source(builder);
         SearchResponse response = null;
         try {
             response = restHighLevelClient.search(request, RequestOptions.DEFAULT);
         } catch (IOException e) {
-            baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Server_Error).build();
-            SearchUsersResponse resp = SearchUsersResponse.newBuilder().setBaseResp(baseResp).build();
-            return resp;
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Server_Error).build();
+            return resp.setBaseResp(baseResp).build();
         }
         SearchHit[] hits = response.getHits().getHits();
         List<UserEs> userList = Arrays.stream(hits).map(o -> JSON.parseObject(o.getSourceAsString(), UserEs.class)).collect(Collectors.toList());
@@ -138,8 +138,7 @@ public class UserServiceImpl implements UserService {
         for (UserEs user : userList) {
             userInfos.add(UserInfo.newBuilder().setUserId(user.getUserId()).setUsername(user.getUsername()).setAvatar(user.getAvatar()).build());
         }
-        baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-        SearchUsersResponse resp = SearchUsersResponse.newBuilder().setBaseResp(baseResp).addAllUserInfos(userInfos).build();
-        return resp;
+        BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+        return resp.setBaseResp(baseResp).addAllUserInfos(userInfos).build();
     }
 }

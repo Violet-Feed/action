@@ -1,9 +1,9 @@
 grpc:
   server:
-    port: 3002
+    port: 3003
   client:
     im:
-      address: 'static://127.0.0.1:3003'
+      address: 'static://127.0.0.1:3004'
       negotiation-type: plaintext
 spring:
   main:

@@ -102,5 +102,5 @@ service ActionService {
   rpc GetFollowingList(GetFollowListRequest)returns(GetFollowListResponse){}
   rpc GetFollowerList(GetFollowListRequest)returns(GetFollowListResponse){}
   rpc GetFriendList(GetFollowListRequest)returns(GetFollowListResponse){}
-  rpc GetFollowCount(MGetFollowCountRequest)returns(MGetFollowCountResponse){}
+  rpc MGetFollowCount(MGetFollowCountRequest)returns(MGetFollowCountResponse){}
 }
