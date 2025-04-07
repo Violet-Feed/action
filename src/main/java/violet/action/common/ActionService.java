@@ -57,6 +57,20 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     }
 
     @Override
+    public void mIsFollowing(MIsFollowRequest request, StreamObserver<MIsFollowResponse> responseObserver) {
+        MIsFollowResponse resp = relationService.mIsFollowing(request);
+        responseObserver.onNext(resp);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void mIsFollower(MIsFollowRequest request, StreamObserver<MIsFollowResponse> responseObserver) {
+        MIsFollowResponse resp = relationService.mIsFollower(request);
+        responseObserver.onNext(resp);
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void getFollowingList(GetFollowListRequest request, StreamObserver<GetFollowListResponse> responseObserver) {
         GetFollowListResponse resp = relationService.getFollowingList(request);
         responseObserver.onNext(resp);

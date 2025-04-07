@@ -66,9 +66,8 @@ message MIsFollowResponse{
 
 message GetFollowListRequest{
   int64 user_id = 1;
-  int64 min_time = 2;
-  int64 max_time = 3;
-  int64 count = 4;
+  int64 cursor = 2;
+  int64 limit = 3;
 }
 message GetFollowListResponse{
   repeated int64 user_ids = 1;
@@ -79,9 +78,8 @@ message GetFollowListResponse{
 
 message MGetFollowCountRequest{
   repeated int64 user_ids = 1;
-  bool need_following = 2;
-  bool need_follower = 3;
-  bool need_friend = 4;
+  bool need_follow = 2;
+  bool need_friend = 3;
 }
 message MGetFollowCountResponse{
   map<int64, int64> following_count = 1;
