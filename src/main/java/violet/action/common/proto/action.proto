@@ -88,6 +88,45 @@ message MGetFollowCountResponse{
   common.BaseResp baseResp = 255;
 }
 
+message DiggRequest{
+  int64 user_id = 1;
+  string entity_type = 2;
+  int64 entity_id = 3;
+}
+message DiggResponse{
+  common.BaseResp baseResp = 255;
+}
+
+message GetDiggListByUserRequest{
+  int64 user_id = 1;
+  string entity_type = 2;
+  int64 page = 3;
+}
+message GetDiggListByUserResponse{
+  repeated int64 entity_ids = 1;
+  bool has_more = 2;
+  common.BaseResp baseResp = 255;
+}
+
+message MGetDiggCountByEntityRequest{
+  string entity_type = 1;
+  repeated int64 entity_ids = 2;
+}
+message MGetDiggCountByEntityResponse{
+  map<int64, int64> entity_digg_count = 1;
+  common.BaseResp baseResp = 255;
+}
+
+message MHasDiggRequest{
+  int64 user_id = 1;
+  string entity_type = 2;
+  repeated int64 entity_ids = 3;
+}
+message MHasDiggResponse{
+  map<int64, bool> has_digg = 1;
+  common.BaseResp baseResp = 255;
+}
+
 service ActionService {
   rpc Login(LoginRequest)returns(LoginResponse){}
   rpc Register(RegisterRequest)returns(RegisterResponse){}
@@ -101,4 +140,9 @@ service ActionService {
   rpc GetFollowerList(GetFollowListRequest)returns(GetFollowListResponse){}
   rpc GetFriendList(GetFollowListRequest)returns(GetFollowListResponse){}
   rpc MGetFollowCount(MGetFollowCountRequest)returns(MGetFollowCountResponse){}
+  rpc Digg(DiggRequest)returns(DiggResponse){}
+  rpc CancelDigg(DiggRequest)returns(DiggResponse){}
+  rpc GetDiggListByUser(GetDiggListByUserRequest)returns(GetDiggListByUserResponse){}
+  rpc MGetDiggCountByEntity(MGetDiggCountByEntityRequest)returns(MGetDiggCountByEntityResponse){}
+  rpc MHasDigg(MHasDiggRequest)returns(MHasDiggResponse){}
 }

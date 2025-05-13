@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import violet.action.common.pojo.User;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface RelationMapper extends Neo4jRepository<User, Long> {
@@ -29,4 +30,6 @@ public interface RelationMapper extends Neo4jRepository<User, Long> {
 //
 //    @Query(" MATCH (a:user)-[:follow]->(b:user {userId: {0}}) RETURN Count(*)")
 //    Long getFollowerCount(Long userId);
+    @Query("UNWIND {0} AS userId MATCH (a:user {userId: userId})-[:follow]->(b:user) RETURN a.userId AS userId, COUNT(b) AS count")
+    List<Map<String, Object>> mGetFollowingCount(List<Long> userIds);
 }

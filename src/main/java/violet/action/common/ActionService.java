@@ -4,6 +4,7 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import violet.action.common.proto_gen.action.*;
+import violet.action.common.service.DiggService;
 import violet.action.common.service.RelationService;
 import violet.action.common.service.UserService;
 
@@ -13,6 +14,8 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     private UserService userService;
     @Autowired
     private RelationService relationService;
+    @Autowired
+    private DiggService diggService;
 
     @Override
     public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
@@ -96,5 +99,55 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
         MGetFollowCountResponse resp = relationService.mGetFollowCount(request);
         responseObserver.onNext(resp);
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void digg(DiggRequest request, StreamObserver<DiggResponse> responseObserver) {
+        try {
+            responseObserver.onNext(diggService.digg(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void cancelDigg(DiggRequest request, StreamObserver<DiggResponse> responseObserver) {
+        try {
+            responseObserver.onNext(diggService.cancelDigg(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void getDiggListByUser(GetDiggListByUserRequest request, StreamObserver<GetDiggListByUserResponse> responseObserver) {
+        try {
+            responseObserver.onNext(diggService.getDiggListByUser(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void mGetDiggCountByEntity(MGetDiggCountByEntityRequest request, StreamObserver<MGetDiggCountByEntityResponse> responseObserver) {
+        try {
+            responseObserver.onNext(diggService.mGetDiggCountByEntity(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void mHasDigg(MHasDiggRequest request, StreamObserver<MHasDiggResponse> responseObserver) {
+        try {
+            responseObserver.onNext(diggService.mHasDigg(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
     }
 }

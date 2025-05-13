@@ -335,64 +335,52 @@ public class RelationModel {
         return followerCountMap;
     }
 
-    public void updateFollowingListCache(Long formUserId,Long toUserId,int delta){
+    public void updateCache(Long formUserId,Long toUserId,int delta){
         String followingListKey = String.format(FOLLOWING_LIST_KEY, formUserId);
         String followListStr= redisTemplate.opsForValue().get(followingListKey);
-        if(followListStr == null){
-            return;
+        if(followListStr != null) {
+            List<Long> followingList = JSONObject.parseArray(followListStr, Long.class);
+            if (delta > 0) {
+                followingList.add(toUserId);
+                redisTemplate.opsForValue().set(followingListKey, JSONObject.toJSONString(followingList), Duration.ofDays(1));
+            } else {
+                followingList.remove(toUserId);
+                redisTemplate.opsForValue().set(followingListKey, JSONObject.toJSONString(followingList), Duration.ofDays(1));
+            }
         }
-        List<Long> followingList = JSONObject.parseArray(followListStr, Long.class);
-        if (delta > 0) {
-            followingList.add(toUserId);
-            redisTemplate.opsForValue().set(followingListKey, JSONObject.toJSONString(followingList), Duration.ofDays(1));
-        } else {
-            followingList.remove(toUserId);
-            redisTemplate.opsForValue().set(followingListKey, JSONObject.toJSONString(followingList), Duration.ofDays(1));
-        }
-    }
-
-    public void updateFollowerListCache(Long formUserId,Long toUserId,int delta){
-        String followerListKey = String.format(FOLLOWER_LIST_KEY, formUserId);
+        String followerListKey = String.format(FOLLOWER_LIST_KEY, toUserId);
         redisTemplate.delete(followerListKey);
-    }
-
-    public void updateFollowingHashCache(Long formUserId,Long toUserId,int delta){
+        String friendListKey = String.format(FRIEND_LIST_KEY, formUserId);
+        redisTemplate.delete(friendListKey);
+        friendListKey = String.format(FRIEND_LIST_KEY, toUserId);
+        redisTemplate.delete(friendListKey);
         String followingHashKey = String.format(FOLLOWING_HASH_KEY, formUserId);
         Object guard = redisTemplate.opsForHash().get(followingHashKey, guardIndex);
-        if (guard == null) {
-            return;
+        if (guard != null) {
+            if (delta > 0) {
+                redisTemplate.opsForHash().put(followingHashKey, toUserId.toString(), "1");
+                redisTemplate.expire(followingHashKey, Duration.ofDays(2));
+            } else {
+                redisTemplate.opsForHash().delete(followingHashKey, toUserId.toString());
+            }
         }
-        if (delta > 0) {
-            redisTemplate.opsForHash().put(followingHashKey, toUserId.toString(), "1");
-            redisTemplate.expire(followingHashKey, Duration.ofDays(2));
-        } else {
-            redisTemplate.opsForHash().delete(followingHashKey, toUserId.toString());
-        }
-    }
-
-    public void updateFollowingCountCache(Long formUserId,Long toUserId,int delta){
         String followingCountKey = String.format(FOLLOWING_COUNT_KEY, formUserId);
         String followingCount = redisTemplate.opsForValue().get(followingCountKey);
-        if (followingCount == null) {
-            return;
+        if (followingCount != null) {
+            if (delta > 0) {
+                redisTemplate.opsForValue().increment(followingCountKey, 1);
+            } else {
+                redisTemplate.opsForValue().decrement(followingCountKey, 1);
+            }
         }
-        if (delta > 0) {
-            redisTemplate.opsForValue().increment(followingCountKey, 1);
-        } else {
-            redisTemplate.opsForValue().decrement(followingCountKey, 1);
-        }
-    }
-
-    public void updateFollowerCountCache(Long formUserId,Long toUserId,int delta){
         String followerCountKey = String.format(FOLLOWER_COUNT_KEY, toUserId);
         String followerCount = redisTemplate.opsForValue().get(followerCountKey);
-        if (followerCount == null) {
-            return;
-        }
-        if (delta > 0) {
-            redisTemplate.opsForValue().increment(followerCountKey, 1);
-        } else {
-            redisTemplate.opsForValue().decrement(followerCountKey, 1);
+        if (followerCount != null) {
+            if (delta > 0) {
+                redisTemplate.opsForValue().increment(followerCountKey, 1);
+            } else {
+                redisTemplate.opsForValue().decrement(followerCountKey, 1);
+            }
         }
     }
 }

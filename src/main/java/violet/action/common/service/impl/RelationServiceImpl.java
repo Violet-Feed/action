@@ -56,11 +56,7 @@ public class RelationServiceImpl implements RelationService {
             return FollowResponse.newBuilder().setBaseResp(baseResp).build();
         }
         relationMapper.follow(req.getFromUserId(), req.getToUserId());
-        relationModel.updateFollowingListCache(req.getFromUserId(), req.getToUserId(),1);
-        relationModel.updateFollowerListCache(req.getToUserId(), req.getFromUserId(),1);
-        relationModel.updateFollowingHashCache(req.getFromUserId(), req.getToUserId(), 1);
-        relationModel.updateFollowingCountCache(req.getFromUserId(), req.getToUserId(),1);
-        relationModel.updateFollowerCountCache(req.getToUserId(), req.getToUserId(),1);
+        relationModel.updateCache(req.getFromUserId(), req.getToUserId(),1);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return FollowResponse.newBuilder().setBaseResp(baseResp).build();
     }
@@ -69,11 +65,7 @@ public class RelationServiceImpl implements RelationService {
     public FollowResponse unfollow(FollowRequest req) {
         //每日取关上限redis200->更新mysql(成功写备,失败mq?)->写bg->更新关注粉丝列表关注hash缓存->更新每日上限->更新计数->发送消息mq->检验mq
         relationMapper.unfollow(req.getFromUserId(), req.getToUserId());
-        relationModel.updateFollowingListCache(req.getFromUserId(), req.getToUserId(),-1);
-        relationModel.updateFollowerListCache(req.getToUserId(), req.getFromUserId(),-1);
-        relationModel.updateFollowingHashCache(req.getFromUserId(), req.getToUserId(), -1);
-        relationModel.updateFollowingCountCache(req.getFromUserId(), req.getToUserId(),-1);
-        relationModel.updateFollowerCountCache(req.getToUserId(), req.getToUserId(),-1);
+        relationModel.updateCache(req.getFromUserId(), req.getToUserId(),-1);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return FollowResponse.newBuilder().setBaseResp(baseResp).build();
     }

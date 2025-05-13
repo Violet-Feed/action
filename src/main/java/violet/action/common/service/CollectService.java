@@ -1,4 +1,4 @@
 package violet.action.common.service;
 
-public interface FavoriteService {
+public interface CollectService {
 }
