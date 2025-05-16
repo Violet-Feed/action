@@ -245,7 +245,7 @@ public class RelationModel {
         return followingMaps;
     }
 
-    public Map<Long,Long> getFollowingCountFromDB(List<Long> userIds) {
+    public Map<Long, Long> getFollowingCountFromDB(List<Long> userIds) {
         Map<Long, Long> followingCountMap = new HashMap<>();
         List<String> keys = new ArrayList<>();
         for (Long userId : userIds) {
@@ -272,7 +272,7 @@ public class RelationModel {
             Map<String, Long> map = (Map<String, Long>) record;
             followingCountMap.put(map.get("userId"), map.get("count"));
         }
-        for(Long userId : missIds) {
+        for (Long userId : missIds) {
             if (!followingCountMap.containsKey(userId)) {
                 followingCountMap.put(userId, 0L);
             }
@@ -290,7 +290,7 @@ public class RelationModel {
         return followingCountMap;
     }
 
-    public Map<Long,Long> getFollowerCountFromDB(List<Long> userIds) {
+    public Map<Long, Long> getFollowerCountFromDB(List<Long> userIds) {
         Map<Long, Long> followerCountMap = new HashMap<>();
         List<String> keys = new ArrayList<>();
         for (Long userId : userIds) {
@@ -317,7 +317,7 @@ public class RelationModel {
             Map<String, Long> map = (Map<String, Long>) record;
             followerCountMap.put(map.get("userId"), map.get("count"));
         }
-        for(Long userId : missIds) {
+        for (Long userId : missIds) {
             if (!followerCountMap.containsKey(userId)) {
                 followerCountMap.put(userId, 0L);
             }
@@ -335,10 +335,10 @@ public class RelationModel {
         return followerCountMap;
     }
 
-    public void updateCache(Long formUserId,Long toUserId,int delta){
+    public void updateCache(Long formUserId, Long toUserId, int delta) {
         String followingListKey = String.format(FOLLOWING_LIST_KEY, formUserId);
-        String followListStr= redisTemplate.opsForValue().get(followingListKey);
-        if(followListStr != null) {
+        String followListStr = redisTemplate.opsForValue().get(followingListKey);
+        if (followListStr != null) {
             List<Long> followingList = JSONObject.parseArray(followListStr, Long.class);
             if (delta > 0) {
                 followingList.add(toUserId);

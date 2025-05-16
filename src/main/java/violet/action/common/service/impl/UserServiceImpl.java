@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginResponse login(LoginRequest req) {
-        LoginResponse.Builder resp=LoginResponse.newBuilder();
+        LoginResponse.Builder resp = LoginResponse.newBuilder();
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
         GetUserInfosResponse.Builder resp = GetUserInfosResponse.newBuilder();
         List<Long> userIds = req.getUserIdsList();
         List<User> users = userMapper.selectByUserIds(userIds);
-        if(users.size()!=userIds.size()){
+        if (users.size() != userIds.size()) {
             BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Not_Found_Error).build();
             return resp.setBaseResp(baseResp).build();
         }

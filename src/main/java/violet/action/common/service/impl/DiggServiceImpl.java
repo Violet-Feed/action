@@ -32,7 +32,7 @@ public class DiggServiceImpl implements DiggService {
     @Override
     public GetDiggListByUserResponse getDiggListByUser(GetDiggListByUserRequest req) throws Exception {
         GetDiggListByUserResponse.Builder resp = GetDiggListByUserResponse.newBuilder();
-        diggMapper.getDiggListByUser(req.getUserId(), req.getEntityType(), (int) ((req.getPage()-1)*20), 20);
+        diggMapper.getDiggListByUser(req.getUserId(), req.getEntityType(), (int) ((req.getPage() - 1) * 20), 20);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setBaseResp(baseResp).build();
     }

@@ -4,6 +4,7 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import violet.action.common.proto_gen.action.*;
+import violet.action.common.service.CommentService;
 import violet.action.common.service.DiggService;
 import violet.action.common.service.RelationService;
 import violet.action.common.service.UserService;
@@ -16,6 +17,8 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     private RelationService relationService;
     @Autowired
     private DiggService diggService;
+    @Autowired
+    private CommentService commentService;
 
     @Override
     public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
@@ -145,6 +148,56 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     public void mHasDigg(MHasDiggRequest request, StreamObserver<MHasDiggResponse> responseObserver) {
         try {
             responseObserver.onNext(diggService.mHasDigg(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void createComment(CreateCommentRequest request, StreamObserver<CreateCommentResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.createComment(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void createCommentReply(CreateCommentReplyRequest request, StreamObserver<CreateCommentReplyResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.createCommentReply(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void getCommentList(GetCommentListRequest request, StreamObserver<GetCommentListResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.getCommentList(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void getCommentReplyList(GetCommentReplyListRequest request, StreamObserver<GetCommentReplyListResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.getCommentReplyList(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void getCommentCount(GetCommentCountRequest request, StreamObserver<GetCommentCountResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.getCommentCount(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
             responseObserver.onError(e);

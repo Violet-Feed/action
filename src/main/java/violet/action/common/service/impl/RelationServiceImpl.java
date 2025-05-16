@@ -4,7 +4,6 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.stereotype.Service;
 import violet.action.common.config.CaffeineConfig;
 import violet.action.common.mapper.RelationMapper;
@@ -51,12 +50,12 @@ public class RelationServiceImpl implements RelationService {
         List<Long> userIds = new ArrayList<>();
         userIds.add(req.getFromUserId());
         Long followingCount = relationModel.getFollowingCountFromDB(userIds).get(req.getFromUserId());
-        if(followingCount>= MAX_FOLLOWING_COUNT){
+        if (followingCount >= MAX_FOLLOWING_COUNT) {
             BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.OverLimit_Error).setStatusMessage("关注人数达到上限").build();
             return FollowResponse.newBuilder().setBaseResp(baseResp).build();
         }
         relationMapper.follow(req.getFromUserId(), req.getToUserId());
-        relationModel.updateCache(req.getFromUserId(), req.getToUserId(),1);
+        relationModel.updateCache(req.getFromUserId(), req.getToUserId(), 1);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return FollowResponse.newBuilder().setBaseResp(baseResp).build();
     }
@@ -65,7 +64,7 @@ public class RelationServiceImpl implements RelationService {
     public FollowResponse unfollow(FollowRequest req) {
         //每日取关上限redis200->更新mysql(成功写备,失败mq?)->写bg->更新关注粉丝列表关注hash缓存->更新每日上限->更新计数->发送消息mq->检验mq
         relationMapper.unfollow(req.getFromUserId(), req.getToUserId());
-        relationModel.updateCache(req.getFromUserId(), req.getToUserId(),-1);
+        relationModel.updateCache(req.getFromUserId(), req.getToUserId(), -1);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return FollowResponse.newBuilder().setBaseResp(baseResp).build();
     }
@@ -265,13 +264,13 @@ public class RelationServiceImpl implements RelationService {
                 }
             }
             if (!missIds.isEmpty()) {
-                Map<Long,Long> followingCountMapDB = relationModel.getFollowingCountFromDB(missIds);
+                Map<Long, Long> followingCountMapDB = relationModel.getFollowingCountFromDB(missIds);
                 for (Long userId : missIds) {
                     if (followingCountMapDB.containsKey(userId)) {
                         followingCountMap.put(userId, followingCountMapDB.get(userId));
                         String followingCountKey = String.format(relationModel.FOLLOWING_COUNT_KEY, userId);
                         countCaffeineCache.put(followingCountKey, followingCountMapDB.get(userId));
-                    }else{
+                    } else {
                         followingCountMap.put(userId, 0L);
                         String followingCountKey = String.format(relationModel.FOLLOWING_COUNT_KEY, userId);
                         countCaffeineCache.put(followingCountKey, 0L);
@@ -289,13 +288,13 @@ public class RelationServiceImpl implements RelationService {
                 }
             }
             if (!missIds.isEmpty()) {
-                Map<Long,Long> followerCountMapDB = relationModel.getFollowerCountFromDB(missIds);
+                Map<Long, Long> followerCountMapDB = relationModel.getFollowerCountFromDB(missIds);
                 for (Long userId : missIds) {
                     if (followerCountMapDB.containsKey(userId)) {
                         followerCountMap.put(userId, followerCountMapDB.get(userId));
                         String followerCountKey = String.format(relationModel.FOLLOWER_COUNT_KEY, userId);
                         countCaffeineCache.put(followerCountKey, followerCountMapDB.get(userId));
-                    }else{
+                    } else {
                         followerCountMap.put(userId, 0L);
                         String followerCountKey = String.format(relationModel.FOLLOWER_COUNT_KEY, userId);
                         countCaffeineCache.put(followerCountKey, 0L);
