@@ -1,5 +1,6 @@
 package violet.action.common.mapper;
 
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 import violet.action.common.pojo.Entity;
@@ -7,7 +8,7 @@ import violet.action.common.pojo.Entity;
 import java.util.List;
 
 @Repository
-public interface CommentMapper {
+public interface CommentMapper extends Neo4jRepository<Entity, Long> {
     @Query("MATCH (e:entity {entityType:{0},entityId:{1}}) CREATE (cmt:entity {entityType:{2},entityId:{3}}) CREATE (e)-[c:comment {timestamp:datetime()}]->(cmt)")
     void createComment(Integer entityType, Long entityId, Integer commentType, Long commentId);
 

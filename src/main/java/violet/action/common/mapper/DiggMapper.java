@@ -1,5 +1,6 @@
 package violet.action.common.mapper;
 
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 import violet.action.common.pojo.Entity;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface DiggMapper {
+public interface DiggMapper extends Neo4jRepository<Entity, Long> {
 
     @Query("MATCH (u:user {userId:{0}}) MATCH (e:entity {entityType:{1},entityId:{2}}) MERGE (u)-[d:digg]->(e) ON CREATE SET d.timestamp=datetime()")
     void digg(Long userId, Integer entityType, Long entityId);

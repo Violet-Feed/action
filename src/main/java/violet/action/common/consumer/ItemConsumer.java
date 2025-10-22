@@ -22,6 +22,6 @@ public class ItemConsumer implements RocketMQListener<String> {
     public void onMessage(String data) {
         log.info("ItemConsumer received message: {}", data);
         ItemInfo itemInfo = JSONObject.parseObject(data, ItemInfo.class);
-        entityMapper.save(new Entity(EntityType.Item_VALUE, itemInfo.getItemId(), ""));
+        entityMapper.save(new Entity(null, EntityType.Item_VALUE, itemInfo.getItemId(), ""));
     }
 }
