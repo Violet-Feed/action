@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
             BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Server_Error).build();
             return resp.setBaseResp(baseResp).build();
         }
-        relationMapper.save(user);
+        //relationMapper.save(user);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setBaseResp(baseResp).build();
     }

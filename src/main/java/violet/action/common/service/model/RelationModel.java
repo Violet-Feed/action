@@ -231,16 +231,16 @@ public class RelationModel {
 
     public Map<Long, Map<String, String>> mGetFollowingMap(List<Long> userIds) {
         Map<Long, Map<String, String>> followingMaps = new HashMap<>();
-        String cypher = "UNWIND $userIds as row MATCH (a:user {userId: row})-[:follow]->(b:user) RETURN a.userId, b.userId";
+        String cypher = "UNWIND $userIds as row MATCH (a:User {user_id: row})-[:follow]->(b:User) RETURN a.user_id, b.user_id";
         Map<String, Object> param = new HashMap<>();
         param.put("userIds", userIds);
         Object[] records = neo4jClient.query(cypher).bindAll(param).fetch().all().toArray();
         for (Object record : records) {
             Map<String, Long> map = (Map<String, Long>) record;
-            if (!followingMaps.containsKey(map.get("a.userId"))) {
-                followingMaps.put(map.get("a.userId"), new HashMap<>());
+            if (!followingMaps.containsKey(map.get("a.user_id"))) {
+                followingMaps.put(map.get("a.user_id"), new HashMap<>());
             }
-            followingMaps.get(map.get("a.userId")).put(map.get("b.userId").toString(), "1");
+            followingMaps.get(map.get("a.user_id")).put(map.get("b.user_id").toString(), "1");
         }
         return followingMaps;
     }
@@ -264,7 +264,7 @@ public class RelationModel {
         if (missIds.isEmpty()) {
             return followingCountMap;
         }
-        String cypher = "UNWIND $userIds as row MATCH (a:user {userId: row})-[:follow]->(b:user) RETURN a.userId as userId, Count(*) as count";
+        String cypher = "UNWIND $userIds as row MATCH (a:User {user_id: row})-[:follow]->(b:User) RETURN a.user_id as userId, Count(*) as count";
         Map<String, Object> param = new HashMap<>();
         param.put("userIds", missIds);
         Object[] records = neo4jClient.query(cypher).bindAll(param).fetch().all().toArray();
@@ -309,7 +309,7 @@ public class RelationModel {
         if (missIds.isEmpty()) {
             return followerCountMap;
         }
-        String cypher = "UNWIND $userIds as row MATCH (a:user)-[:follow]->(b:user {userId: row}) RETURN b.userId as userId, Count(*) as count";
+        String cypher = "UNWIND $userIds as row MATCH (a:User)-[:follow]->(b:User {user_id: row}) RETURN b.user_id as userId, Count(*) as count";
         Map<String, Object> param = new HashMap<>();
         param.put("userIds", missIds);
         Object[] records = neo4jClient.query(cypher).bindAll(param).fetch().all().toArray();

@@ -2,6 +2,7 @@ package violet.action.common.mapper;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import violet.action.common.pojo.User;
 
@@ -10,26 +11,26 @@ import java.util.Map;
 
 @Repository
 public interface RelationMapper extends Neo4jRepository<User, Long> {
-    @Query("MATCH (a:user {userId: {0}}), (b:user {userId: {1}}) CREATE (a)-[:follow]->(b)")
-    void follow(Long fromUserId, Long toUserId);
+    @Query("MATCH (a:User {user_id: $fromUserId}), (b:User {user_id: $toUserId}) CREATE (a)-[:follow]->(b)")
+    void follow(@Param("fromUserId") Long fromUserId, @Param("toUserId") Long toUserId);
 
-    @Query("MATCH (a:user {userId: {0}})-[r:follow]->(b:user {userId: {1}}) DELETE r")
-    void unfollow(Long fromUserId, Long toUserId);
+    @Query("MATCH (a:User {user_id: $fromUserId})-[r:follow]->(b:User {user_id: $toUserId}) DELETE r")
+    void unfollow(@Param("fromUserId") Long fromUserId, @Param("toUserId") Long toUserId);
 
-    @Query("MATCH (a:user {userId: {0}})-[:follow]->(b:user) RETURN b")
-    List<User> getFollowingList(Long userId);
+    @Query("MATCH (a:User {user_id: $userId})-[:follow]->(b:User) RETURN b")
+    List<User> getFollowingList(@Param("userId") Long userId);
 
-    @Query("MATCH (a:user)-[:follow]->(b:user {userId: {0}}) RETURN a")
-    List<User> getFollowerList(Long userId);
+    @Query("MATCH (a:User)-[:follow]->(b:User {user_id: $userId}) RETURN a")
+    List<User> getFollowerList(@Param("userId") Long userId);
 
-    @Query("MATCH (a:user {userId: {0}})-[:follow]-(b:user) RETURN b")
-    List<User> getFriendList(Long userId);
+    @Query("MATCH (a:User {user_id: $userId})-[:follow]-(b:User) RETURN b")
+    List<User> getFriendList(@Param("userId") Long userId);
 
 //    @Query("MATCH (a:user {userId: {0}})-[:follow]->(b:user) RETURN Count(*)")
 //    Long getFollowingCount(Long userId);
 //
 //    @Query(" MATCH (a:user)-[:follow]->(b:user {userId: {0}}) RETURN Count(*)")
 //    Long getFollowerCount(Long userId);
-    @Query("UNWIND {0} AS userId MATCH (a:user {userId: userId})-[:follow]->(b:user) RETURN a.userId AS userId, COUNT(b) AS count")
-    List<Map<String, Object>> mGetFollowingCount(List<Long> userIds);
+    @Query("UNWIND $userIds AS userId MATCH (a:User {user_id: userId})-[:follow]->(b:User) RETURN a.user_id AS userId, COUNT(b) AS count")
+    List<Map<String, Object>> mGetFollowingCount(@Param("userIds") List<Long> userIds);
 }
