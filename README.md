@@ -22,6 +22,7 @@ friend_count：Caffeine->list(Redis->Neo4j)
 
 is_following：热点Caffeine，非热点获取count->获取list(Redis->Neo4j)(count<=2000||size>20)/获取hash(Redis->Neo4j)
 
-is_follower：获取list(Redis->Neo4j)(count<=1000||count<=5000&&size>20)/获取hash(热点Caffeine，非热点Caffeine->list?(Redis->Neo4j)(hit)/Redis+Neo4j)
+is_follower：获取list(Redis->Neo4j)(count<=1000||count<=5000&&size>20)/获取hash(热点Caffeine，非热点Caffeine->list?(
+Redis->Neo4j)(hit)/Redis+Neo4j)
 
 is_friend：Neo4j

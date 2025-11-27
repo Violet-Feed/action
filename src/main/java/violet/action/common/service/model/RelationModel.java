@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SessionCallback;
@@ -39,8 +38,6 @@ public class RelationModel {
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private RedisMutex redisMutex;
-    @Autowired
-    private Neo4jClient neo4jClient;
 
     public List<Long> getFollowingListFromDB(Long userId) {
         String followingListKey = String.format(FOLLOWING_LIST_KEY, userId);
@@ -203,7 +200,7 @@ public class RelationModel {
             return isFollower;
         }
         //批量加锁？
-        Map<Long, Map<String, String>> followingMaps = mGetFollowingMap(missIds);
+        Map<Long, Map<String, String>> followingMaps = relationMapper.mGetFollowingMap(missIds);
         for (Long toUserId : missIds) {
             if (!followingMaps.containsKey(toUserId)) {
                 isFollower.put(toUserId, Boolean.FALSE);
@@ -229,22 +226,6 @@ public class RelationModel {
         return isFollower;
     }
 
-    public Map<Long, Map<String, String>> mGetFollowingMap(List<Long> userIds) {
-        Map<Long, Map<String, String>> followingMaps = new HashMap<>();
-        String cypher = "UNWIND $userIds as row MATCH (a:User {user_id: row})-[:follow]->(b:User) RETURN a.user_id, b.user_id";
-        Map<String, Object> param = new HashMap<>();
-        param.put("userIds", userIds);
-        Object[] records = neo4jClient.query(cypher).bindAll(param).fetch().all().toArray();
-        for (Object record : records) {
-            Map<String, Long> map = (Map<String, Long>) record;
-            if (!followingMaps.containsKey(map.get("a.user_id"))) {
-                followingMaps.put(map.get("a.user_id"), new HashMap<>());
-            }
-            followingMaps.get(map.get("a.user_id")).put(map.get("b.user_id").toString(), "1");
-        }
-        return followingMaps;
-    }
-
     public Map<Long, Long> getFollowingCountFromDB(List<Long> userIds) {
         Map<Long, Long> followingCountMap = new HashMap<>();
         List<String> keys = new ArrayList<>();
@@ -264,18 +245,10 @@ public class RelationModel {
         if (missIds.isEmpty()) {
             return followingCountMap;
         }
-        String cypher = "UNWIND $userIds as row MATCH (a:User {user_id: row})-[:follow]->(b:User) RETURN a.user_id as userId, Count(*) as count";
-        Map<String, Object> param = new HashMap<>();
-        param.put("userIds", missIds);
-        Object[] records = neo4jClient.query(cypher).bindAll(param).fetch().all().toArray();
-        for (Object record : records) {
-            Map<String, Long> map = (Map<String, Long>) record;
-            followingCountMap.put(map.get("userId"), map.get("count"));
-        }
+        Map<Long, Long> dbCounts = relationMapper.mGetFollowingCount(missIds);
         for (Long userId : missIds) {
-            if (!followingCountMap.containsKey(userId)) {
-                followingCountMap.put(userId, 0L);
-            }
+            Long count = dbCounts.getOrDefault(userId, 0L);
+            followingCountMap.put(userId, count);
         }
         redisTemplate.executePipelined(new SessionCallback<Object>() {
             @Override
@@ -309,18 +282,10 @@ public class RelationModel {
         if (missIds.isEmpty()) {
             return followerCountMap;
         }
-        String cypher = "UNWIND $userIds as row MATCH (a:User)-[:follow]->(b:User {user_id: row}) RETURN b.user_id as userId, Count(*) as count";
-        Map<String, Object> param = new HashMap<>();
-        param.put("userIds", missIds);
-        Object[] records = neo4jClient.query(cypher).bindAll(param).fetch().all().toArray();
-        for (Object record : records) {
-            Map<String, Long> map = (Map<String, Long>) record;
-            followerCountMap.put(map.get("userId"), map.get("count"));
-        }
+        Map<Long, Long> dbCounts = relationMapper.mGetFollowerCount(missIds);
         for (Long userId : missIds) {
-            if (!followerCountMap.containsKey(userId)) {
-                followerCountMap.put(userId, 0L);
-            }
+            Long count = dbCounts.getOrDefault(userId, 0L);
+            followerCountMap.put(userId, count);
         }
         redisTemplate.executePipelined(new SessionCallback<Object>() {
             @Override

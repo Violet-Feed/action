@@ -49,6 +49,13 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     }
 
     @Override
+    public void reportUserAction(ReportUserActionRequest request, StreamObserver<ReportUserActionResponse> responseObserver) {
+        ReportUserActionResponse resp = userService.reportUserAction(request);
+        responseObserver.onNext(resp);
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void follow(FollowRequest request, StreamObserver<FollowResponse> responseObserver) {
         FollowResponse resp = relationService.follow(request);
         responseObserver.onNext(resp);

@@ -10,4 +10,6 @@ public interface UserService {
     GetUserInfosResponse getUserInfos(GetUserInfosRequest req);
 
     SearchUsersResponse searchUsers(SearchUsersRequest req);
+
+    ReportUserActionResponse reportUserAction(ReportUserActionRequest req);
 }

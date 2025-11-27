@@ -8,17 +8,33 @@ grpc:
 spring:
   main:
     web-application-type: none
-  data:
-    neo4j:
-      uri: bolt://localhost:7687
-      username: neo4j
-      password: password
   datasource:
     url: jdbc:mysql://localhost:3306/violet?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
-  elasticsearch:
-    uris: localhost:9200
-rocketmq:
-  name-server: 127.0.0.1:9876
+  kafka:
+    bootstrap-servers: localhost:9094
+    producer:
+      retries: 2
+      batch-size: 16384
+      buffer-memory: 16777216
+    consumer:
+      group-id: action_consumer
+      auto-offset-reset: earliest
+  redis:
+    host: localhost
+    port: 6379
+    password:
+  kvrocks:
+    host: localhost
+    port: 6666
+    password:
+nebula:
+  address: localhost
+  port: 9669
+  username: nebula
+  password: 123456
+milvus:
+  uri: http://localhost:19530
+  token: root:Milvus

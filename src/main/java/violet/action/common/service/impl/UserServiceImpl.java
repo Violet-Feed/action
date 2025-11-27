@@ -1,15 +1,14 @@
 package violet.action.common.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
+import io.milvus.v2.client.MilvusClientV2;
+import io.milvus.v2.service.vector.request.SearchReq;
+import io.milvus.v2.service.vector.request.data.EmbeddedText;
+import io.milvus.v2.service.vector.response.SearchResp;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,20 +17,19 @@ import org.springframework.stereotype.Service;
 import violet.action.common.mapper.RelationMapper;
 import violet.action.common.mapper.UserMapper;
 import violet.action.common.pojo.User;
-import violet.action.common.pojo.UserEs;
+import violet.action.common.producer.KafkaProducer;
 import violet.action.common.proto_gen.action.*;
 import violet.action.common.proto_gen.common.BaseResp;
 import violet.action.common.proto_gen.common.StatusCode;
 import violet.action.common.service.UserService;
 import violet.action.common.utils.SnowFlake;
+import violet.action.common.utils.TimeUtil;
 import violet.action.common.utils.UserDetailsImpl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
     private SnowFlake userIdGenerator = new SnowFlake(0, 0);
@@ -40,11 +38,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RelationMapper relationMapper;
     @Autowired
-    private RestHighLevelClient restHighLevelClient;
+    private MilvusClientV2 milvusClient;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private KafkaProducer kafkaProducer;
+    @Autowired
+    @Qualifier("kvrocksTemplate")
+    private RedisTemplate<String, String> kvrocksTemplate;
 
     @Override
     public LoginResponse login(LoginRequest req) {
@@ -120,25 +123,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public SearchUsersResponse searchUsers(SearchUsersRequest req) {
         SearchUsersResponse.Builder resp = SearchUsersResponse.newBuilder();
-        SearchRequest request = new SearchRequest("user");
-        SearchSourceBuilder builder = new SearchSourceBuilder();
-        MatchQueryBuilder query = QueryBuilders.matchQuery("username", req.getKeyword());
-        builder.from(0).size(10).query(query);
-        request.source(builder);
-        SearchResponse response = null;
-        try {
-            response = restHighLevelClient.search(request, RequestOptions.DEFAULT);
-        } catch (IOException e) {
-            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Server_Error).build();
-            return resp.setBaseResp(baseResp).build();
+        Map<String, Object> searchParams = new HashMap<>();
+        searchParams.put("drop_ratio_search", 0.2);
+        List<List<SearchResp.SearchResult>> searchResults = milvusClient.search(SearchReq.builder()
+                .collectionName("user")
+                .data(Collections.singletonList(new EmbeddedText(req.getKeyword())))
+                .annsField("username_embeddings")
+                .topK(20)
+                .searchParams(searchParams)
+                .outputFields(Arrays.asList("user_id", "username", "avatar"))
+                .build()).getSearchResults();
+        List<User> users = new ArrayList<>();
+        if (!searchResults.isEmpty()) {
+            users = searchResults.get(0).stream()
+                    .map(searchResult -> new User(null,
+                            ((Long) searchResult.getEntity().get("user_id")),
+                            (String) searchResult.getEntity().get("username"),
+                            (String) searchResult.getEntity().get("avatar"),
+                            null))
+                    .collect(Collectors.toList());
         }
-        SearchHit[] hits = response.getHits().getHits();
-        List<UserEs> userList = Arrays.stream(hits).map(o -> JSON.parseObject(o.getSourceAsString(), UserEs.class)).collect(Collectors.toList());
-        List<UserInfo> userInfos = new ArrayList<>();
-        for (UserEs user : userList) {
-            userInfos.add(UserInfo.newBuilder().setUserId(user.getUserId()).setUsername(user.getUsername()).setAvatar(user.getAvatar()).build());
-        }
+        List<UserInfo> userInfos = users.stream().map(User::toProto).collect(Collectors.toList());
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setBaseResp(baseResp).addAllUserInfos(userInfos).build();
+    }
+
+    @Override
+    public ReportUserActionResponse reportUserAction(ReportUserActionRequest req) {
+        ReportUserActionResponse.Builder resp = ReportUserActionResponse.newBuilder();
+        kvrocksTemplate.opsForList().rightPush("action:"+req.getUserId()+":"+ TimeUtil.getNowDate(), JSON.toJSONString(req));
+        kafkaProducer.sendMessage("action", JSON.toJSONString(req));
+        BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+        return resp.setBaseResp(baseResp).build();
     }
 }
