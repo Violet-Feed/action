@@ -21,12 +21,13 @@ public class DiggMapperImpl implements DiggMapper {
     private Session session;
 
     @Override
-    public void digg(Long userId, Integer entityType, Long entityId) {
+    public void digg(Long userId, String entityType, Long entityId) {
+        String userVid = String.valueOf(userId);
+        String entityVid = entityType + ":" + entityId;
         String nGQL = String.format(
-                "MATCH (u:user {userId: %d}) " +
-                        "MATCH (e:entity {entityType: %d, entityId: %d}) " +
-                        "CREATE (u)-[:digg {timestamp: datetime()}]->(e)",
-                userId, entityType, entityId
+                "INSERT EDGE IF NOT EXISTS digg(ts) " +
+                        "VALUES \"%s\"->\"%s\":(%d);",
+                userVid, entityVid, System.currentTimeMillis()
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -41,11 +42,12 @@ public class DiggMapperImpl implements DiggMapper {
     }
 
     @Override
-    public void cancelDigg(Long userId, Integer entityType, Long entityId) {
+    public void cancelDigg(Long userId, String entityType, Long entityId) {
+        String userVid = String.valueOf(userId);
+        String entityVid = entityType + ":" + entityId;
         String nGQL = String.format(
-                "MATCH (u:user {userId: %d})-[d:digg]->(e:entity {entityType: %d, entityId: %d}) " +
-                        "DELETE d",
-                userId, entityType, entityId
+                "DELETE EDGE digg \"%s\" -> \"%s\";",
+                userVid, entityVid
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -60,13 +62,16 @@ public class DiggMapperImpl implements DiggMapper {
     }
 
     @Override
-    public List<Entity> getDiggListByUser(Long userId, Integer entityType, int skip, int limit) {
+    public List<Entity> getDiggListByUser(Long userId, String entityType, int skip, int limit) {
+        String userVid = String.valueOf(userId);
         String nGQL = String.format(
-                "MATCH (u:user {userId: %d})-[d:digg]->(e:entity {entityType: %d}) " +
-                        "RETURN e.entityId AS entityId, e.entityType AS entityType " +
-                        "ORDER BY d.timestamp DESC " +
+                "MATCH (u:user)-[d:digg]->(e:entity) " +
+                        "WHERE id(u) == \"%s\" AND e.entity_type == \"%s\" " +
+                        "RETURN e.entity_id AS entityId, e.entity_type AS entityType, " +
+                        "d.ts AS ts " +
+                        "ORDER BY ts DESC " +
                         "SKIP %d LIMIT %d",
-                userId, entityType, skip, limit
+                userVid, entityType, skip, limit
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -82,7 +87,7 @@ public class DiggMapperImpl implements DiggMapper {
     }
 
     @Override
-    public List<Map<String, Object>> mGetDiggCountByEntity(Integer entityType, List<Long> entityIds) {
+    public List<Map<String, Object>> mGetDiggCountByEntity(String entityType, List<Long> entityIds) {
         List<Map<String, Object>> list = new ArrayList<>();
         if (entityIds == null || entityIds.isEmpty()) {
             return list;
@@ -93,8 +98,9 @@ public class DiggMapperImpl implements DiggMapper {
                 .orElse("");
         String nGQL = String.format(
                 "UNWIND [%s] AS id " +
-                        "MATCH (u:user)-[:digg]->(e:entity {entityType: %d, entityId: id}) " +
-                        "RETURN e.entityId AS entityId, COUNT(u) AS count",
+                        "MATCH (u:user)-[:digg]->(e:entity) " +
+                        "WHERE e.entity_type == \"%s\" AND e.entity_id == id " +
+                        "RETURN e.entity_id AS entityId, COUNT(u) AS count",
                 idList, entityType
         );
         try {
@@ -118,7 +124,7 @@ public class DiggMapperImpl implements DiggMapper {
     }
 
     @Override
-    public List<Map<String, Object>> mHasDigg(Long userId, Integer entityType, List<Long> entityIds) {
+    public List<Map<String, Object>> mHasDigg(Long userId, String entityType, List<Long> entityIds) {
         List<Map<String, Object>> list = new ArrayList<>();
         if (entityIds == null || entityIds.isEmpty()) {
             return list;
@@ -127,11 +133,13 @@ public class DiggMapperImpl implements DiggMapper {
                 .map(String::valueOf)
                 .reduce((a, b) -> a + "," + b)
                 .orElse("");
+        String userVid = String.valueOf(userId);
         String nGQL = String.format(
                 "UNWIND [%s] AS id " +
-                        "MATCH (u:user {userId: %d})-[d:digg]->(e:entity {entityType: %d, entityId: id}) " +
-                        "RETURN e.entityId AS entityId, COUNT(d) > 0 AS hasDigg",
-                idList, userId, entityType
+                        "MATCH (u:user)-[d:digg]->(e:entity) " +
+                        "WHERE id(u) == \"%s\" AND e.entity_type == \"%s\" AND e.entity_id == id " +
+                        "RETURN e.entity_id AS entityId, COUNT(d) > 0 AS hasDigg",
+                idList, userVid, entityType
         );
         try {
             ResultSet resultSet = session.execute(nGQL);

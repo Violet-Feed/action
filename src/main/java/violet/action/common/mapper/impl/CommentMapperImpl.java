@@ -20,12 +20,17 @@ public class CommentMapperImpl implements CommentMapper {
     private Session session;
 
     @Override
-    public void createComment(Integer entityType, Long entityId, Integer commentType, Long commentId) {
+    public void createComment(String entityType, Long entityId, Integer commentType, Long commentId) {
+        String targetVid = entityType + ":" + entityId;
+        String commentTypeStr = String.valueOf(commentType);
+        String commentVid = commentTypeStr + ":" + commentId;
         String nGQL = String.format(
-                "MATCH (e:entity {entityType: %d, entityId: %d}) " +
-                        "CREATE (cmt:entity {entityType: %d, entityId: %d}) " +
-                        "CREATE (e)-[:comment {timestamp: datetime()}]->(cmt)",
-                entityType, entityId, commentType, commentId
+                "INSERT VERTEX IF NOT EXISTS entity(`entity_type`, `entity_id`) " +
+                        "VALUES \"%s\":(\"%s\", %d); " +
+                        "INSERT EDGE IF NOT EXISTS comment(ts) " +
+                        "VALUES \"%s\"->\"%s\":(%d);",
+                commentVid, commentTypeStr, commentId,
+                targetVid, commentVid, System.currentTimeMillis()
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -40,13 +45,18 @@ public class CommentMapperImpl implements CommentMapper {
     }
 
     @Override
-    public List<Entity> getCommentList(Integer entityType, Long entityId, int skip, int limit) {
+    public List<Entity> getCommentList(String entityType, Long entityId, int skip, int limit) {
+        String targetVid = entityType + ":" + entityId;
         String nGQL = String.format(
-                "MATCH (e:entity {entityType: %d, entityId: %d})-[c:comment]->(cmt:entity) " +
-                        "RETURN cmt.entityId AS entityId, cmt.entityType AS entityType " +
-                        "ORDER BY c.timestamp DESC " +
+                "MATCH (e:entity)-[c:comment]->(cmt:entity) " +
+                        "WHERE id(e) == \"%s\" " +
+                        "RETURN " +
+                        "cmt.entity_id AS entityId, " +
+                        "cmt.entity_type AS entityType, " +
+                        "c.ts AS ts " +
+                        "ORDER BY ts DESC " +
                         "SKIP %d LIMIT %d",
-                entityType, entityId, skip, limit
+                targetVid, skip, limit
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -62,11 +72,13 @@ public class CommentMapperImpl implements CommentMapper {
     }
 
     @Override
-    public Long getCommentCount(Integer entityType, Long entityId) {
+    public Long getCommentCount(String entityType, Long entityId) {
+        String targetVid = entityType + ":" + entityId;
         String nGQL = String.format(
-                "MATCH (e:entity {entityType: %d, entityId: %d})-[c:comment]->() " +
+                "MATCH (e:entity)-[c:comment]->() " +
+                        "WHERE id(e) == \"%s\" " +
                         "RETURN COUNT(c) AS count",
-                entityType, entityId
+                targetVid
         );
         try {
             ResultSet resultSet = session.execute(nGQL);

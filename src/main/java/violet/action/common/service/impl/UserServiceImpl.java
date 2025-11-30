@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReportUserActionResponse reportUserAction(ReportUserActionRequest req) {
         ReportUserActionResponse.Builder resp = ReportUserActionResponse.newBuilder();
-        kvrocksTemplate.opsForList().rightPush("action:"+req.getUserId()+":"+ TimeUtil.getNowDate(), JSON.toJSONString(req));
+        kvrocksTemplate.opsForList().rightPush("action:" + req.getUserId() + ":" + TimeUtil.getNowDate(), JSON.toJSONString(req));
         kafkaProducer.sendMessage("action", JSON.toJSONString(req));
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setBaseResp(baseResp).build();

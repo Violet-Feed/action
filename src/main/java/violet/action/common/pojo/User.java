@@ -20,7 +20,7 @@ public class User {
         return UserInfo.newBuilder()
                 .setUserId(this.userId)
                 .setUsername(this.username)
-                .setAvatar(this.avatar)
+                .setAvatar(this.avatar == null ? "" : this.avatar)
                 .build();
     }
 }

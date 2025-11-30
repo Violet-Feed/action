@@ -106,13 +106,8 @@ public class RelationModel {
         }
         List<User> userList = relationMapper.getFriendList(userId);
         List<Long> friendList = new ArrayList<>();
-        Map<Long, Boolean> friendMap = new HashMap<>();
         for (User user : userList) {
-            if (friendMap.containsKey(user.getUserId())) {
-                friendList.add(user.getUserId());
-            } else {
-                friendMap.put(user.getUserId(), Boolean.TRUE);
-            }
+            friendList.add(user.getUserId());
         }
         redisTemplate.opsForValue().set(friendListKey, JSONObject.toJSONString(friendList), Duration.ofDays(1));
         redisMutex.unlock(friendListKey);

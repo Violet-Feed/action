@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface RelationMapper {
+    void createUser(User user);
+
     void follow(Long fromUserId, Long toUserId);
 
     void unfollow(Long fromUserId, Long toUserId);

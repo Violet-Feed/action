@@ -33,7 +33,7 @@ spring:
 nebula:
   address: localhost
   port: 9669
-  username: nebula
+  username: root
   password: 123456
 milvus:
   uri: http://localhost:19530

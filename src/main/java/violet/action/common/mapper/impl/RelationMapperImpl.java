@@ -23,11 +23,43 @@ public class RelationMapperImpl implements RelationMapper {
 
 
     @Override
-    public void follow(Long fromUserId, Long toUserId) {
+    public void createUser(User user) {
+        String vid = String.valueOf(user.getUserId());
         String nGQL = String.format(
-                "MATCH (a:user {user_id: %d}), (b:user {user_id: %d}) " +
-                        "CREATE (a)-[:follow]->(b)",
-                fromUserId, toUserId
+                "INSERT VERTEX IF NOT EXISTS user(user_id, username, avatar) " +
+                        "VALUES \"%s\":(%d, \"%s\", \"%s\")",
+                vid,
+                user.getUserId(),
+                escapeString(user.getUsername()),
+                escapeString(user.getAvatar())
+        );
+        try {
+            ResultSet resultSet = session.execute(nGQL);
+            if (!resultSet.isSucceeded()) {
+                log.error("createUser failed, userId: {}, error: {}", user.getUserId(), resultSet.getErrorMessage());
+                throw new RuntimeException("createUser failed: " + resultSet.getErrorMessage());
+            }
+        } catch (IOErrorException e) {
+            log.error("createUser failed, userId: {}", user.getUserId(), e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String escapeString(String s) {
+        if (s == null) {
+            return "";
+        }
+        return s.replace("\"", "\\\"");
+    }
+
+    @Override
+    public void follow(Long fromUserId, Long toUserId) {
+        String fromVid = String.valueOf(fromUserId);
+        String toVid = String.valueOf(toUserId);
+        String nGQL = String.format(
+                "INSERT EDGE IF NOT EXISTS follow (ts) " +
+                        "VALUES \"%s\"->\"%s\":(%d);",
+                fromVid, toVid, System.currentTimeMillis()
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -43,10 +75,11 @@ public class RelationMapperImpl implements RelationMapper {
 
     @Override
     public void unfollow(Long fromUserId, Long toUserId) {
+        String fromVid = String.valueOf(fromUserId);
+        String toVid = String.valueOf(toUserId);
         String nGQL = String.format(
-                "MATCH (a:user {user_id: %d})-[r:follow]->(b:user {user_id: %d}) " +
-                        "DELETE r",
-                fromUserId, toUserId
+                "DELETE EDGE follow \"%s\" -> \"%s\";",
+                fromVid, toVid
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -62,10 +95,12 @@ public class RelationMapperImpl implements RelationMapper {
 
     @Override
     public List<User> getFollowingList(Long userId) {
+        String vid = String.valueOf(userId);
         String nGQL = String.format(
-                "MATCH (a:user {user_id: %d})-[:follow]->(b:user) " +
-                        "RETURN b",
-                userId
+                "MATCH (a:user)-[:follow]->(b:user) " +
+                        "WHERE id(a) == \"%s\" " +
+                        "RETURN b.user.user_id AS user_id, b.user.username AS username, b.user.avatar AS avatar",
+                vid
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -82,10 +117,12 @@ public class RelationMapperImpl implements RelationMapper {
 
     @Override
     public List<User> getFollowerList(Long userId) {
+        String vid = String.valueOf(userId);
         String nGQL = String.format(
-                "MATCH (a:user)-[:follow]->(b:user {user_id: %d}) " +
-                        "RETURN a",
-                userId
+                "MATCH (a:user)-[:follow]->(b:user) " +
+                        "WHERE id(b) == \"%s\" " +
+                        "RETURN a.user.user_id AS user_id, a.user.username AS username, a.user.avatar AS avatar",
+                vid
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -102,10 +139,12 @@ public class RelationMapperImpl implements RelationMapper {
 
     @Override
     public List<User> getFriendList(Long userId) {
+        String vid = String.valueOf(userId);
         String nGQL = String.format(
-                "MATCH (u1:user {user_id: %d})-[:follow]->(u2:user)-[:follow]->(u1) " +
-                        "RETURN u2.user_id AS user_id, u2.username AS username, u2.avatar AS avatar",
-                userId
+                "MATCH (u1:user)-[:follow]->(u2:user)-[:follow]->(u1) " +
+                        "WHERE id(u1) == \"%s\" " +
+                        "RETURN u2.user.user_id AS user_id, u2.user.username AS username, u2.user.avatar AS avatar",
+                vid
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -124,13 +163,14 @@ public class RelationMapperImpl implements RelationMapper {
     public Map<Long, Map<String, String>> mGetFollowingMap(List<Long> userIds) {
         Map<Long, Map<String, String>> followingMaps = new HashMap<>();
         String idList = userIds.stream()
-                .map(String::valueOf)
+                .map(id -> "\"" + id + "\"")
                 .reduce((a, b) -> a + "," + b)
                 .orElse("");
         String nGQL = String.format(
-                "UNWIND [%s] AS row " +
-                        "MATCH (a:user {user_id: row})-[:follow]->(b:user) " +
-                        "RETURN a.user_id AS from_id, b.user_id AS to_id",
+                "UNWIND [%s] AS vid " +
+                        "MATCH (a:user)-[:follow]->(b:user) " +
+                        "WHERE id(a) == vid " +
+                        "RETURN a.user.user_id AS from_id, b.user.user_id AS to_id",
                 idList
         );
         try {
@@ -155,13 +195,14 @@ public class RelationMapperImpl implements RelationMapper {
     @Override
     public Map<Long, Long> mGetFollowingCount(List<Long> userIds) {
         String idList = userIds.stream()
-                .map(String::valueOf)
+                .map(id -> "\"" + id + "\"")
                 .reduce((a, b) -> a + "," + b)
                 .orElse("");
         String nGQL = String.format(
-                "UNWIND [%s] AS row " +
-                        "MATCH (a:user {user_id: row})-[:follow]->(b:user) " +
-                        "RETURN a.user_id AS userId, COUNT(b) AS count",
+                "UNWIND [%s] AS vid " +
+                        "MATCH (a:user)-[:follow]->(b:user) " +
+                        "WHERE id(a) == vid " +
+                        "RETURN a.user.user_id AS userId, COUNT(b) AS count",
                 idList
         );
         try {
@@ -180,13 +221,14 @@ public class RelationMapperImpl implements RelationMapper {
     @Override
     public Map<Long, Long> mGetFollowerCount(List<Long> userIds) {
         String idList = userIds.stream()
-                .map(String::valueOf)
+                .map(id -> "\"" + id + "\"")
                 .reduce((a, b) -> a + "," + b)
                 .orElse("");
         String nGQL = String.format(
-                "UNWIND [%s] AS row " +
-                        "MATCH (a:user)-[:follow]->(b:user {user_id: row}) " +
-                        "RETURN b.user_id AS userId, COUNT(a) AS count",
+                "UNWIND [%s] AS vid " +
+                        "MATCH (a:user)-[:follow]->(b:user) " +
+                        "WHERE id(b) == vid " +
+                        "RETURN b.user.user_id AS userId, COUNT(a) AS count",
                 idList
         );
         try {

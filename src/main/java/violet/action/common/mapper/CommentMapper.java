@@ -5,9 +5,9 @@ import violet.action.common.pojo.Entity;
 import java.util.List;
 
 public interface CommentMapper {
-    void createComment(Integer entityType, Long entityId, Integer commentType, Long commentId);
+    void createComment(String entityType, Long entityId, Integer commentType, Long commentId);
 
-    List<Entity> getCommentList(Integer entityType, Long entityId, int skip, int limit);
+    List<Entity> getCommentList(String entityType, Long entityId, int skip, int limit);
 
-    Long getCommentCount(Integer entityType, Long entityId);
+    Long getCommentCount(String entityType, Long entityId);
 }
