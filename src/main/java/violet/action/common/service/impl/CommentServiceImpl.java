@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
                 .build();
         String key = String.format("comment:%d", commentId);
         redisTemplate.opsForValue().set(key, JSONObject.toJSONString(commentData));
-        commentMapper.createComment(req.getEntityType(), req.getEntityId(), EntityType.Comment_VALUE, commentId);
+        commentMapper.createComment(req.getEntityType(), req.getEntityId(), "comment", commentId);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setCommentId(commentId).setBaseResp(baseResp).build();
     }

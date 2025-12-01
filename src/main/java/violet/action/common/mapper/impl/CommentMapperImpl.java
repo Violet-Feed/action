@@ -20,16 +20,15 @@ public class CommentMapperImpl implements CommentMapper {
     private Session session;
 
     @Override
-    public void createComment(String entityType, Long entityId, Integer commentType, Long commentId) {
+    public void createComment(String entityType, Long entityId, String commentType, Long commentId) {
         String targetVid = entityType + ":" + entityId;
-        String commentTypeStr = String.valueOf(commentType);
-        String commentVid = commentTypeStr + ":" + commentId;
+        String commentVid = commentType + ":" + commentId;
         String nGQL = String.format(
                 "INSERT VERTEX IF NOT EXISTS entity(`entity_type`, `entity_id`) " +
                         "VALUES \"%s\":(\"%s\", %d); " +
                         "INSERT EDGE IF NOT EXISTS comment(ts) " +
                         "VALUES \"%s\"->\"%s\":(%d);",
-                commentVid, commentTypeStr, commentId,
+                commentVid, commentType, commentId,
                 targetVid, commentVid, System.currentTimeMillis()
         );
         try {

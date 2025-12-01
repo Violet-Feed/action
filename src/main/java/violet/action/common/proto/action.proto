@@ -40,6 +40,7 @@ message GetUserInfosResponse{
 
 message SearchUsersRequest{
   string keyword = 1;
+  int32 page = 2;
 }
 message SearchUsersResponse{
   repeated UserInfo user_infos = 1;
@@ -100,7 +101,7 @@ message DiggResponse{
 message GetDiggListByUserRequest{
   int64 user_id = 1;
   string entity_type = 2;
-  int64 page = 3;
+  int32 page = 3;
 }
 message GetDiggListByUserResponse{
   repeated int64 entity_ids = 1;
@@ -117,13 +118,13 @@ message MGetDiggCountByEntityResponse{
   common.BaseResp baseResp = 255;
 }
 
-message MHasDiggRequest{
+message MIsDiggRequest{
   int64 user_id = 1;
   string entity_type = 2;
   repeated int64 entity_ids = 3;
 }
-message MHasDiggResponse{
-  map<int64, bool> has_digg = 1;
+message MIsDiggResponse{
+  map<int64, bool> is_digg = 1;
   common.BaseResp baseResp = 255;
 }
 
@@ -171,7 +172,7 @@ message CreateCommentReplyResponse{
 message GetCommentListRequest{
   string entity_type = 1;
   int64 entity_id = 2;
-  int64 page = 3;
+  int32 page = 3;
 }
 message GetCommentListResponse{
   repeated CommentData comment_list = 1;
@@ -183,7 +184,7 @@ message GetCommentReplyListRequest{
   string entity_type = 1;
   int64 entity_id = 2;
   int64 comment_id = 3;
-  int64 page = 4;
+  int32 page = 4;
 }
 message GetCommentReplyListResponse{
   repeated CommentData comment_list = 1;
@@ -235,7 +236,7 @@ service ActionService {
   rpc CancelDigg(DiggRequest)returns(DiggResponse){}
   rpc GetDiggListByUser(GetDiggListByUserRequest)returns(GetDiggListByUserResponse){}
   rpc MGetDiggCountByEntity(MGetDiggCountByEntityRequest)returns(MGetDiggCountByEntityResponse){}
-  rpc MHasDigg(MHasDiggRequest)returns(MHasDiggResponse){}
+  rpc MIsDigg(MIsDiggRequest)returns(MIsDiggResponse){}
   rpc CreateComment(CreateCommentRequest)returns(CreateCommentResponse){}
   rpc CreateCommentReply(CreateCommentReplyRequest)returns(CreateCommentReplyResponse){}
   rpc GetCommentList(GetCommentListRequest)returns(GetCommentListResponse){}

@@ -9,9 +9,7 @@ public interface DiggService {
 
     GetDiggListByUserResponse getDiggListByUser(GetDiggListByUserRequest req) throws Exception;
 
-    //JSONObject getDiggListByEntity(JSONObject req) throws Exception;
-    //JSONObject getDiggCountByUser(JSONObject req) throws Exception;
     MGetDiggCountByEntityResponse mGetDiggCountByEntity(MGetDiggCountByEntityRequest req) throws Exception;
 
-    MHasDiggResponse mHasDigg(MHasDiggRequest req) throws Exception;
+    MIsDiggResponse mIsDigg(MIsDiggRequest req) throws Exception;
 }

@@ -1,6 +1,7 @@
 package violet.action.common;
 
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import violet.action.common.proto_gen.action.*;
@@ -9,6 +10,7 @@ import violet.action.common.service.DiggService;
 import violet.action.common.service.RelationService;
 import violet.action.common.service.UserService;
 
+@Slf4j
 @GrpcService
 public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     @Autowired
@@ -22,93 +24,145 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
 
     @Override
     public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
-        LoginResponse resp = userService.login(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(userService.login(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("login error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void register(RegisterRequest request, StreamObserver<RegisterResponse> responseObserver) {
-        RegisterResponse resp = userService.register(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(userService.register(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("register error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void getUserInfos(GetUserInfosRequest request, StreamObserver<GetUserInfosResponse> responseObserver) {
-        GetUserInfosResponse resp = userService.getUserInfos(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(userService.getUserInfos(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("getUserInfos error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void searchUsers(SearchUsersRequest request, StreamObserver<SearchUsersResponse> responseObserver) {
-        SearchUsersResponse resp = userService.searchUsers(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(userService.searchUsers(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("searchUsers error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void reportUserAction(ReportUserActionRequest request, StreamObserver<ReportUserActionResponse> responseObserver) {
-        ReportUserActionResponse resp = userService.reportUserAction(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(userService.reportUserAction(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("reportUserAction error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void follow(FollowRequest request, StreamObserver<FollowResponse> responseObserver) {
-        FollowResponse resp = relationService.follow(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(relationService.follow(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("follow error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void unfollow(FollowRequest request, StreamObserver<FollowResponse> responseObserver) {
-        FollowResponse resp = relationService.unfollow(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(relationService.unfollow(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("unfollow error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void mIsFollowing(MIsFollowRequest request, StreamObserver<MIsFollowResponse> responseObserver) {
-        MIsFollowResponse resp = relationService.mIsFollowing(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(relationService.mIsFollowing(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("mIsFollowing error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void mIsFollower(MIsFollowRequest request, StreamObserver<MIsFollowResponse> responseObserver) {
-        MIsFollowResponse resp = relationService.mIsFollower(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(relationService.mIsFollower(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("mIsFollower error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void getFollowingList(GetFollowListRequest request, StreamObserver<GetFollowListResponse> responseObserver) {
-        GetFollowListResponse resp = relationService.getFollowingList(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(relationService.getFollowingList(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("getFollowingList error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void getFollowerList(GetFollowListRequest request, StreamObserver<GetFollowListResponse> responseObserver) {
-        GetFollowListResponse resp = relationService.getFollowerList(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(relationService.getFollowerList(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("getFollowerList error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void getFriendList(GetFollowListRequest request, StreamObserver<GetFollowListResponse> responseObserver) {
-        GetFollowListResponse resp = relationService.getFriendList(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(relationService.getFriendList(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("getFriendList error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
     public void mGetFollowCount(MGetFollowCountRequest request, StreamObserver<MGetFollowCountResponse> responseObserver) {
-        MGetFollowCountResponse resp = relationService.mGetFollowCount(request);
-        responseObserver.onNext(resp);
-        responseObserver.onCompleted();
+        try {
+            responseObserver.onNext(relationService.mGetFollowCount(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("mGetFollowCount error", e);
+            responseObserver.onError(e);
+        }
     }
 
     @Override
@@ -117,6 +171,7 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onNext(diggService.digg(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("digg error", e);
             responseObserver.onError(e);
         }
     }
@@ -127,6 +182,7 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onNext(diggService.cancelDigg(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("cancelDigg error", e);
             responseObserver.onError(e);
         }
     }
@@ -137,6 +193,7 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onNext(diggService.getDiggListByUser(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("getDiggListByUser error", e);
             responseObserver.onError(e);
         }
     }
@@ -147,16 +204,18 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onNext(diggService.mGetDiggCountByEntity(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("mGetDiggCountByEntity error", e);
             responseObserver.onError(e);
         }
     }
 
     @Override
-    public void mHasDigg(MHasDiggRequest request, StreamObserver<MHasDiggResponse> responseObserver) {
+    public void mIsDigg(MIsDiggRequest request, StreamObserver<MIsDiggResponse> responseObserver) {
         try {
-            responseObserver.onNext(diggService.mHasDigg(request));
+            responseObserver.onNext(diggService.mIsDigg(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("mIsDigg error", e);
             responseObserver.onError(e);
         }
     }
@@ -167,6 +226,7 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onNext(commentService.createComment(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("createComment error", e);
             responseObserver.onError(e);
         }
     }
@@ -177,6 +237,7 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onNext(commentService.createCommentReply(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("createCommentReply error", e);
             responseObserver.onError(e);
         }
     }
@@ -187,6 +248,7 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onNext(commentService.getCommentList(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("getCommentList error", e);
             responseObserver.onError(e);
         }
     }
@@ -197,6 +259,7 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onNext(commentService.getCommentReplyList(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("getCommentReplyList error", e);
             responseObserver.onError(e);
         }
     }
@@ -207,6 +270,7 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onNext(commentService.getCommentCount(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("getCommentCount error", e);
             responseObserver.onError(e);
         }
     }

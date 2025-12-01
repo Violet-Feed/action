@@ -49,6 +49,8 @@ public class UserServiceImpl implements UserService {
     @Qualifier("kvrocksTemplate")
     private RedisTemplate<String, String> kvrocksTemplate;
 
+    private static final int PAGE_SIZE = 20;
+
     @Override
     public LoginResponse login(LoginRequest req) {
         LoginResponse.Builder resp = LoginResponse.newBuilder();
@@ -107,6 +109,10 @@ public class UserServiceImpl implements UserService {
     public GetUserInfosResponse getUserInfos(GetUserInfosRequest req) {
         GetUserInfosResponse.Builder resp = GetUserInfosResponse.newBuilder();
         List<Long> userIds = req.getUserIdsList();
+        if (userIds.isEmpty()) {
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+            return resp.setBaseResp(baseResp).build();
+        }
         List<User> users = userMapper.selectByUserIds(userIds);
         if (users.size() != userIds.size()) {
             BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Not_Found_Error).build();
@@ -123,13 +129,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public SearchUsersResponse searchUsers(SearchUsersRequest req) {
         SearchUsersResponse.Builder resp = SearchUsersResponse.newBuilder();
+        int offset = (req.getPage() - 1) * PAGE_SIZE;
         Map<String, Object> searchParams = new HashMap<>();
         searchParams.put("drop_ratio_search", 0.2);
         List<List<SearchResp.SearchResult>> searchResults = milvusClient.search(SearchReq.builder()
                 .collectionName("user")
                 .data(Collections.singletonList(new EmbeddedText(req.getKeyword())))
                 .annsField("username_embeddings")
-                .topK(20)
+                .offset(offset)
+                .limit(PAGE_SIZE)
                 .searchParams(searchParams)
                 .outputFields(Arrays.asList("user_id", "username", "avatar"))
                 .build()).getSearchResults();

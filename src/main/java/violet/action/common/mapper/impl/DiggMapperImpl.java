@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import violet.action.common.mapper.DiggMapper;
-import violet.action.common.pojo.Entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,12 +61,12 @@ public class DiggMapperImpl implements DiggMapper {
     }
 
     @Override
-    public List<Entity> getDiggListByUser(Long userId, String entityType, int skip, int limit) {
+    public List<Long> getDiggListByUser(Long userId, String entityType, int skip, int limit) {
         String userVid = String.valueOf(userId);
         String nGQL = String.format(
                 "MATCH (u:user)-[d:digg]->(e:entity) " +
-                        "WHERE id(u) == \"%s\" AND e.entity_type == \"%s\" " +
-                        "RETURN e.entity_id AS entityId, e.entity_type AS entityType, " +
+                        "WHERE id(u) == \"%s\" AND e.entity.entity_type == \"%s\" " +
+                        "RETURN e.entity.entity_id AS entityId, " +
                         "d.ts AS ts " +
                         "ORDER BY ts DESC " +
                         "SKIP %d LIMIT %d",
@@ -79,7 +78,12 @@ public class DiggMapperImpl implements DiggMapper {
                 log.error("getDiggListByUser failed, userId: {}, entityType: {}, skip: {}, limit: {}, error: {}", userId, entityType, skip, limit, resultSet.getErrorMessage());
                 throw new RuntimeException("getDiggListByUser failed: " + resultSet.getErrorMessage());
             }
-            return parseEntities(resultSet);
+            List<Long> entityIds = new ArrayList<>();
+            for (int i = 0; i < resultSet.rowsSize(); i++) {
+                ResultSet.Record record = resultSet.rowValues(i);
+                entityIds.add(record.get("entityId").asLong());
+            }
+            return entityIds;
         } catch (IOErrorException e) {
             log.error("getDiggListByUser failed, userId: {}, entityType: {}, skip: {}, limit: {}", userId, entityType, skip, limit, e);
             throw new RuntimeException(e);
@@ -87,21 +91,24 @@ public class DiggMapperImpl implements DiggMapper {
     }
 
     @Override
-    public List<Map<String, Object>> mGetDiggCountByEntity(String entityType, List<Long> entityIds) {
-        List<Map<String, Object>> list = new ArrayList<>();
+    public Map<Long, Long> mGetDiggCountByEntity(String entityType, List<Long> entityIds) {
+        Map<Long, Long> result = new HashMap<>();
         if (entityIds == null || entityIds.isEmpty()) {
-            return list;
+            return result;
         }
-        String idList = entityIds.stream()
-                .map(String::valueOf)
+        for (Long id : entityIds) {
+            result.put(id, 0L);
+        }
+        String vidList = entityIds.stream()
+                .map(id -> String.format("\"%s:%d\"", entityType, id))
                 .reduce((a, b) -> a + "," + b)
                 .orElse("");
         String nGQL = String.format(
-                "UNWIND [%s] AS id " +
+                "UNWIND [%s] AS vid " +
                         "MATCH (u:user)-[:digg]->(e:entity) " +
-                        "WHERE e.entity_type == \"%s\" AND e.entity_id == id " +
-                        "RETURN e.entity_id AS entityId, COUNT(u) AS count",
-                idList, entityType
+                        "WHERE id(e) == vid " +
+                        "RETURN e.entity.entity_id AS entityId, COUNT(u) AS count",
+                vidList
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
@@ -111,12 +118,11 @@ public class DiggMapperImpl implements DiggMapper {
             }
             for (int i = 0; i < resultSet.rowsSize(); i++) {
                 ResultSet.Record record = resultSet.rowValues(i);
-                Map<String, Object> map = new HashMap<>();
-                map.put("entityId", record.get("entityId").asLong());
-                map.put("count", record.get("count").asLong());
-                list.add(map);
+                long entityId = record.get("entityId").asLong();
+                long count = record.get("count").asLong();
+                result.put(entityId, count);
             }
-            return list;
+            return result;
         } catch (IOErrorException e) {
             log.error("mGetDiggCountByEntity failed, entityType: {}, entityIds: {}", entityType, entityIds, e);
             throw new RuntimeException(e);
@@ -124,53 +130,42 @@ public class DiggMapperImpl implements DiggMapper {
     }
 
     @Override
-    public List<Map<String, Object>> mHasDigg(Long userId, String entityType, List<Long> entityIds) {
-        List<Map<String, Object>> list = new ArrayList<>();
+    public Map<Long, Boolean> mIsDigg(Long userId, String entityType, List<Long> entityIds) {
+        Map<Long, Boolean> result = new HashMap<>();
         if (entityIds == null || entityIds.isEmpty()) {
-            return list;
+            return result;
         }
-        String idList = entityIds.stream()
-                .map(String::valueOf)
+        for (Long id : entityIds) {
+            result.put(id, false);
+        }
+        String userVid = String.valueOf(userId);
+        String vidList = entityIds.stream()
+                .map(id -> String.format("\"%s:%d\"", entityType, id))
                 .reduce((a, b) -> a + "," + b)
                 .orElse("");
-        String userVid = String.valueOf(userId);
         String nGQL = String.format(
-                "UNWIND [%s] AS id " +
+                "UNWIND [%s] AS vid " +
                         "MATCH (u:user)-[d:digg]->(e:entity) " +
-                        "WHERE id(u) == \"%s\" AND e.entity_type == \"%s\" AND e.entity_id == id " +
-                        "RETURN e.entity_id AS entityId, COUNT(d) > 0 AS hasDigg",
-                idList, userVid, entityType
+                        "WHERE id(u) == \"%s\" AND id(e) == vid " +
+                        "RETURN e.entity.entity_id AS entityId, COUNT(d) > 0 AS isDigg",
+                vidList, userVid
         );
         try {
             ResultSet resultSet = session.execute(nGQL);
             if (!resultSet.isSucceeded()) {
-                log.error("mHasDigg failed, userId: {}, entityType: {}, entityIds: {}, error: {}", userId, entityType, entityIds, resultSet.getErrorMessage());
-                throw new RuntimeException("mHasDigg failed: " + resultSet.getErrorMessage());
+                log.error("mIsDigg failed, userId: {}, entityType: {}, entityIds: {}, error: {}", userId, entityType, entityIds, resultSet.getErrorMessage());
+                throw new RuntimeException("mIsDigg failed: " + resultSet.getErrorMessage());
             }
             for (int i = 0; i < resultSet.rowsSize(); i++) {
                 ResultSet.Record record = resultSet.rowValues(i);
-                Map<String, Object> map = new HashMap<>();
-                map.put("entityId", record.get("entityId").asLong());
-                map.put("hasDigg", record.get("hasDigg").asBoolean());
-                list.add(map);
+                long entityId = record.get("entityId").asLong();
+                boolean isDigg = record.get("isDigg").asBoolean();
+                result.put(entityId, isDigg);
             }
-            return list;
+            return result;
         } catch (IOErrorException e) {
-            log.error("mHasDigg failed, userId: {}, entityType: {}, entityIds: {}", userId, entityType, entityIds, e);
+            log.error("mIsDigg failed, userId: {}, entityType: {}, entityIds: {}", userId, entityType, entityIds, e);
             throw new RuntimeException(e);
         }
-    }
-
-
-    private List<Entity> parseEntities(ResultSet resultSet) {
-        List<Entity> entities = new ArrayList<>();
-        for (int i = 0; i < resultSet.rowsSize(); i++) {
-            ResultSet.Record record = resultSet.rowValues(i);
-            Entity entity = new Entity();
-            entity.setEntityId(record.get("entityId").asLong());
-            entity.setEntityType((int) record.get("entityType").asLong());
-            entities.add(entity);
-        }
-        return entities;
     }
 }
