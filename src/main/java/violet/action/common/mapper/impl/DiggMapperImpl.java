@@ -90,6 +90,7 @@ public class DiggMapperImpl implements DiggMapper {
         }
     }
 
+    @Deprecated
     @Override
     public Map<Long, Long> mGetDiggCountByEntity(String entityType, List<Long> entityIds) {
         Map<Long, Long> result = new HashMap<>();
