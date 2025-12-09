@@ -8,11 +8,15 @@ public interface CommentMapper {
 
     void createReply(Long commentId, Long replyId);
 
-    List<Long> getCommentList(String entityType, Long entityId, int skip, int limit);
+    Map<Long, Long> getCommentListByTime(String entityType, Long entityId, int skip, int limit);
 
-    List<Long> getReplyList(Long commentId, int skip, int limit);
+    Map<Long, Long> getCommentListByDigg(String entityType, Long entityId, int skip, int limit);
+
+    Map<Long, Long> getReplyList(Long commentId, int skip, int limit);
 
     Long getCommentCount(String entityType, Long entityId);
 
     Map<Long, Long> mGetReplyCount(List<Long> commentIds);
+
+    void updateCommentDigg(String entityType, Long entityId, Long commentId, int delta);
 }

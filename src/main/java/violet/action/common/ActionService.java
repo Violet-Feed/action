@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import violet.action.common.proto_gen.action.*;
-import violet.action.common.service.CommentService;
-import violet.action.common.service.DiggService;
-import violet.action.common.service.RelationService;
-import violet.action.common.service.UserService;
+import violet.action.common.service.*;
 
 @Slf4j
 @GrpcService
@@ -21,6 +18,8 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     private DiggService diggService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private ForwardService forwardService;
 
     @Override
     public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
@@ -271,6 +270,39 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onCompleted();
         } catch (Exception e) {
             log.error("getCommentCount error", e);
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void diggComment(DiggCommentRequest request, StreamObserver<DiggCommentResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.diggComment(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("diggComment error", e);
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void cancelDiggComment(DiggCommentRequest request, StreamObserver<DiggCommentResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.cancelDiggComment(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("cancelDiggComment error", e);
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void forward(ForwardRequest request, StreamObserver<ForwardResponse> responseObserver) {
+        try {
+            responseObserver.onNext(forwardService.forward(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("forward error", e);
             responseObserver.onError(e);
         }
     }

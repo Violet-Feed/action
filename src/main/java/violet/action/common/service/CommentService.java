@@ -12,4 +12,8 @@ public interface CommentService {
     GetCommentReplyListResponse getCommentReplyList(GetCommentReplyListRequest req) throws Exception;
 
     GetCommentCountResponse getCommentCount(GetCommentCountRequest req) throws Exception;
+
+    DiggCommentResponse diggComment(DiggCommentRequest req) throws Exception;
+
+    DiggCommentResponse cancelDiggComment(DiggCommentRequest req) throws Exception;
 }

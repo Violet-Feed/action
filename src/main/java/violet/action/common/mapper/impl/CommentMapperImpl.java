@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import violet.action.common.mapper.CommentMapper;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,11 +46,11 @@ public class CommentMapperImpl implements CommentMapper {
     @Override
     public void createReply(Long commentId, Long replyId) {
         String commentVid = "comment:" + commentId;
-        String replyVid = "reply:" + replyId;
+        String replyVid = "comment:" + replyId;
         String nGQL = String.format(
                 "INSERT VERTEX IF NOT EXISTS entity(`entity_type`, `entity_id`) " +
                         "VALUES \"%s\":(\"reply\", %d); " +
-                        "INSERT EDGE IF NOT EXISTS reply(ts, digg) " +
+                        "INSERT EDGE IF NOT EXISTS comment(ts, digg) " +
                         "VALUES \"%s\"->\"%s\":(%d, 0);",
                 replyVid, replyId,
                 commentVid, replyVid, System.currentTimeMillis()
@@ -68,14 +68,15 @@ public class CommentMapperImpl implements CommentMapper {
     }
 
     @Override
-    public List<Long> getCommentList(String entityType, Long entityId, int skip, int limit) {
+    public Map<Long, Long> getCommentListByTime(String entityType, Long entityId, int skip, int limit) {
         String targetVid = entityType + ":" + entityId;
         String nGQL = String.format(
                 "MATCH (e:entity)-[c:comment]->(cmt:entity) " +
                         "WHERE id(e) == \"%s\" " +
                         "RETURN " +
-                        "cmt.entity.entity_id AS entityId, " +
-                        "c.ts AS ts " +
+                        "cmt.entity.entity_id AS commentId, " +
+                        "c.ts AS ts, " +
+                        "c.digg AS diggCount " +
                         "ORDER BY ts DESC " +
                         "SKIP %d LIMIT %d",
                 targetVid, skip, limit
@@ -83,31 +84,53 @@ public class CommentMapperImpl implements CommentMapper {
         try {
             ResultSet resultSet = session.execute(nGQL);
             if (!resultSet.isSucceeded()) {
-                log.error("getCommentList failed, entityType: {}, entityId: {}, skip: {}, limit: {}, error: {}", entityType, entityId, skip, limit, resultSet.getErrorMessage());
-                throw new RuntimeException("getCommentList failed: " + resultSet.getErrorMessage());
+                log.error("getCommentListByTime failed, entityType: {}, entityId: {}, skip: {}, limit: {}, error: {}", entityType, entityId, skip, limit, resultSet.getErrorMessage());
+                throw new RuntimeException("getCommentListByTime failed: " + resultSet.getErrorMessage());
             }
-            List<Long> commentIds = new ArrayList<>();
-            for (int i = 0; i < resultSet.rowsSize(); i++) {
-                ResultSet.Record record = resultSet.rowValues(i);
-                commentIds.add(record.get("entityId").asLong());
-            }
-            return commentIds;
+            return parseCommentMetas(resultSet);
         } catch (IOErrorException e) {
-            log.error("getCommentList failed, entityType: {}, entityId: {}, skip: {}, limit: {}", entityType, entityId, skip, limit, e);
+            log.error("getCommentListByTime failed, entityType: {}, entityId: {}, skip: {}, limit: {}", entityType, entityId, skip, limit, e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<Long> getReplyList(Long commentId, int skip, int limit) {
+    public Map<Long, Long> getCommentListByDigg(String entityType, Long entityId, int skip, int limit) {
+        String targetVid = entityType + ":" + entityId;
+        String nGQL = String.format(
+                "MATCH (e:entity)-[c:comment]->(cmt:entity) " +
+                        "WHERE id(e) == \"%s\" " +
+                        "RETURN " +
+                        "cmt.entity.entity_id AS commentId, " +
+                        "c.ts AS ts, " +
+                        "c.digg AS diggCount " +
+                        "ORDER BY diggCount DESC, ts DESC " +
+                        "SKIP %d LIMIT %d",
+                targetVid, skip, limit
+        );
+        try {
+            ResultSet resultSet = session.execute(nGQL);
+            if (!resultSet.isSucceeded()) {
+                log.error("getCommentListByDigg failed, entityType: {}, entityId: {}, skip: {}, limit: {}, error: {}", entityType, entityId, skip, limit, resultSet.getErrorMessage());
+                throw new RuntimeException("getCommentList failed: " + resultSet.getErrorMessage());
+            }
+            return parseCommentMetas(resultSet);
+        } catch (IOErrorException e) {
+            log.error("getCommentListByDigg failed, entityType: {}, entityId: {}, skip: {}, limit: {}", entityType, entityId, skip, limit, e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Map<Long, Long> getReplyList(Long commentId, int skip, int limit) {
         String commentVid = "comment:" + commentId;
         String nGQL = String.format(
-                "MATCH (cmt:entity)-[r:reply]->(rep:entity) " +
+                "MATCH (cmt:entity)-[c:comment]->(rep:entity) " +
                         "WHERE id(cmt) == \"%s\" " +
                         "RETURN " +
-                        "rep.entity.entity_id AS entityId, " +
-                        "r.ts AS ts " +
-                        "ORDER BY ts DESC " +
+                        "rep.entity.entity_id AS commentId, " +
+                        "c.digg AS diggCount " +
+                        "ORDER BY diggCount DESC " +
                         "SKIP %d LIMIT %d",
                 commentVid, skip, limit
         );
@@ -117,12 +140,7 @@ public class CommentMapperImpl implements CommentMapper {
                 log.error("getReplyList failed, commentId: {}, skip: {}, limit: {}, error: {}", commentId, skip, limit, resultSet.getErrorMessage());
                 throw new RuntimeException("getReplyList failed: " + resultSet.getErrorMessage());
             }
-            List<Long> replyIds = new ArrayList<>();
-            for (int i = 0; i < resultSet.rowsSize(); i++) {
-                ResultSet.Record record = resultSet.rowValues(i);
-                replyIds.add(record.get("entityId").asLong());
-            }
-            return replyIds;
+            return parseCommentMetas(resultSet);
         } catch (IOErrorException e) {
             log.error("getReplyList failed, commentId: {}, skip: {}, limit: {}", commentId, skip, limit, e);
             throw new RuntimeException(e);
@@ -171,9 +189,9 @@ public class CommentMapperImpl implements CommentMapper {
                 .orElse("");
         String nGQL = String.format(
                 "UNWIND [%s] AS vid " +
-                        "MATCH (cmt:entity)-[r:reply]->() " +
+                        "MATCH (cmt:entity)-[c:comment]->() " +
                         "WHERE id(cmt) == vid " +
-                        "RETURN cmt.entity.entity_id AS commentId, COUNT(r) AS count",
+                        "RETURN cmt.entity.entity_id AS commentId, COUNT(c) AS count",
                 vidList
         );
         try {
@@ -193,5 +211,37 @@ public class CommentMapperImpl implements CommentMapper {
             log.error("mGetReplyCount failed, commentIds: {}", commentIds, e);
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void updateCommentDigg(String entityType, Long entityId, Long commentId, int delta) {
+        String srcVid = entityType + ":" + entityId;
+        String dstVid = "comment:" + commentId;
+        String nGQL = String.format(
+                "UPDATE EDGE ON comment \"%s\"->\"%s\" " +
+                        "SET digg = digg + (%d);",
+                srcVid, dstVid, delta
+        );
+        try {
+            ResultSet resultSet = session.execute(nGQL);
+            if (!resultSet.isSucceeded()) {
+                log.error("updateCommentDigg failed, commentId: {}, delta: {}, error: {}", commentId, delta, resultSet.getErrorMessage());
+                throw new RuntimeException("updateCommentDigg failed: " + resultSet.getErrorMessage());
+            }
+        } catch (IOErrorException e) {
+            log.error("updateCommentDigg failed, commentId: {}, delta: {}", commentId, delta, e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Map<Long, Long> parseCommentMetas(ResultSet resultSet) {
+        Map<Long, Long> commentMetas = new LinkedHashMap<>();
+        for (int i = 0; i < resultSet.rowsSize(); i++) {
+            ResultSet.Record record = resultSet.rowValues(i);
+            Long commentId = record.get("commentId").asLong();
+            Long diggCount = record.get("diggCount").asLong();
+            commentMetas.put(commentId, diggCount);
+        }
+        return commentMetas;
     }
 }
