@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import violet.action.common.mapper.DiggMapper;
+import violet.action.common.repository.NebulaManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +18,7 @@ import java.util.Map;
 @Repository
 public class DiggMapperImpl implements DiggMapper {
     @Autowired
-    private Session session;
+    private NebulaManager nebulaManager;
 
     @Override
     public void digg(Long userId, String entityType, Long entityId) {
@@ -28,15 +29,10 @@ public class DiggMapperImpl implements DiggMapper {
                         "VALUES \"%s\"->\"%s\":(%d);",
                 userVid, entityVid, System.currentTimeMillis()
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("digg failed, userId: {}, entityType: {}, entityId: {}, error: {}", userId, entityType, entityId, resultSet.getErrorMessage());
-                throw new RuntimeException("digg failed: " + resultSet.getErrorMessage());
-            }
-        } catch (IOErrorException e) {
-            log.error("digg failed, userId: {}, entityType: {}, entityId: {}", userId, entityType, entityId, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("digg failed, userId: {}, entityType: {}, entityId: {}, error: {}", userId, entityType, entityId, resultSet.getErrorMessage());
+            throw new RuntimeException("digg failed: " + resultSet.getErrorMessage());
         }
     }
 
@@ -48,15 +44,10 @@ public class DiggMapperImpl implements DiggMapper {
                 "DELETE EDGE digg \"%s\" -> \"%s\";",
                 userVid, entityVid
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("cancelDigg failed, userId: {}, entityType: {}, entityId: {}, error: {}", userId, entityType, entityId, resultSet.getErrorMessage());
-                throw new RuntimeException("cancelDigg failed: " + resultSet.getErrorMessage());
-            }
-        } catch (IOErrorException e) {
-            log.error("cancelDigg failed, userId: {}, entityType: {}, entityId: {}", userId, entityType, entityId, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("cancelDigg failed, userId: {}, entityType: {}, entityId: {}, error: {}", userId, entityType, entityId, resultSet.getErrorMessage());
+            throw new RuntimeException("cancelDigg failed: " + resultSet.getErrorMessage());
         }
     }
 
@@ -72,22 +63,17 @@ public class DiggMapperImpl implements DiggMapper {
                         "SKIP %d LIMIT %d",
                 userVid, entityType, skip, limit
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("getDiggListByUser failed, userId: {}, entityType: {}, skip: {}, limit: {}, error: {}", userId, entityType, skip, limit, resultSet.getErrorMessage());
-                throw new RuntimeException("getDiggListByUser failed: " + resultSet.getErrorMessage());
-            }
-            List<Long> entityIds = new ArrayList<>();
-            for (int i = 0; i < resultSet.rowsSize(); i++) {
-                ResultSet.Record record = resultSet.rowValues(i);
-                entityIds.add(record.get("entityId").asLong());
-            }
-            return entityIds;
-        } catch (IOErrorException e) {
-            log.error("getDiggListByUser failed, userId: {}, entityType: {}, skip: {}, limit: {}", userId, entityType, skip, limit, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("getDiggListByUser failed, userId: {}, entityType: {}, skip: {}, limit: {}, error: {}", userId, entityType, skip, limit, resultSet.getErrorMessage());
+            throw new RuntimeException("getDiggListByUser failed: " + resultSet.getErrorMessage());
         }
+        List<Long> entityIds = new ArrayList<>();
+        for (int i = 0; i < resultSet.rowsSize(); i++) {
+            ResultSet.Record record = resultSet.rowValues(i);
+            entityIds.add(record.get("entityId").asLong());
+        }
+        return entityIds;
     }
 
     @Deprecated
@@ -111,23 +97,18 @@ public class DiggMapperImpl implements DiggMapper {
                         "RETURN e.entity.entity_id AS entityId, COUNT(u) AS count",
                 vidList
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("mGetDiggCountByEntity failed, entityType: {}, entityIds: {}, error: {}", entityType, entityIds, resultSet.getErrorMessage());
-                throw new RuntimeException("mGetDiggCountByEntity failed: " + resultSet.getErrorMessage());
-            }
-            for (int i = 0; i < resultSet.rowsSize(); i++) {
-                ResultSet.Record record = resultSet.rowValues(i);
-                long entityId = record.get("entityId").asLong();
-                long count = record.get("count").asLong();
-                result.put(entityId, count);
-            }
-            return result;
-        } catch (IOErrorException e) {
-            log.error("mGetDiggCountByEntity failed, entityType: {}, entityIds: {}", entityType, entityIds, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("mGetDiggCountByEntity failed, entityType: {}, entityIds: {}, error: {}", entityType, entityIds, resultSet.getErrorMessage());
+            throw new RuntimeException("mGetDiggCountByEntity failed: " + resultSet.getErrorMessage());
         }
+        for (int i = 0; i < resultSet.rowsSize(); i++) {
+            ResultSet.Record record = resultSet.rowValues(i);
+            long entityId = record.get("entityId").asLong();
+            long count = record.get("count").asLong();
+            result.put(entityId, count);
+        }
+        return result;
     }
 
     @Override
@@ -151,22 +132,17 @@ public class DiggMapperImpl implements DiggMapper {
                         "RETURN e.entity.entity_id AS entityId, COUNT(d) > 0 AS isDigg",
                 vidList, userVid
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("mIsDigg failed, userId: {}, entityType: {}, entityIds: {}, error: {}", userId, entityType, entityIds, resultSet.getErrorMessage());
-                throw new RuntimeException("mIsDigg failed: " + resultSet.getErrorMessage());
-            }
-            for (int i = 0; i < resultSet.rowsSize(); i++) {
-                ResultSet.Record record = resultSet.rowValues(i);
-                long entityId = record.get("entityId").asLong();
-                boolean isDigg = record.get("isDigg").asBoolean();
-                result.put(entityId, isDigg);
-            }
-            return result;
-        } catch (IOErrorException e) {
-            log.error("mIsDigg failed, userId: {}, entityType: {}, entityIds: {}", userId, entityType, entityIds, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("mIsDigg failed, userId: {}, entityType: {}, entityIds: {}, error: {}", userId, entityType, entityIds, resultSet.getErrorMessage());
+            throw new RuntimeException("mIsDigg failed: " + resultSet.getErrorMessage());
         }
+        for (int i = 0; i < resultSet.rowsSize(); i++) {
+            ResultSet.Record record = resultSet.rowValues(i);
+            long entityId = record.get("entityId").asLong();
+            boolean isDigg = record.get("isDigg").asBoolean();
+            result.put(entityId, isDigg);
+        }
+        return result;
     }
 }

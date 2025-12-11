@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import violet.action.common.mapper.RelationMapper;
 import violet.action.common.pojo.User;
+import violet.action.common.repository.NebulaManager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.Map;
 @Repository
 public class RelationMapperImpl implements RelationMapper {
     @Autowired
-    private Session session;
+    private NebulaManager nebulaManager;
 
 
     @Override
@@ -33,15 +34,10 @@ public class RelationMapperImpl implements RelationMapper {
                 escapeString(user.getUsername()),
                 escapeString(user.getAvatar())
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("createUser failed, userId: {}, error: {}", user.getUserId(), resultSet.getErrorMessage());
-                throw new RuntimeException("createUser failed: " + resultSet.getErrorMessage());
-            }
-        } catch (IOErrorException e) {
-            log.error("createUser failed, userId: {}", user.getUserId(), e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("createUser failed, userId: {}, error: {}", user.getUserId(), resultSet.getErrorMessage());
+            throw new RuntimeException("createUser failed: " + resultSet.getErrorMessage());
         }
     }
 
@@ -61,15 +57,10 @@ public class RelationMapperImpl implements RelationMapper {
                         "VALUES \"%s\"->\"%s\":(%d);",
                 fromVid, toVid, System.currentTimeMillis()
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("follow failed, fromUserId: {}, toUserId: {}, error: {}", fromUserId, toUserId, resultSet.getErrorMessage());
-                throw new RuntimeException("follow failed: " + resultSet.getErrorMessage());
-            }
-        } catch (IOErrorException e) {
-            log.error("follow failed, fromUserId: {}, toUserId: {}", fromUserId, toUserId, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("follow failed, fromUserId: {}, toUserId: {}, error: {}", fromUserId, toUserId, resultSet.getErrorMessage());
+            throw new RuntimeException("follow failed: " + resultSet.getErrorMessage());
         }
     }
 
@@ -81,15 +72,10 @@ public class RelationMapperImpl implements RelationMapper {
                 "DELETE EDGE follow \"%s\" -> \"%s\";",
                 fromVid, toVid
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("unfollow failed, fromUserId: {}, toUserId: {}, error: {}", fromUserId, toUserId, resultSet.getErrorMessage());
-                throw new RuntimeException("unfollow failed: " + resultSet.getErrorMessage());
-            }
-        } catch (IOErrorException e) {
-            log.error("unfollow failed, fromUserId: {}, toUserId: {}", fromUserId, toUserId, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("unfollow failed, fromUserId: {}, toUserId: {}, error: {}", fromUserId, toUserId, resultSet.getErrorMessage());
+            throw new RuntimeException("unfollow failed: " + resultSet.getErrorMessage());
         }
     }
 
@@ -103,13 +89,13 @@ public class RelationMapperImpl implements RelationMapper {
                 vid
         );
         try {
-            ResultSet resultSet = session.execute(nGQL);
+            ResultSet resultSet = nebulaManager.execute(nGQL);
             if (!resultSet.isSucceeded()) {
                 log.error("getFollowingList failed, userId: {}, error: {}", userId, resultSet.getErrorMessage());
                 throw new RuntimeException("getFollowingList failed: " + resultSet.getErrorMessage());
             }
             return parseUsers(resultSet);
-        } catch (IOErrorException | UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             log.error("getFollowingList failed, userId: {}", userId, e);
             throw new RuntimeException(e);
         }
@@ -125,13 +111,13 @@ public class RelationMapperImpl implements RelationMapper {
                 vid
         );
         try {
-            ResultSet resultSet = session.execute(nGQL);
+            ResultSet resultSet = nebulaManager.execute(nGQL);
             if (!resultSet.isSucceeded()) {
                 log.error("getFollowerList failed, userId: {}, error: {}", userId, resultSet.getErrorMessage());
                 throw new RuntimeException("getFollowerList failed: " + resultSet.getErrorMessage());
             }
             return parseUsers(resultSet);
-        } catch (IOErrorException | UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             log.error("getFollowerList failed, userId: {}", userId, e);
             throw new RuntimeException(e);
         }
@@ -147,13 +133,13 @@ public class RelationMapperImpl implements RelationMapper {
                 vid
         );
         try {
-            ResultSet resultSet = session.execute(nGQL);
+            ResultSet resultSet = nebulaManager.execute(nGQL);
             if (!resultSet.isSucceeded()) {
                 log.error("getFriendList failed, userId: {}, error: {}", userId, resultSet.getErrorMessage());
                 throw new RuntimeException("getFriendList failed: " + resultSet.getErrorMessage());
             }
             return parseUsers(resultSet);
-        } catch (IOErrorException | UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             log.error("getFriendList failed, userId: {}", userId, e);
             throw new RuntimeException(e);
         }
@@ -173,23 +159,18 @@ public class RelationMapperImpl implements RelationMapper {
                         "RETURN a.user.user_id AS from_id, b.user.user_id AS to_id",
                 idList
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("mGetFollowingMap failed, userIds: {}, error: {}", userIds, resultSet.getErrorMessage());
-                throw new RuntimeException("mGetFollowingMap failed: " + resultSet.getErrorMessage());
-            }
-            for (int i = 0; i < resultSet.rowsSize(); i++) {
-                ResultSet.Record record = resultSet.rowValues(i);
-                long fromId = record.get("from_id").asLong();
-                long toId = record.get("to_id").asLong();
-                followingMaps.computeIfAbsent(fromId, k -> new HashMap<>()).put(Long.toString(toId), "1");
-            }
-            return followingMaps;
-        } catch (IOErrorException e) {
-            log.error("mGetFollowingMap failed, userIds: {}", userIds, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("mGetFollowingMap failed, userIds: {}, error: {}", userIds, resultSet.getErrorMessage());
+            throw new RuntimeException("mGetFollowingMap failed: " + resultSet.getErrorMessage());
         }
+        for (int i = 0; i < resultSet.rowsSize(); i++) {
+            ResultSet.Record record = resultSet.rowValues(i);
+            long fromId = record.get("from_id").asLong();
+            long toId = record.get("to_id").asLong();
+            followingMaps.computeIfAbsent(fromId, k -> new HashMap<>()).put(Long.toString(toId), "1");
+        }
+        return followingMaps;
     }
 
     @Override
@@ -205,17 +186,12 @@ public class RelationMapperImpl implements RelationMapper {
                         "RETURN a.user.user_id AS userId, COUNT(b) AS count",
                 idList
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("mGetFollowingCount failed, userIds: {}, error: {}", userIds, resultSet.getErrorMessage());
-                throw new RuntimeException("mGetFollowingCount failed: " + resultSet.getErrorMessage());
-            }
-            return parseCount(resultSet);
-        } catch (IOErrorException e) {
-            log.error("mGetFollowingCount failed, userIds: {}", userIds, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("mGetFollowingCount failed, userIds: {}, error: {}", userIds, resultSet.getErrorMessage());
+            throw new RuntimeException("mGetFollowingCount failed: " + resultSet.getErrorMessage());
         }
+        return parseCount(resultSet);
     }
 
     @Override
@@ -231,17 +207,12 @@ public class RelationMapperImpl implements RelationMapper {
                         "RETURN b.user.user_id AS userId, COUNT(a) AS count",
                 idList
         );
-        try {
-            ResultSet resultSet = session.execute(nGQL);
-            if (!resultSet.isSucceeded()) {
-                log.error("mGetFollowerCount failed, userIds: {}, error: {}", userIds, resultSet.getErrorMessage());
-                throw new RuntimeException("mGetFollowerCount failed: " + resultSet.getErrorMessage());
-            }
-            return parseCount(resultSet);
-        } catch (IOErrorException e) {
-            log.error("mGetFollowerCount failed, userIds: {}", userIds, e);
-            throw new RuntimeException(e);
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("mGetFollowerCount failed, userIds: {}, error: {}", userIds, resultSet.getErrorMessage());
+            throw new RuntimeException("mGetFollowerCount failed: " + resultSet.getErrorMessage());
         }
+        return parseCount(resultSet);
     }
 
     private List<User> parseUsers(ResultSet resultSet) throws UnsupportedEncodingException {
