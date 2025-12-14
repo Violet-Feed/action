@@ -14,12 +14,9 @@ import org.springframework.stereotype.Component;
 import violet.action.common.pojo.Action;
 import violet.action.common.proto_gen.action.ActionEvent;
 import violet.action.common.proto_gen.action.ActionType;
-import violet.action.common.proto_gen.action.EntityType;
 import violet.action.common.proto_gen.common.StatusCode;
 import violet.action.common.proto_gen.im.*;
 import violet.action.common.utils.TimeUtil;
-
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -41,93 +38,48 @@ public class ActionConsumer {
             throw new RuntimeException(e);
         }
         ActionEvent event = builder.build();
-        Action action = new Action();
-        action.setUserId(event.getUserId());
-        action.setActionType(event.getActionType());
-        action.setTimestamp(event.getTimestamp());
-        String creationIds = null;
-        String payload = null;
-        long noticeUserId = 0;
-        int noticeType = 0;
-        String refType = null;
-        long refId = 0;
-        switch (event.getActionType()) {
-            case ActionType.Click_VALUE:
-                creationIds = event.getClickPayload().getCreationIdsList().stream().map(String::valueOf).collect(Collectors.joining(","));
-                break;
-            case ActionType.Digg_VALUE:
-                creationIds = String.valueOf(event.getDiggPayload().getCreationId());
-                payload = JSON.toJSONString(event.getDiggPayload());
-                noticeUserId = event.getDiggPayload().getOwnerId();
-                noticeType = NoticeType.Digg_VALUE;
-                refType = EntityType.Creation.name();
-                refId = event.getDiggPayload().getCreationId();
-                break;
-            case ActionType.DiggComment_VALUE:
-                creationIds = String.valueOf(event.getDiggCommentPayload().getCommentId());
-                payload = JSON.toJSONString(event.getDiggCommentPayload());
-                noticeUserId = event.getDiggCommentPayload().getOwnerId();
-                noticeType = NoticeType.DiggComment_VALUE;
-                refType = EntityType.Comment.name();
-                refId = event.getDiggCommentPayload().getCommentId();
-                break;
-            case ActionType.CreateComment_VALUE:
-                creationIds = String.valueOf(event.getCreateCommentPayload().getCommentId());
-                payload = JSON.toJSONString(event.getCreateCommentPayload());
-                noticeUserId = event.getCreateCommentPayload().getOwnerId();
-                noticeType = NoticeType.CreateComment_VALUE;
-                refType = EntityType.Creation.name();
-                refId = event.getCreateCommentPayload().getCreationId();
-                break;
-            case ActionType.CreateReply_VALUE:
-                creationIds = String.valueOf(event.getCreateReplyPayload().getReplyId());
-                payload = JSON.toJSONString(event.getCreateReplyPayload());
-                noticeUserId = event.getCreateReplyPayload().getOwnerId();
-                noticeType = NoticeType.CreateReply_VALUE;
-                refType = EntityType.Comment.name();
-                refId = event.getCreateReplyPayload().getCommentId();
-                break;
-            case ActionType.Follow_VALUE:
-                payload = JSON.toJSONString(event.getFollowPayload());
-                noticeUserId = event.getFollowPayload().getToUserId();
-                noticeType = NoticeType.Follow_VALUE;
-                break;
-        }
-
-        if (event.getActionType() != ActionType.Follow_VALUE) {
-            action.setCreationIds(creationIds);
-            kvrocksTemplate.opsForList().rightPush("action:" + action.getUserId() + ":" + TimeUtil.getNowDate(), JSON.toJSONString(action));
-        }
+        Action action = new Action(event.getUserId(), event.getActionType(), event.getCreationList(), event.getTimestamp());
+        kvrocksTemplate.opsForList().rightPush("action:" + action.getUserId() + ":" + TimeUtil.getNowDate(), JSON.toJSONString(action));
 
         //按理应该放在另一个消费者组
         if (event.getActionType() == ActionType.Click_VALUE) {
             return;
-        } else if (event.getActionType() == ActionType.Follow_VALUE) {
-            SendNoticeRequest sendNoticeRequest = SendNoticeRequest.newBuilder()
-                    .setUserId(noticeUserId)
-                    .setGroup(NoticeGroup.Follow_Group_VALUE)
-                    .setNoticeType(noticeType)
-                    .setNoticeContent(payload)
-                    .setSenderId(event.getUserId())
-                    .build();
-            SendNoticeResponse sendNoticeResponse = imStub.sendNotice(sendNoticeRequest);
-            if (sendNoticeResponse.getBaseResp().getStatusCode() != StatusCode.Success) {
-                log.error("[ActionConsumer] send follow notice failed, resp = {}", sendNoticeResponse.getBaseResp());
-            }
-        } else {
-            SendNoticeRequest sendNoticeRequest = SendNoticeRequest.newBuilder()
-                    .setUserId(noticeUserId)
-                    .setGroup(NoticeGroup.Action_Group_VALUE)
-                    .setNoticeType(noticeType)
-                    .setNoticeContent(payload)
-                    .setSenderId(event.getUserId())
-                    .setRefType(refType)
-                    .setRefId(refId)
-                    .build();
-            SendNoticeResponse sendNoticeResponse = imStub.sendNotice(sendNoticeRequest);
-            if (sendNoticeResponse.getBaseResp().getStatusCode() != StatusCode.Success) {
-                log.error("[ActionConsumer] send action notice failed, resp = {}", sendNoticeResponse.getBaseResp());
-            }
+        }
+        long creationId = Long.parseLong(event.getCreationList());
+        int noticeType;
+        String aggField;
+        switch (event.getActionType()) {
+            case ActionType.Digg_VALUE:
+                noticeType = NoticeType.Digg_VALUE;
+                aggField = noticeType + ":" + creationId;
+                break;
+            case ActionType.DiggComment_VALUE:
+                noticeType = NoticeType.DiggComment_VALUE;
+                aggField = noticeType + ":" + event.getPayload().getOpCommentId();
+                break;
+            case ActionType.CreateComment_VALUE:
+                noticeType = NoticeType.CreateComment_VALUE;
+                aggField = noticeType + ":" + creationId;
+                break;
+            case ActionType.CreateReply_VALUE:
+                noticeType = NoticeType.CreateReply_VALUE;
+                aggField = noticeType + ":" + event.getPayload().getOpCommentId();
+                break;
+            default:
+                return;
+        }
+        SendNoticeRequest sendNoticeRequest = SendNoticeRequest.newBuilder()
+                .setUserId(event.getPayload().getAuthorId())
+                .setGroup(NoticeGroup.Action_Group_VALUE)
+                .setNoticeType(noticeType)
+                .setNoticeContent(JSON.toJSONString(event.getPayload()))
+                .setSenderId(event.getUserId())
+                .setRefId(creationId)
+                .setAggField(aggField)
+                .build();
+        SendNoticeResponse sendNoticeResponse = imStub.sendNotice(sendNoticeRequest);
+        if (sendNoticeResponse.getBaseResp().getStatusCode() != StatusCode.Success) {
+            log.error("[ActionConsumer] send action notice failed, resp = {}", sendNoticeResponse.getBaseResp());
         }
     }
 }

@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class Action {
     private Long userId;
     private Integer actionType;
-    private String creationIds;
+    private String creationIdList;
     private Long timestamp;
 }

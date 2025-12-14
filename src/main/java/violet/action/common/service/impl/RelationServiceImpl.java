@@ -3,14 +3,15 @@ package violet.action.common.service.impl;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import violet.action.common.config.CaffeineConfig;
 import violet.action.common.mapper.RelationMapper;
-import violet.action.common.producer.ActionMqPublisher;
 import violet.action.common.proto_gen.action.*;
 import violet.action.common.proto_gen.common.BaseResp;
 import violet.action.common.proto_gen.common.StatusCode;
+import violet.action.common.proto_gen.im.*;
 import violet.action.common.service.RelationService;
 import violet.action.common.service.model.RelationModel;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
@@ -25,6 +27,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RelationServiceImpl implements RelationService {
     private final Long MAX_FOLLOWING_COUNT = 5000L;
 
+    @GrpcClient("im")
+    private IMServiceGrpc.IMServiceBlockingStub imStub;
     @Autowired
     private RelationModel relationModel;
     @Autowired
@@ -39,8 +43,6 @@ public class RelationServiceImpl implements RelationService {
     private Cache<String, Long> countCaffeineCache;
     @Autowired
     private CaffeineConfig.HitCaffeineCache hitCaffeineCache;
-    @Autowired
-    private ActionMqPublisher actionMqPublisher;
 
     public boolean isStar(Long userId) {
         return false;
@@ -59,7 +61,18 @@ public class RelationServiceImpl implements RelationService {
         }
         relationMapper.follow(req.getFromUserId(), req.getToUserId());
         relationModel.updateCache(req.getFromUserId(), req.getToUserId(), 1);
-        actionMqPublisher.publishFollowEvent(req);
+        CompletableFuture.runAsync(() -> {
+            SendNoticeRequest sendNoticeRequest = SendNoticeRequest.newBuilder()
+                    .setUserId(req.getToUserId())
+                    .setGroup(NoticeGroup.Follow_Group_VALUE)
+                    .setNoticeType(NoticeType.Follow_VALUE)
+                    .setSenderId(req.getFromUserId())
+                    .build();
+            SendNoticeResponse sendNoticeResponse = imStub.sendNotice(sendNoticeRequest);
+            if (sendNoticeResponse.getBaseResp().getStatusCode() != StatusCode.Success) {
+                log.error("[follow] send follow notice failed, resp = {}", sendNoticeResponse.getBaseResp());
+            }
+        });
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return FollowResponse.newBuilder().setBaseResp(baseResp).build();
     }

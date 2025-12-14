@@ -91,8 +91,9 @@ message MGetFollowCountResponse{
 
 enum EntityType{
   ENTITY_TYPE_Not_Use = 0;
-  Creation = 1;
-  Comment = 2;
+  User = 1;
+  Creation = 2;
+  Comment = 3;
 }
 
 message DiggRequest{
@@ -261,52 +262,17 @@ message ActionEvent {
   int32 action_type = 2;
   int64 user_id = 3;
   int64 timestamp = 4;
-  oneof payload {
-    ClickPayload click_payload = 5;
-    DiggPayload digg_payload = 6;
-    DiggCommentPayload digg_comment_payload = 7;
-    CreateCommentPayload create_comment_payload = 8;
-    CreateReplyPayload create_reply_payload = 9;
-    FollowPayload follow_payload = 10;
-  }
+  string creation_list = 5;
+  ActionPayload payload = 6;
 }
 
-message ClickPayload {
-  repeated int64 creation_ids = 1;
-}
-
-message DiggPayload {
-  int64 creation_id = 1;
-  int64 owner_id = 2;
-}
-
-message DiggCommentPayload {
-  int64 creation_id = 1;
-  int64 comment_id = 2;
-  int64 owner_id = 3;
-  int64 parent_comment_id = 4;
-}
-
-message CreateCommentPayload {
-  int64 creation_id = 1;
-  int64 owner_id = 2;
+message ActionPayload {
+  int64 author_id = 1;
+  int64 op_comment_id = 2;
   int64 comment_id = 3;
-  int32 comment_content_type = 4;
-  string comment_content = 5;
-}
-
-message CreateReplyPayload {
-  int64 creation_id = 1;
-  int64 comment_id = 2;
-  int64 owner_id = 3;
-  int64 reply_id = 4;
-  int32 reply_content_type = 5;
-  string reply_content = 6;
-  int64 parent_comment_id = 7;
-}
-
-message FollowPayload {
-  int64 to_user_id = 1;
+  int32 content_type = 4;
+  string content = 5;
+  int64 parent_comment_id = 6;
 }
 
 service ActionService {
