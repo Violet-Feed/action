@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import violet.action.common.config.CaffeineConfig;
 import violet.action.common.mapper.RelationMapper;
+import violet.action.common.producer.ActionMqPublisher;
 import violet.action.common.proto_gen.action.*;
 import violet.action.common.proto_gen.common.BaseResp;
 import violet.action.common.proto_gen.common.StatusCode;
@@ -38,6 +39,8 @@ public class RelationServiceImpl implements RelationService {
     private Cache<String, Long> countCaffeineCache;
     @Autowired
     private CaffeineConfig.HitCaffeineCache hitCaffeineCache;
+    @Autowired
+    private ActionMqPublisher actionMqPublisher;
 
     public boolean isStar(Long userId) {
         return false;
@@ -56,6 +59,7 @@ public class RelationServiceImpl implements RelationService {
         }
         relationMapper.follow(req.getFromUserId(), req.getToUserId());
         relationModel.updateCache(req.getFromUserId(), req.getToUserId(), 1);
+        actionMqPublisher.publishFollowEvent(req);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return FollowResponse.newBuilder().setBaseResp(baseResp).build();
     }

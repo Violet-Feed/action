@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import violet.action.common.mapper.DiggMapper;
+import violet.action.common.producer.ActionMqPublisher;
 import violet.action.common.proto_gen.action.*;
 import violet.action.common.proto_gen.common.BaseResp;
 import violet.action.common.proto_gen.common.StatusCode;
@@ -22,6 +23,8 @@ public class DiggServiceImpl implements DiggService {
     @Autowired
     @Qualifier("kvrocksTemplate")
     private RedisTemplate<String, String> kvrocksTemplate;
+    @Autowired
+    private ActionMqPublisher actionMqPublisher;
 
     private static final int PAGE_SIZE = 20;
 
@@ -30,6 +33,7 @@ public class DiggServiceImpl implements DiggService {
         DiggResponse.Builder resp = DiggResponse.newBuilder();
         diggMapper.digg(req.getUserId(), req.getEntityType(), req.getEntityId());
         kvrocksTemplate.opsForValue().increment("digg_count:" + req.getEntityType() + ":" + req.getEntityId(), 1);
+        actionMqPublisher.publishDiggEvent(req);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setBaseResp(baseResp).build();
     }

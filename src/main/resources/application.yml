@@ -5,6 +5,9 @@ grpc:
     im:
       address: 'static://127.0.0.1:3004'
       negotiation-type: plaintext
+    aigc:
+      address: 'static://127.0.0.1:3005'
+      negotiation-type: plaintext
 spring:
   main:
     web-application-type: none

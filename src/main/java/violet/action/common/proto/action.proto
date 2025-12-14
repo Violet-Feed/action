@@ -2,7 +2,7 @@ syntax = "proto3";
 package action;
 option java_multiple_files = true;
 option java_package = "violet.action.common.proto_gen.action";
-option go_package = "/proto_gen/action";
+option go_package = "im/proto_gen/action";
 
 import "proto/common.proto";
 
@@ -89,6 +89,12 @@ message MGetFollowCountResponse{
   common.BaseResp baseResp = 255;
 }
 
+enum EntityType{
+  ENTITY_TYPE_Not_Use = 0;
+  Creation = 1;
+  Comment = 2;
+}
+
 message DiggRequest{
   int64 user_id = 1;
   string entity_type = 2;
@@ -172,6 +178,14 @@ message CreateCommentReplyResponse{
   common.BaseResp baseResp = 255;
 }
 
+message GetCommentByIdRequest{
+  int64 comment_id = 1;
+}
+message GetCommentByIdResponse{
+  CommentData comment = 1;
+  common.BaseResp baseResp = 255;
+}
+
 message GetCommentListRequest{
   string entity_type = 1;
   int64 entity_id = 2;
@@ -222,23 +236,77 @@ message ForwardRequest{
 message ForwardResponse{
   common.BaseResp baseResp = 255;
 }
-
-enum ActionType{
-  USER_ACTION_TYPE_Not_Use = 0;
-  expo = 1;
-  click = 2;
-  digg = 3;
-  comment = 4;
-  forward = 5;
-}
-message ReportUserActionRequest{
+message ReportClickRequest{
   int64 user_id = 1;
-  string action_type_list = 2;
-  string creation_id_list = 3;
-  string timestamp_list = 4;
+  repeated int64 creation_ids = 2;
+  int64 timestamp = 3;
 }
-message ReportUserActionResponse{
+message ReportClickResponse{
   common.BaseResp baseResp = 255;
+}
+
+enum ActionType {
+  ActionType_Not_Use = 0;
+  Expo = 1;
+  Click = 2;
+  Digg = 3;
+  DiggComment = 4;
+  CreateComment = 5;
+  CreateReply = 6;
+  Forward = 7;
+}
+
+message ActionEvent {
+  int64 action_id = 1;
+  int32 action_type = 2;
+  int64 user_id = 3;
+  int64 timestamp = 4;
+  oneof payload {
+    ClickPayload click_payload = 5;
+    DiggPayload digg_payload = 6;
+    DiggCommentPayload digg_comment_payload = 7;
+    CreateCommentPayload create_comment_payload = 8;
+    CreateReplyPayload create_reply_payload = 9;
+    FollowPayload follow_payload = 10;
+  }
+}
+
+message ClickPayload {
+  repeated int64 creation_ids = 1;
+}
+
+message DiggPayload {
+  int64 creation_id = 1;
+  int64 owner_id = 2;
+}
+
+message DiggCommentPayload {
+  int64 creation_id = 1;
+  int64 comment_id = 2;
+  int64 owner_id = 3;
+  int64 parent_comment_id = 4;
+}
+
+message CreateCommentPayload {
+  int64 creation_id = 1;
+  int64 owner_id = 2;
+  int64 comment_id = 3;
+  int32 comment_content_type = 4;
+  string comment_content = 5;
+}
+
+message CreateReplyPayload {
+  int64 creation_id = 1;
+  int64 comment_id = 2;
+  int64 owner_id = 3;
+  int64 reply_id = 4;
+  int32 reply_content_type = 5;
+  string reply_content = 6;
+  int64 parent_comment_id = 7;
+}
+
+message FollowPayload {
+  int64 to_user_id = 1;
 }
 
 service ActionService {
@@ -261,11 +329,12 @@ service ActionService {
   rpc MIsDigg(MIsDiggRequest)returns(MIsDiggResponse){}
   rpc CreateComment(CreateCommentRequest)returns(CreateCommentResponse){}
   rpc CreateCommentReply(CreateCommentReplyRequest)returns(CreateCommentReplyResponse){}
+  rpc GetCommentById(GetCommentByIdRequest)returns(GetCommentByIdResponse){}
   rpc GetCommentList(GetCommentListRequest)returns(GetCommentListResponse){}
   rpc GetCommentReplyList(GetCommentReplyListRequest)returns(GetCommentReplyListResponse){}
   rpc GetCommentCount(GetCommentCountRequest)returns(GetCommentCountResponse){}
   rpc DiggComment(DiggCommentRequest)returns(DiggCommentResponse){}
   rpc CancelDiggComment(DiggCommentRequest)returns(DiggCommentResponse){}
   rpc Forward(ForwardRequest)returns(ForwardResponse){}
-  rpc ReportUserAction(ReportUserActionRequest)returns(ReportUserActionResponse){}
+  rpc ReportClick(ReportClickRequest)returns(ReportClickResponse){}
 }

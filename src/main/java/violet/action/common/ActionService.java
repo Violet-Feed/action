@@ -66,12 +66,12 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     }
 
     @Override
-    public void reportUserAction(ReportUserActionRequest request, StreamObserver<ReportUserActionResponse> responseObserver) {
+    public void reportClick(ReportClickRequest request, StreamObserver<ReportClickResponse> responseObserver) {
         try {
-            responseObserver.onNext(userService.reportUserAction(request));
+            responseObserver.onNext(userService.reportClick(request));
             responseObserver.onCompleted();
         } catch (Exception e) {
-            log.error("reportUserAction error", e);
+            log.error("reportClick error", e);
             responseObserver.onError(e);
         }
     }
@@ -237,6 +237,17 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onCompleted();
         } catch (Exception e) {
             log.error("createCommentReply error", e);
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void getCommentById(GetCommentByIdRequest request, StreamObserver<GetCommentByIdResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.getCommentById(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("getCommentById error", e);
             responseObserver.onError(e);
         }
     }

@@ -1,6 +1,5 @@
 package violet.action.common.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import io.milvus.v2.client.MilvusClientV2;
 import io.milvus.v2.service.vector.request.SearchReq;
 import io.milvus.v2.service.vector.request.data.EmbeddedText;
@@ -17,13 +16,13 @@ import org.springframework.stereotype.Service;
 import violet.action.common.mapper.RelationMapper;
 import violet.action.common.mapper.UserMapper;
 import violet.action.common.pojo.User;
+import violet.action.common.producer.ActionMqPublisher;
 import violet.action.common.producer.KafkaProducer;
 import violet.action.common.proto_gen.action.*;
 import violet.action.common.proto_gen.common.BaseResp;
 import violet.action.common.proto_gen.common.StatusCode;
 import violet.action.common.service.UserService;
 import violet.action.common.utils.SnowFlake;
-import violet.action.common.utils.TimeUtil;
 import violet.action.common.utils.UserDetailsImpl;
 
 import java.util.*;
@@ -32,7 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
-    private SnowFlake userIdGenerator = new SnowFlake(0, 0);
+    private final SnowFlake userIdGenerator = new SnowFlake(0, 0);
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -48,6 +47,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     @Qualifier("kvrocksTemplate")
     private RedisTemplate<String, String> kvrocksTemplate;
+    @Autowired
+    private ActionMqPublisher actionMqPublisher;
 
     private static final int PAGE_SIZE = 20;
 
@@ -157,10 +158,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReportUserActionResponse reportUserAction(ReportUserActionRequest req) {
-        ReportUserActionResponse.Builder resp = ReportUserActionResponse.newBuilder();
-        kvrocksTemplate.opsForList().rightPush("action:" + req.getUserId() + ":" + TimeUtil.getNowDate(), JSON.toJSONString(req));
-        kafkaProducer.sendMessage("action", JSON.toJSONString(req));
+    public ReportClickResponse reportClick(ReportClickRequest req) {
+        ReportClickResponse.Builder resp = ReportClickResponse.newBuilder();
+        actionMqPublisher.publishClickEvent(req);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setBaseResp(baseResp).build();
     }

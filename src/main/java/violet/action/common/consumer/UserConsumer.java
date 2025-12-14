@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import violet.action.common.mapper.RelationMapper;
 import violet.action.common.pojo.User;
 
@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Slf4j
-@Service
+@Component
 public class UserConsumer {
     @Autowired
     private MilvusClientV2 milvusClient;

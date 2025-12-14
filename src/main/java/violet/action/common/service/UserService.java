@@ -11,5 +11,5 @@ public interface UserService {
 
     SearchUsersResponse searchUsers(SearchUsersRequest req);
 
-    ReportUserActionResponse reportUserAction(ReportUserActionRequest req);
+    ReportClickResponse reportClick(ReportClickRequest req);
 }

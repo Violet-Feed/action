@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import violet.action.common.mapper.CommentMapper;
+import violet.action.common.producer.ActionMqPublisher;
 import violet.action.common.proto_gen.action.*;
 import violet.action.common.proto_gen.common.BaseResp;
 import violet.action.common.proto_gen.common.StatusCode;
@@ -31,6 +32,8 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     @Qualifier("kvrocksTemplate")
     private RedisTemplate<String, String> kvrocksTemplate;
+    @Autowired
+    private ActionMqPublisher actionMqPublisher;
 
     private static final int PAGE_SIZE = 10;
 
@@ -53,6 +56,7 @@ public class CommentServiceImpl implements CommentService {
         kvrocksTemplate.opsForValue().set(key, JSONObject.toJSONString(commentData));
         commentMapper.createComment(req.getEntityType(), req.getEntityId(), commentId);
         kvrocksTemplate.opsForValue().increment("comment_count:" + req.getEntityType() + ":" + req.getEntityId(), 1);
+        actionMqPublisher.publishCreateCommentEvent(req, commentId);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setCommentId(commentId).setBaseResp(baseResp).build();
     }
@@ -78,8 +82,21 @@ public class CommentServiceImpl implements CommentService {
         kvrocksTemplate.opsForValue().set(key, JSONObject.toJSONString(commentData));
         commentMapper.createReply(req.getParentId(), commentId);
         kvrocksTemplate.opsForValue().increment("comment_count:" + req.getEntityType() + ":" + req.getEntityId(), 1);
+        actionMqPublisher.publishCreateReplyEvent(req, commentId);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setCommentId(commentId).setBaseResp(baseResp).build();
+    }
+
+    @Override
+    public GetCommentByIdResponse getCommentById(GetCommentByIdRequest req) throws Exception {
+        GetCommentByIdResponse.Builder resp = GetCommentByIdResponse.newBuilder();
+        String key = "comment:" + req.getCommentId();
+        String commentStr = kvrocksTemplate.opsForValue().get(key);
+        CommentData.Builder builder = CommentData.newBuilder();
+        JsonFormat.parser().ignoringUnknownFields().merge(commentStr, builder);
+        CommentData commentData = builder.build();
+        BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+        return resp.setBaseResp(baseResp).setComment(commentData).build();
     }
 
     @Override
