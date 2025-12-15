@@ -1,17 +1,20 @@
 package violet.action.common.producer;
 
 import com.alibaba.fastjson2.JSON;
+import com.google.protobuf.util.JsonFormat;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import violet.action.common.proto_gen.action.*;
 import violet.action.common.proto_gen.aigc.AigcServiceGrpc;
 import violet.action.common.proto_gen.aigc.GetCreationByIdRequest;
 import violet.action.common.proto_gen.aigc.GetCreationByIdResponse;
+import violet.action.common.proto_gen.common.BaseResp;
 import violet.action.common.proto_gen.common.StatusCode;
-import violet.action.common.service.CommentService;
 import violet.action.common.utils.SnowFlake;
 
 import java.util.stream.Collectors;
@@ -22,7 +25,8 @@ public class ActionMqPublisher {
     @GrpcClient("aigc")
     private AigcServiceGrpc.AigcServiceBlockingStub aigcStub;
     @Autowired
-    private CommentService commentService;
+    @Qualifier("kvrocksTemplate")
+    private RedisTemplate<String, String> kvrocksTemplate;
     @Autowired
     private KafkaProducer kafkaProducer;
     private final SnowFlake actionIdGenerator = new SnowFlake(0, 0);
@@ -51,7 +55,7 @@ public class ActionMqPublisher {
         try {
             long actionId = actionIdGenerator.nextId();
             long timestamp = System.currentTimeMillis();
-            if (EntityType.Creation.name().equals(req.getEntityType())) {
+            if (EntityType.creation.name().equals(req.getEntityType())) {
                 GetCreationByIdRequest getCreationByIdRequest = GetCreationByIdRequest.newBuilder()
                         .setCreationId(req.getEntityId())
                         .build();
@@ -73,11 +77,11 @@ public class ActionMqPublisher {
                         .setPayload(payload)
                         .build();
                 kafkaProducer.sendMessage(ACTION_TOPIC, JSON.toJSONString(event));
-            } else if (EntityType.Comment.name().equals(req.getEntityType())) {
+            } else if (EntityType.comment.name().equals(req.getEntityType())) {
                 GetCommentByIdRequest getCommentByIdRequest = GetCommentByIdRequest.newBuilder()
                         .setCommentId(req.getEntityId())
                         .build();
-                GetCommentByIdResponse getCommentByIdResponse = commentService.getCommentById(getCommentByIdRequest);
+                GetCommentByIdResponse getCommentByIdResponse = getCommentById(getCommentByIdRequest);
                 if (getCommentByIdResponse.getBaseResp().getStatusCode() != StatusCode.Success) {
                     log.error("[publishDiggEvent] getCommentById err, err = {}", getCommentByIdResponse.getBaseResp());
                     return;
@@ -112,7 +116,7 @@ public class ActionMqPublisher {
         try {
             long actionId = actionIdGenerator.nextId();
             long timestamp = System.currentTimeMillis();
-            if (EntityType.Creation.name().equals(req.getEntityType())) {
+            if (EntityType.creation.name().equals(req.getEntityType())) {
                 GetCreationByIdRequest getCreationByIdRequest = GetCreationByIdRequest.newBuilder()
                         .setCreationId(req.getEntityId())
                         .build();
@@ -148,14 +152,14 @@ public class ActionMqPublisher {
         try {
             long actionId = actionIdGenerator.nextId();
             long timestamp = System.currentTimeMillis();
-            if (EntityType.Creation.name().equals(req.getEntityType())) {
+            if (EntityType.creation.name().equals(req.getEntityType())) {
                 long opCommentId, authorId;
                 if (req.getSibId() == 0) {
                     opCommentId = req.getParentId();
                     GetCommentByIdRequest getCommentByIdRequest = GetCommentByIdRequest.newBuilder()
                             .setCommentId(req.getParentId())
                             .build();
-                    GetCommentByIdResponse getCommentByIdResponse = commentService.getCommentById(getCommentByIdRequest);
+                    GetCommentByIdResponse getCommentByIdResponse = getCommentById(getCommentByIdRequest);
                     if (getCommentByIdResponse.getBaseResp().getStatusCode() != StatusCode.Success) {
                         log.error("[publishCreateReplyEvent] getCommentById err, err = {}", getCommentByIdResponse.getBaseResp());
                         return;
@@ -186,5 +190,16 @@ public class ActionMqPublisher {
         } catch (Exception ex) {
             log.error("[publishCreateReplyEvent] err", ex);
         }
+    }
+
+    public GetCommentByIdResponse getCommentById(GetCommentByIdRequest req) throws Exception {
+        GetCommentByIdResponse.Builder resp = GetCommentByIdResponse.newBuilder();
+        String key = "comment:" + req.getCommentId();
+        String commentStr = kvrocksTemplate.opsForValue().get(key);
+        CommentData.Builder builder = CommentData.newBuilder();
+        JsonFormat.parser().ignoringUnknownFields().merge(commentStr, builder);
+        CommentData commentData = builder.build();
+        BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+        return resp.setBaseResp(baseResp).setComment(commentData).build();
     }
 }

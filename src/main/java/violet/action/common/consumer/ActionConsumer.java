@@ -45,9 +45,12 @@ public class ActionConsumer {
         if (event.getActionType() == ActionType.Click_VALUE) {
             return;
         }
+        if (event.getUserId() == event.getPayload().getAuthorId()) {
+            return;
+        }
         long creationId = Long.parseLong(event.getCreationList());
         int noticeType;
-        String aggField;
+        String aggField = "";
         switch (event.getActionType()) {
             case ActionType.Digg_VALUE:
                 noticeType = NoticeType.Digg_VALUE;
@@ -59,11 +62,9 @@ public class ActionConsumer {
                 break;
             case ActionType.CreateComment_VALUE:
                 noticeType = NoticeType.CreateComment_VALUE;
-                aggField = noticeType + ":" + creationId;
                 break;
             case ActionType.CreateReply_VALUE:
                 noticeType = NoticeType.CreateReply_VALUE;
-                aggField = noticeType + ":" + event.getPayload().getOpCommentId();
                 break;
             default:
                 return;
