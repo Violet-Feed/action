@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class RelationServiceImpl implements RelationService {
     private final Long MAX_FOLLOWING_COUNT = 5000L;
+    private static final int PAGE_SIZE = 10;
 
     @GrpcClient("im")
     private IMServiceGrpc.IMServiceBlockingStub imStub;
@@ -113,10 +114,10 @@ public class RelationServiceImpl implements RelationService {
             BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
             return MIsFollowResponse.newBuilder().setBaseResp(baseResp).putAllIsFollowing(isFollowing).build();
         }
-        MGetFollowCountRequest countReq = MGetFollowCountRequest.newBuilder().addUserIds(userId).setNeedFollow(true).build();
+        MGetFollowCountRequest countReq = MGetFollowCountRequest.newBuilder().addUserIds(userId).setNeedFollowing(true).build();
         long followingCount = mGetFollowCount(countReq).getFollowingCountOrThrow(userId);
         if (followingCount <= 2000 || toUserIds.size() > 20) {
-            List<Long> followingList = relationModel.getFollowingListFromDB(userId);
+            List<Long> followingList = relationModel.getFollowingListFromDB(userId, 0, Integer.MAX_VALUE);
             for (Long toUserId : toUserIds) {
                 isFollowing.put(toUserId, false);
             }
@@ -140,10 +141,10 @@ public class RelationServiceImpl implements RelationService {
         Long userId = req.getFromUserId();
         List<Long> toUserIds = req.getToUserIdsList();
         Map<Long, Boolean> isFollower = new HashMap<>();
-        MGetFollowCountRequest countReq = MGetFollowCountRequest.newBuilder().addUserIds(userId).setNeedFollow(true).build();
+        MGetFollowCountRequest countReq = MGetFollowCountRequest.newBuilder().addUserIds(userId).setNeedFollower(true).build();
         long followerCount = mGetFollowCount(countReq).getFollowerCountOrThrow(userId);
         if (followerCount <= 1000 || followerCount <= 5000 && toUserIds.size() > 20) {
-            List<Long> followerList = relationModel.getFollowerListFromDB(userId);
+            List<Long> followerList = relationModel.getFollowerListFromDB(userId, 0, Integer.MAX_VALUE);
             for (Long toUserId : toUserIds) {
                 isFollower.put(toUserId, false);
             }
@@ -174,7 +175,7 @@ public class RelationServiceImpl implements RelationService {
                     log.info("[RelationServiceImpl:mIsFollower] hit cache, toUserId = {}, total = {}, hit = {}, isLoad = {}", toUserId, total, hit, followingMap == null);
                     if (followingMap == null) {
                         //是否应该调getFollowingHashFromDB？
-                        List<Long> followingList = relationModel.getFollowingListFromDB(toUserId);
+                        List<Long> followingList = relationModel.getFollowingListFromDB(toUserId, 0, Integer.MAX_VALUE);
                         followingMap = new HashMap<>();
                         for (Long followingId : followingList) {
                             followingMap.put(followingId, Boolean.TRUE);
@@ -200,11 +201,13 @@ public class RelationServiceImpl implements RelationService {
         return MIsFollowResponse.newBuilder().setBaseResp(baseResp).putAllIsFollower(isFollower).build();
     }
 
+
     @Override
     public GetFollowListResponse getFollowingList(GetFollowListRequest req) {
         //是否热点用户->热点异步本地缓存(key:userId:followType,10s刷新，从redis/db读数据)
         //非热点redis(缓存容灾or指定bg)->加锁->再次redis？>mysql/bg->一致性检查->写缓存1天
         Long userId = req.getUserId();
+        int offset = (req.getPage()-1)*PAGE_SIZE;
         if (isStar(userId)) {
             String followCaffeineKey = String.format(relationModel.FOLLOW_STAR_KEY, userId);
             CaffeineConfig.StarCacheResult starCacheResult = starCaffeineCache.get(followCaffeineKey);
@@ -214,20 +217,20 @@ public class RelationServiceImpl implements RelationService {
                 return GetFollowListResponse.newBuilder().setBaseResp(baseResp).build();
             }
             List<Long> followingList = starCacheResult.getFollowingList();
-            int total = followingList.size();
+            List<Long> pageList = followingList.subList(Math.min(offset, followingList.size()), Math.min(offset + PAGE_SIZE, followingList.size()));
             BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-            return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followingList).setTotal(total).build();
+            return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(pageList).build();
         }
-        List<Long> followingList = relationModel.getFollowingListFromDB(userId);
-        int total = followingList.size();
+        List<Long> followingList = relationModel.getFollowingListFromDB(userId, offset, PAGE_SIZE);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-        return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followingList).setTotal(total).build();
+        return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followingList).build();
     }
 
     @Override
     public GetFollowListResponse getFollowerList(GetFollowListRequest req) {
         //热点用户异步本地缓存->本地LRU缓存->redis+锁+redis+db+写redis->写本地缓存5s
         Long userId = req.getUserId();
+        int offset = (req.getPage()-1)*PAGE_SIZE;
         if (isStar(userId)) {
             String followCaffeineKey = String.format(relationModel.FOLLOW_STAR_KEY, userId);
             CaffeineConfig.StarCacheResult starCacheResult = starCaffeineCache.get(followCaffeineKey);
@@ -237,24 +240,23 @@ public class RelationServiceImpl implements RelationService {
                 return GetFollowListResponse.newBuilder().setBaseResp(baseResp).build();
             }
             List<Long> followerList = starCacheResult.getFollowerList();
-            int total = followerList.size();
+            List<Long> pageList = followerList.subList(Math.min(offset, followerList.size()), Math.min(offset + PAGE_SIZE, followerList.size()));
             BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-            return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followerList).setTotal(total).build();
+            return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(pageList).build();
         }
         String followerListKey = String.format(relationModel.FOLLOWER_LIST_KEY, userId);
-        List<Long> followerList = listCaffeineCache.get(followerListKey, fun -> relationModel.getFollowerListFromDB(userId));
-        int total = followerList.size();
+        List<Long> followerList = listCaffeineCache.get(followerListKey, fun -> relationModel.getFollowerListFromDB(userId, offset, PAGE_SIZE));
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-        return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followerList).setTotal(total).build();
+        return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(followerList).build();
     }
 
     @Override
     public GetFollowListResponse getFriendList(GetFollowListRequest req) {
         Long userId = req.getUserId();
-        List<Long> friendList = relationModel.getFriendListFromDB(userId);
-        int total = friendList.size();
+        int offset = (req.getPage()-1)*PAGE_SIZE;
+        List<Long> friendList = relationModel.getFriendListFromDB(userId, offset, PAGE_SIZE);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-        return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(friendList).setTotal(total).build();
+        return GetFollowListResponse.newBuilder().setBaseResp(baseResp).addAllUserIds(friendList).build();
     }
 
     @Override
@@ -263,13 +265,14 @@ public class RelationServiceImpl implements RelationService {
         //降级->本地缓存->bg->写本地
         //互关->本地->获取互关列表->写本地
         List<Long> userIds = req.getUserIdsList();
-        boolean needFollow = req.getNeedFollow();
+        boolean needFollowing = req.getNeedFollowing();
+        boolean needFollower = req.getNeedFollower();
         boolean needFriend = req.getNeedFriend();
         Map<Long, Long> followingCountMap = new HashMap<>();
         Map<Long, Long> followerCountMap = new HashMap<>();
         Map<Long, Long> friendCountMap = new HashMap<>();
         //本地缓存放入model？
-        if (needFollow) {
+        if (needFollowing) {
             List<Long> missIds = new ArrayList<>();
             for (Long userId : userIds) {
                 String followingCountKey = String.format(relationModel.FOLLOWING_COUNT_KEY, userId);
@@ -294,7 +297,9 @@ public class RelationServiceImpl implements RelationService {
                     }
                 }
             }
-            missIds = new ArrayList<>();
+        }
+        if(needFollower){
+            List<Long> missIds = new ArrayList<>();
             for (Long userId : userIds) {
                 String followerCountKey = String.format(relationModel.FOLLOWER_COUNT_KEY, userId);
                 Long cacheResult = countCaffeineCache.getIfPresent(followerCountKey);
@@ -324,7 +329,7 @@ public class RelationServiceImpl implements RelationService {
                 String friendCountKey = String.format(relationModel.FRIEND_COUNT_KEY, userId);
                 Long cacheResult = countCaffeineCache.getIfPresent(friendCountKey);
                 if (cacheResult == null) {
-                    List<Long> friendList = relationModel.getFriendListFromDB(userId);
+                    List<Long> friendList = relationModel.getFriendListFromDB(userId, 0, Integer.MAX_VALUE);
                     friendCountMap.put(userId, (long) friendList.size());
                     countCaffeineCache.put(friendCountKey, (long) friendList.size());
                 } else {

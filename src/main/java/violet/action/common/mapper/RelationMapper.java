@@ -12,11 +12,11 @@ public interface RelationMapper {
 
     void unfollow(Long fromUserId, Long toUserId);
 
-    List<User> getFollowingList(Long userId);
+    List<User> getFollowingList(Long userId, int skip, int limit);
 
-    List<User> getFollowerList(Long userId);
+    List<User> getFollowerList(Long userId, int skip, int limit);
 
-    List<User> getFriendList(Long userId);
+    List<User> getFriendList(Long userId, int skip, int limit);
 
     Map<Long, Map<String, String>> mGetFollowingMap(List<Long> userIds);
 

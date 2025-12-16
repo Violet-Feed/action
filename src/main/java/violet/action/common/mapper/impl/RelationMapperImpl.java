@@ -78,13 +78,19 @@ public class RelationMapperImpl implements RelationMapper {
     }
 
     @Override
-    public List<User> getFollowingList(Long userId) {
+    public List<User> getFollowingList(Long userId, int skip, int limit) {
         String vid = String.valueOf(userId);
         String nGQL = String.format(
-                "MATCH (a:user)-[:follow]->(b:user) " +
+                "MATCH (a:user)-[f:follow]->(b:user) " +
                         "WHERE id(a) == \"%s\" " +
-                        "RETURN b.user.user_id AS user_id, b.user.username AS username, b.user.avatar AS avatar",
-                vid
+                        "RETURN " +
+                        "b.user.user_id AS user_id, " +
+                        "b.user.username AS username, " +
+                        "b.user.avatar AS avatar, " +
+                        "f.ts AS ts " +
+                        "ORDER BY ts DESC " +
+                        "SKIP %d LIMIT %d",
+                vid, skip, limit
         );
         try {
             ResultSet resultSet = nebulaManager.execute(nGQL);
@@ -100,13 +106,19 @@ public class RelationMapperImpl implements RelationMapper {
     }
 
     @Override
-    public List<User> getFollowerList(Long userId) {
+    public List<User> getFollowerList(Long userId, int skip, int limit) {
         String vid = String.valueOf(userId);
         String nGQL = String.format(
-                "MATCH (a:user)-[:follow]->(b:user) " +
+                "MATCH (a:user)-[f:follow]->(b:user) " +
                         "WHERE id(b) == \"%s\" " +
-                        "RETURN a.user.user_id AS user_id, a.user.username AS username, a.user.avatar AS avatar",
-                vid
+                        "RETURN " +
+                        "a.user.user_id AS user_id, " +
+                        "a.user.username AS username, " +
+                        "a.user.avatar AS avatar, " +
+                        "f.ts AS ts " +
+                        "ORDER BY ts DESC " +
+                        "SKIP %d LIMIT %d",
+                vid, skip, limit
         );
         try {
             ResultSet resultSet = nebulaManager.execute(nGQL);
@@ -122,13 +134,19 @@ public class RelationMapperImpl implements RelationMapper {
     }
 
     @Override
-    public List<User> getFriendList(Long userId) {
+    public List<User> getFriendList(Long userId, int skip, int limit) {
         String vid = String.valueOf(userId);
         String nGQL = String.format(
-                "MATCH (u1:user)-[:follow]->(u2:user)-[:follow]->(u1) " +
+                "MATCH (u1:user)-[f:follow]->(u2:user)-[:follow]->(u1) " +
                         "WHERE id(u1) == \"%s\" " +
-                        "RETURN u2.user.user_id AS user_id, u2.user.username AS username, u2.user.avatar AS avatar",
-                vid
+                        "RETURN " +
+                        "u2.user.user_id AS user_id, " +
+                        "u2.user.username AS username, " +
+                        "u2.user.avatar AS avatar, " +
+                        "f.ts AS ts " +
+                        "ORDER BY ts DESC " +
+                        "SKIP %d LIMIT %d",
+                vid, skip, limit
         );
         try {
             ResultSet resultSet = nebulaManager.execute(nGQL);

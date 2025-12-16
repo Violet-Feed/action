@@ -39,22 +39,24 @@ public class RelationModel {
     @Autowired
     private RedisMutex redisMutex;
 
-    public List<Long> getFollowingListFromDB(Long userId) {
+    public List<Long> getFollowingListFromDB(Long userId, int skip, int limit) {
         String followingListKey = String.format(FOLLOWING_LIST_KEY, userId);
         String followingListStr = redisTemplate.opsForValue().get(followingListKey);
         if (followingListStr != null) {
-            return JSONObject.parseArray(followingListStr, Long.class);
+            List<Long> followingList = JSONObject.parseArray(followingListStr, Long.class);
+            return followingList.subList(Math.min(skip, followingList.size()), Math.min(skip + limit, followingList.size()));
         }
         boolean locked = redisMutex.lock(followingListKey);
         followingListStr = redisTemplate.opsForValue().get(followingListKey);
         if (followingListStr != null) {
-            return JSONObject.parseArray(followingListStr, Long.class);
+            List<Long> followingList = JSONObject.parseArray(followingListStr, Long.class);
+            return followingList.subList(Math.min(skip, followingList.size()), Math.min(skip + limit, followingList.size()));
         }
         if (!locked) {
             log.error("[RelationModel:getFollowingListFromDB] err = redis mutex failed");
             return null;
         }
-        List<User> userList = relationMapper.getFollowingList(userId);
+        List<User> userList = relationMapper.getFollowingList(userId, skip, limit);
         List<Long> followingList = new ArrayList<>();
         for (User user : userList) {
             followingList.add(user.getUserId());
@@ -64,22 +66,24 @@ public class RelationModel {
         return followingList;
     }
 
-    public List<Long> getFollowerListFromDB(Long userId) {
+    public List<Long> getFollowerListFromDB(Long userId, int skip, int limit) {
         String followerListKey = String.format(FOLLOWER_LIST_KEY, userId);
         String followerListStr = redisTemplate.opsForValue().get(followerListKey);
         if (followerListStr != null) {
-            return JSONObject.parseArray(followerListStr, Long.class);
+            List<Long> followerList = JSONObject.parseArray(followerListStr, Long.class);
+            return followerList.subList(Math.min(skip, followerList.size()), Math.min(skip + limit, followerList.size()));
         }
         boolean locked = redisMutex.lock(followerListKey);
         followerListStr = redisTemplate.opsForValue().get(followerListKey);
         if (followerListStr != null) {
-            return JSONObject.parseArray(followerListStr, Long.class);
+            List<Long> followerList = JSONObject.parseArray(followerListStr, Long.class);
+            return followerList.subList(Math.min(skip, followerList.size()), Math.min(skip + limit, followerList.size()));
         }
         if (!locked) {
             log.error("[RelationModel:getFollowerListFromDB] err = redis mutex failed");
             return null;
         }
-        List<User> userList = relationMapper.getFollowerList(userId);
+        List<User> userList = relationMapper.getFollowerList(userId, skip, limit);
         List<Long> followerList = new ArrayList<>();
         for (User user : userList) {
             followerList.add(user.getUserId());
@@ -89,22 +93,24 @@ public class RelationModel {
         return followerList;
     }
 
-    public List<Long> getFriendListFromDB(Long userId) {
+    public List<Long> getFriendListFromDB(Long userId, int skip, int limit) {
         String friendListKey = String.format(FRIEND_LIST_KEY, userId);
         String friendListStr = redisTemplate.opsForValue().get(friendListKey);
         if (friendListStr != null) {
-            return JSONObject.parseArray(friendListStr, Long.class);
+            List<Long> friendList = JSONObject.parseArray(friendListStr, Long.class);
+            return friendList.subList(Math.min(skip, friendList.size()), Math.min(skip + limit, friendList.size()));
         }
         boolean locked = redisMutex.lock(friendListKey);
         friendListStr = redisTemplate.opsForValue().get(friendListKey);
         if (friendListStr != null) {
-            return JSONObject.parseArray(friendListStr, Long.class);
+            List<Long> friendList = JSONObject.parseArray(friendListStr, Long.class);
+            return friendList.subList(Math.min(skip, friendList.size()), Math.min(skip + limit, friendList.size()));
         }
         if (!locked) {
             log.error("[RelationModel:getFriendListFromDB] err = redis mutex failed");
             return null;
         }
-        List<User> userList = relationMapper.getFriendList(userId);
+        List<User> userList = relationMapper.getFriendList(userId, skip, limit);
         List<Long> friendList = new ArrayList<>();
         for (User user : userList) {
             friendList.add(user.getUserId());
@@ -149,7 +155,7 @@ public class RelationModel {
             log.error("[RelationModel:getFollowingHashFromDB] err = redis mutex failed");
             return null;
         }
-        List<User> followingList = relationMapper.getFollowingList(userId);
+        List<User> followingList = relationMapper.getFollowingList(userId, 0, Integer.MAX_VALUE);
         Map<String, String> followingMap = new HashMap<>();
         for (User user : followingList) {
             followingMap.put(user.getUserId().toString(), "1");
