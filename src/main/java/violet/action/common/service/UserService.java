@@ -9,6 +9,8 @@ public interface UserService {
 
     GetUserInfosResponse getUserInfos(GetUserInfosRequest req);
 
+    UpdateUserInfoResponse updateUserInfo(UpdateUserInfoRequest req);
+
     SearchUsersResponse searchUsers(SearchUsersRequest req);
 
     ReportClickResponse reportClick(ReportClickRequest req);

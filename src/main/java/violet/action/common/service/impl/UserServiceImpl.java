@@ -80,10 +80,6 @@ public class UserServiceImpl implements UserService {
         if (!password.equals(confirmPassword)) {
             return "两次输入的密码不一致";
         }
-        User user = userMapper.selectByUserName(username);
-        if (user != null) {
-            return "用户名已存在";
-        }
         return null;
     }
 
@@ -96,12 +92,12 @@ public class UserServiceImpl implements UserService {
             return resp.setBaseResp(baseResp).build();
         }
         String encodedPassword = passwordEncoder.encode(req.getPassword());
-        User user = new User(null, userIdGenerator.nextId(), req.getUsername(), "", encodedPassword);
+        Date now = new Date();
+        User user = new User(null, userIdGenerator.nextId(), req.getUsername(), "", encodedPassword, now, now, 0, "");
         if (!userMapper.createUser(user)) {
             BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Server_Error).build();
             return resp.setBaseResp(baseResp).build();
         }
-        //relationMapper.save(user);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setBaseResp(baseResp).build();
     }
@@ -128,6 +124,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UpdateUserInfoResponse updateUserInfo(UpdateUserInfoRequest req) {
+        UpdateUserInfoResponse.Builder resp = UpdateUserInfoResponse.newBuilder();
+        Date now = new Date();
+        switch (req.getType()) {
+            case "username":
+                userMapper.updateUsername(req.getUserId(), req.getValue(), now);
+                break;
+            case "avatar":
+                userMapper.updateUserAvatar(req.getUserId(), req.getValue(), now);
+                break;
+            case "password":
+                String encodedPassword = passwordEncoder.encode(req.getValue());
+                userMapper.updateUserPassword(req.getUserId(), encodedPassword, now);
+                break;
+            default:
+                BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Param_Error).build();
+                return resp.setBaseResp(baseResp).build();
+        }
+        BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+        return resp.setBaseResp(baseResp).build();
+    }
+
+    @Override
     public SearchUsersResponse searchUsers(SearchUsersRequest req) {
         SearchUsersResponse.Builder resp = SearchUsersResponse.newBuilder();
         int offset = (req.getPage() - 1) * PAGE_SIZE;
@@ -149,7 +168,7 @@ public class UserServiceImpl implements UserService {
                             ((Long) searchResult.getEntity().get("user_id")),
                             (String) searchResult.getEntity().get("username"),
                             (String) searchResult.getEntity().get("avatar"),
-                            null))
+                            null, null, null, 0, ""))
                     .collect(Collectors.toList());
         }
         List<UserInfo> userInfos = users.stream().map(User::toProto).collect(Collectors.toList());

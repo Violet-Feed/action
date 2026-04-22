@@ -55,6 +55,17 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     }
 
     @Override
+    public void updateUserInfo(UpdateUserInfoRequest request, StreamObserver<UpdateUserInfoResponse> responseObserver) {
+        try {
+            responseObserver.onNext(userService.updateUserInfo(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("updateUserInfo error", e);
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
     public void searchUsers(SearchUsersRequest request, StreamObserver<SearchUsersResponse> responseObserver) {
         try {
             responseObserver.onNext(userService.searchUsers(request));
@@ -314,6 +325,17 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
             responseObserver.onCompleted();
         } catch (Exception e) {
             log.error("forward error", e);
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void getForwardCount(GetForwardCountRequest request, StreamObserver<GetForwardCountResponse> responseObserver) {
+        try {
+            responseObserver.onNext(forwardService.getForwardCount(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("getForwardCount error", e);
             responseObserver.onError(e);
         }
     }

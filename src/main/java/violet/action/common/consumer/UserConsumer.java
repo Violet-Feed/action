@@ -32,7 +32,6 @@ public class UserConsumer {
         log.info("Received message: key = {}, value = {}, partition = {}, offset = {}", record.key(), record.value(), record.partition(), record.offset());
         JSONObject json = JSON.parseObject(record.value());
         User user = JSON.parseObject(json.getString("payload"), User.class, JSONReader.Feature.SupportSmartMatch);
-        log.info("Parsed user: {}", user.getAvatar());
         List<JsonObject> data = Collections.singletonList(new Gson().fromJson(String.format(
                 "{\"user_id\": %d, \"username\": %s, \"avatar\": %s}",
                 user.getUserId(), user.getUsername(), user.getAvatar().isEmpty() ? null : user.getAvatar()

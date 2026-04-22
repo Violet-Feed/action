@@ -25,7 +25,7 @@ public class RelationMapperImpl implements RelationMapper {
     public void createUser(User user) {
         String vid = String.valueOf(user.getUserId());
         String nGQL = String.format(
-                "INSERT VERTEX IF NOT EXISTS user(user_id, username, avatar) " +
+                "INSERT VERTEX user(user_id, username, avatar) " +
                         "VALUES \"%s\":(%d, \"%s\", \"%s\")",
                 vid,
                 user.getUserId(),

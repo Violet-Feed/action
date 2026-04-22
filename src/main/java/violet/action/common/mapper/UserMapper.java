@@ -1,17 +1,24 @@
 package violet.action.common.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import violet.action.common.pojo.User;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
 public interface UserMapper {
     @Insert("insert into user values (null,#{userId},#{username},#{avatar},#{password})")
     boolean createUser(User user);
+
+    @Update("update user set username = #{username}, modify_time = #{modifyTime} where user_id = #{userId}")
+    boolean updateUsername(@Param("userId") Long userId, @Param("username") String username, @Param("modifyTime") Date modifyTime);
+
+    @Update("update user set avatar = #{avatar}, modify_time = #{modifyTime} where user_id = #{userId}")
+    boolean updateUserAvatar(@Param("userId") Long userId, @Param("avatar") String avatar, @Param("modifyTime") Date modifyTime);
+
+    @Update("update user set password = #{password}, modify_time = #{modifyTime} where user_id = #{userId}")
+    boolean updateUserPassword(@Param("userId") Long userId, @Param("password") String password, @Param("modifyTime") Date modifyTime);
 
     @Select("select * from user where user_id = #{userId}")
     User selectByUserId(@Param("userId") Long userId);

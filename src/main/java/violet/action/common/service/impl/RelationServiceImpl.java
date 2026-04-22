@@ -53,6 +53,10 @@ public class RelationServiceImpl implements RelationService {
     public FollowResponse follow(FollowRequest req) {
         //判断存在?->每日关注上限redis200->总关注上限5000(获取关注数pack/counter/redis)->写mysql(成功写备,失败mq?)->写bg->
         //更新关注粉丝列表关注hash缓存->更新每日上限->更新计数->发送消息mq->检验mq
+        if (req.getFromUserId() == req.getToUserId()) {
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Param_Error).setStatusMessage("不能关注自己").build();
+            return FollowResponse.newBuilder().setBaseResp(baseResp).build();
+        }
         List<Long> userIds = new ArrayList<>();
         userIds.add(req.getFromUserId());
         Long followingCount = relationModel.getFollowingCountFromDB(userIds).get(req.getFromUserId());
