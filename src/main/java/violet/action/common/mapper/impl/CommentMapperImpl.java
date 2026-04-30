@@ -7,9 +7,12 @@ import org.springframework.stereotype.Repository;
 import violet.action.common.mapper.CommentMapper;
 import violet.action.common.repository.NebulaManager;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Repository
@@ -53,6 +56,67 @@ public class CommentMapperImpl implements CommentMapper {
         if (!resultSet.isSucceeded()) {
             log.error("createReply failed, commentId: {}, replyId: {}, error: {}", commentId, replyId, resultSet.getErrorMessage());
             throw new RuntimeException("createComment failed: " + resultSet.getErrorMessage());
+        }
+    }
+
+    @Override
+    public void deleteComment(Long commentId) {
+        //这里感觉不删reply点是不是好一点
+        String commentVid = "comment:" + commentId;
+        String queryReplyNGQL = String.format(
+                "MATCH (cmt:entity)-[c:comment]->(rep:entity) " +
+                        "WHERE id(cmt) == \"%s\" " +
+                        "AND rep.entity.entity_type == \"reply\" " +
+                        "RETURN DISTINCT id(rep) AS replyVid",
+                commentVid
+        );
+        ResultSet replyResultSet = nebulaManager.execute(queryReplyNGQL);
+        if (!replyResultSet.isSucceeded()) {
+            log.error("deleteComment query replies failed, commentId: {}, error: {}", commentId, replyResultSet.getErrorMessage());
+            throw new RuntimeException("deleteComment query replies failed: " + replyResultSet.getErrorMessage());
+        }
+
+        List<String> vids = new ArrayList<>();
+        vids.add(commentVid);
+        try {
+            for (int i = 0; i < replyResultSet.rowsSize(); i++) {
+                ResultSet.Record record = replyResultSet.rowValues(i);
+                String replyVid = record.get("replyVid").asString();
+                if (replyVid != null && !replyVid.isEmpty()) {
+                    vids.add(replyVid);
+                }
+            }
+        } catch (UnsupportedEncodingException e) {
+            log.error("deleteComment query replies failed, commentId: {}", commentId, e);
+            throw new RuntimeException(e);
+        }
+        String vidList = vids.stream()
+                .distinct()
+                .map(vid -> String.format("\"%s\"", vid))
+                .collect(Collectors.joining(", "));
+
+        String deleteNGQL = String.format(
+                "DELETE VERTEX %s WITH EDGE;",
+                vidList
+        );
+        ResultSet deleteResultSet = nebulaManager.execute(deleteNGQL);
+        if (!deleteResultSet.isSucceeded()) {
+            log.error("deleteComment failed, commentId: {}, vids: {}, error: {}", commentId, vids, deleteResultSet.getErrorMessage());
+            throw new RuntimeException("deleteComment failed: " + deleteResultSet.getErrorMessage());
+        }
+    }
+
+    @Override
+    public void deleteReply(Long replyId) {
+        String replyVid = "comment:" + replyId;
+        String nGQL = String.format(
+                "DELETE VERTEX \"%s\" WITH EDGE;",
+                replyVid
+        );
+        ResultSet resultSet = nebulaManager.execute(nGQL);
+        if (!resultSet.isSucceeded()) {
+            log.error("deleteReply failed, replyId: {}, error: {}", replyId, resultSet.getErrorMessage());
+            throw new RuntimeException("deleteReply failed: " + resultSet.getErrorMessage());
         }
     }
 

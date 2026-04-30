@@ -253,6 +253,28 @@ public class ActionService extends ActionServiceGrpc.ActionServiceImplBase {
     }
 
     @Override
+    public void deleteComment(DeleteCommentRequest request, StreamObserver<DeleteCommentResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.deleteComment(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("deleteComment error", e);
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void deleteCommentReply(DeleteCommentReplyRequest request, StreamObserver<DeleteCommentReplyResponse> responseObserver) {
+        try {
+            responseObserver.onNext(commentService.deleteCommentReply(request));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("deleteCommentReply error", e);
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
     public void getCommentById(GetCommentByIdRequest request, StreamObserver<GetCommentByIdResponse> responseObserver) {
         try {
             responseObserver.onNext(commentService.getCommentById(request));

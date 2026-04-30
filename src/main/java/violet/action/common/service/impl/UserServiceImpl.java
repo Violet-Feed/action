@@ -80,6 +80,10 @@ public class UserServiceImpl implements UserService {
         if (!password.equals(confirmPassword)) {
             return "两次输入的密码不一致";
         }
+        User user = userMapper.selectByUserName(username);
+        if (user != null) {
+            return "用户名已存在";
+        }
         return null;
     }
 
@@ -129,6 +133,11 @@ public class UserServiceImpl implements UserService {
         Date now = new Date();
         switch (req.getType()) {
             case "username":
+                User user = userMapper.selectByUserName(req.getValue());
+                if (user != null) {
+                    BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Param_Error).setStatusMessage("用户名已存在").build();
+                    return resp.setBaseResp(baseResp).build();
+                }
                 userMapper.updateUsername(req.getUserId(), req.getValue(), now);
                 break;
             case "avatar":

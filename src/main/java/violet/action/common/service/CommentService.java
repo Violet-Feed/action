@@ -7,6 +7,10 @@ public interface CommentService {
 
     CreateCommentReplyResponse createCommentReply(CreateCommentReplyRequest req) throws Exception;
 
+    DeleteCommentResponse deleteComment(DeleteCommentRequest req) throws Exception;
+
+    DeleteCommentReplyResponse deleteCommentReply(DeleteCommentReplyRequest req) throws Exception;
+
     GetCommentByIdResponse getCommentById(GetCommentByIdRequest req) throws Exception;
 
     GetCommentListResponse getCommentList(GetCommentListRequest req) throws Exception;

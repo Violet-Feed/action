@@ -17,6 +17,7 @@ import violet.action.common.service.DiggService;
 import violet.action.common.utils.SnowFlake;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -85,6 +86,42 @@ public class CommentServiceImpl implements CommentService {
         actionMqPublisher.publishCreateReplyEvent(req, commentId);
         BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
         return resp.setCommentId(commentId).setBaseResp(baseResp).build();
+    }
+
+    @Override
+    public DeleteCommentResponse deleteComment(DeleteCommentRequest req) throws Exception {
+        DeleteCommentResponse.Builder resp = DeleteCommentResponse.newBuilder();
+        String commentStr = kvrocksTemplate.opsForValue().get("comment:" + req.getCommentId());
+        CommentData.Builder builder = CommentData.newBuilder();
+        JsonFormat.parser().ignoringUnknownFields().merge(commentStr, builder);
+        CommentData commentData = builder.build();
+        if (req.getUserId() != commentData.getUserId()) {
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Auth_Error).build();
+            return resp.setBaseResp(baseResp).build();
+        }
+        Map<Long, Long> replyCountMap = commentMapper.mGetReplyCount(Collections.singletonList(req.getCommentId()));
+        Long replyCount = replyCountMap.get(req.getCommentId());
+        commentMapper.deleteComment(req.getCommentId());
+        kvrocksTemplate.opsForValue().decrement("comment_count:" + commentData.getEntityType() + ":" + commentData.getEntityId(), replyCount + 1);
+        BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+        return resp.setBaseResp(baseResp).build();
+    }
+
+    @Override
+    public DeleteCommentReplyResponse deleteCommentReply(DeleteCommentReplyRequest req) throws Exception {
+        DeleteCommentReplyResponse.Builder resp = DeleteCommentReplyResponse.newBuilder();
+        String commentStr = kvrocksTemplate.opsForValue().get("comment:" + req.getReplyId());
+        CommentData.Builder builder = CommentData.newBuilder();
+        JsonFormat.parser().ignoringUnknownFields().merge(commentStr, builder);
+        CommentData commentData = builder.build();
+        if (req.getUserId() != commentData.getUserId()) {
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Auth_Error).build();
+            return resp.setBaseResp(baseResp).build();
+        }
+        commentMapper.deleteReply(req.getReplyId());
+        kvrocksTemplate.opsForValue().decrement("comment_count:" + commentData.getEntityType() + ":" + commentData.getEntityId(), 1);
+        BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+        return resp.setBaseResp(baseResp).build();
     }
 
     @Override
