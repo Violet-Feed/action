@@ -7,7 +7,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import io.milvus.v2.client.MilvusClientV2;
 import io.milvus.v2.service.vector.request.InsertReq;
+import io.milvus.v2.service.vector.request.UpsertReq;
 import io.milvus.v2.service.vector.response.InsertResp;
+import io.milvus.v2.service.vector.response.UpsertResp;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,16 +34,17 @@ public class UserConsumer {
         log.info("Received message: key = {}, value = {}, partition = {}, offset = {}", record.key(), record.value(), record.partition(), record.offset());
         JSONObject json = JSON.parseObject(record.value());
         User user = JSON.parseObject(json.getString("payload"), User.class, JSONReader.Feature.SupportSmartMatch);
-        List<JsonObject> data = Collections.singletonList(new Gson().fromJson(String.format(
-                "{\"user_id\": %d, \"username\": %s, \"avatar\": %s}",
-                user.getUserId(), user.getUsername(), user.getAvatar().isEmpty() ? null : user.getAvatar()
-        ), JsonObject.class));
-        InsertReq insertReq = InsertReq.builder()
+        JSONObject row = new JSONObject();
+        row.put("user_id", user.getUserId());
+        row.put("username", user.getUsername());
+        row.put("avatar", user.getAvatar().isEmpty() ? null : user.getAvatar());
+        List<JsonObject> data = Collections.singletonList(new Gson().fromJson(row.toJSONString(), JsonObject.class));
+        UpsertReq upsertReq = UpsertReq.builder()
                 .collectionName("user")
                 .data(data)
                 .build();
-        InsertResp insertResp = milvusClient.insert(insertReq);
-        log.info("Inserted user_id {} into Milvus with cnt: {}", user.getUserId(), insertResp.getInsertCnt());
+        UpsertResp upsertResp = milvusClient.upsert(upsertReq);
+        log.info("Upserted user_id {} into Milvus with cnt: {}", user.getUserId(), upsertResp.getUpsertCnt());
 
         //按理应该放在另一个消费者组
         relationMapper.createUser(user);
