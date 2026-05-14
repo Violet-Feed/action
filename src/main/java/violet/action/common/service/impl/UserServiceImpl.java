@@ -55,13 +55,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public LoginResponse login(LoginRequest req) {
         LoginResponse.Builder resp = LoginResponse.newBuilder();
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword());
-        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        UserDetailsImpl loginUser = (UserDetailsImpl) authenticate.getPrincipal();
-        User user = loginUser.getUser();
-        BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
-        return resp.setBaseResp(baseResp).setUserId(user.getUserId()).build();
+        try{
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword());
+            Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+            UserDetailsImpl loginUser = (UserDetailsImpl) authenticate.getPrincipal();
+            User user = loginUser.getUser();
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Success).build();
+            return resp.setBaseResp(baseResp).setUserId(user.getUserId()).build();
+        } catch (Exception e) {
+            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Param_Error).setStatusMessage("用户名或密码错误").build();
+            return resp.setBaseResp(baseResp).build();
+        }
     }
 
     private String checkRegisterParam(String username, String password, String confirmPassword) {
