@@ -28,8 +28,6 @@ public class ForwardServiceImpl implements ForwardService {
     @Autowired
     @Qualifier("kvrocksTemplate")
     private RedisTemplate<String, String> kvrocksTemplate;
-    @Autowired
-    private UserServiceImpl userService;
 
     @Override
     public ForwardResponse forward(ForwardRequest req) throws Exception {
@@ -44,24 +42,12 @@ public class ForwardServiceImpl implements ForwardService {
             return resp.setBaseResp(baseResp).build();
         }
         Creation creation = getCreationByIdResponse.getCreation();
-        GetUserInfosRequest getUserInfosRequest = GetUserInfosRequest.newBuilder()
-                .addUserIds(creation.getUserId())
-                .build();
-        GetUserInfosResponse getUserInfosResponse = userService.getUserInfos(getUserInfosRequest);
-        if (getUserInfosResponse.getBaseResp().getStatusCode() != StatusCode.Success) {
-            log.error("[forward] GetUserInfos rpc err, err = {}", getUserInfosResponse.getBaseResp());
-            BaseResp baseResp = BaseResp.newBuilder().setStatusCode(StatusCode.Server_Error).build();
-            return resp.setBaseResp(baseResp).build();
-        }
-        UserInfo userInfo = getUserInfosResponse.getUserInfosList().get(0);
         ForwardMessage forwardMessage = ForwardMessage.newBuilder()
                 .setCreationId(req.getCreationId())
                 .setTitle(creation.getTitle())
                 .setMaterialType(creation.getMaterialType())
                 .setCoverUrl(creation.getCoverUrl())
                 .setAuthorId(creation.getUserId())
-                .setAuthorName(userInfo.getUsername())
-                .setAuthorAvatarUrl(userInfo.getAvatar())
                 .build();
         SendMessageRequest sendMessageRequest = SendMessageRequest.newBuilder()
                 .setSenderType(SenderType.User_VALUE)
