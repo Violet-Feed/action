@@ -302,6 +302,32 @@ public class RelationModel {
     }
 
     public void updateCache(Long formUserId, Long toUserId, int delta) {
+        String followerCountKey = String.format(FOLLOWER_COUNT_KEY, toUserId);
+        String followerCount = redisTemplate.opsForValue().get(followerCountKey);
+        if (followerCount != null) {
+            if (delta > 0) {
+                redisTemplate.opsForValue().increment(followerCountKey, 1);
+            } else {
+                redisTemplate.opsForValue().decrement(followerCountKey, 1);
+            }
+        }
+        String followingCountKey = String.format(FOLLOWING_COUNT_KEY, formUserId);
+        String followingCount = redisTemplate.opsForValue().get(followingCountKey);
+        if (followingCount != null) {
+            if (delta > 0) {
+                redisTemplate.opsForValue().increment(followingCountKey, 1);
+            } else {
+                redisTemplate.opsForValue().decrement(followingCountKey, 1);
+            }
+        }
+
+        String friendListKey = String.format(FRIEND_LIST_KEY, toUserId);
+        redisTemplate.delete(friendListKey);
+        friendListKey = String.format(FRIEND_LIST_KEY, formUserId);
+        redisTemplate.delete(friendListKey);
+        String followerListKey = String.format(FOLLOWER_LIST_KEY, toUserId);
+        redisTemplate.delete(followerListKey);
+
         String followingListKey = String.format(FOLLOWING_LIST_KEY, formUserId);
         String followListStr = redisTemplate.opsForValue().get(followingListKey);
         if (followListStr != null) {
@@ -314,12 +340,7 @@ public class RelationModel {
                 redisTemplate.opsForValue().set(followingListKey, JSONObject.toJSONString(followingList), Duration.ofDays(1));
             }
         }
-        String followerListKey = String.format(FOLLOWER_LIST_KEY, toUserId);
-        redisTemplate.delete(followerListKey);
-        String friendListKey = String.format(FRIEND_LIST_KEY, formUserId);
-        redisTemplate.delete(friendListKey);
-        friendListKey = String.format(FRIEND_LIST_KEY, toUserId);
-        redisTemplate.delete(friendListKey);
+
         String followingHashKey = String.format(FOLLOWING_HASH_KEY, formUserId);
         Object guard = redisTemplate.opsForHash().get(followingHashKey, guardIndex);
         if (guard != null) {
@@ -330,23 +351,6 @@ public class RelationModel {
                 redisTemplate.opsForHash().delete(followingHashKey, toUserId.toString());
             }
         }
-        String followingCountKey = String.format(FOLLOWING_COUNT_KEY, formUserId);
-        String followingCount = redisTemplate.opsForValue().get(followingCountKey);
-        if (followingCount != null) {
-            if (delta > 0) {
-                redisTemplate.opsForValue().increment(followingCountKey, 1);
-            } else {
-                redisTemplate.opsForValue().decrement(followingCountKey, 1);
-            }
-        }
-        String followerCountKey = String.format(FOLLOWER_COUNT_KEY, toUserId);
-        String followerCount = redisTemplate.opsForValue().get(followerCountKey);
-        if (followerCount != null) {
-            if (delta > 0) {
-                redisTemplate.opsForValue().increment(followerCountKey, 1);
-            } else {
-                redisTemplate.opsForValue().decrement(followerCountKey, 1);
-            }
-        }
+
     }
 }
