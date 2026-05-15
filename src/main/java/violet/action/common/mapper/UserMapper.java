@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    @Insert("insert into user values (null,#{userId},#{username},#{avatar},#{password}),#{createTime},#{modifyTime},#{status},#{extra})")
+    @Insert("insert into user values (null,#{userId},#{username},#{avatar},#{password},#{createTime},#{modifyTime},#{status},#{extra})")
     boolean createUser(User user);
 
     @Update("update user set username = #{username}, modify_time = #{modifyTime} where user_id = #{userId}")
